@@ -1,25 +1,25 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { ArrowLeft } from "lucide-react";
-import { useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { ArrowLeft } from 'lucide-react';
+import { useState } from 'react';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 
 export default function NewAgencyPage() {
   const router = useRouter();
   const [form, setForm] = useState({
-    name: "",
-    acronym: "",
-    description: "",
-    website: "",
+    name: '',
+    acronym: '',
+    description: '',
+    website: '',
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // In a real app, POST to API
-    router.push("/admin/agencies");
+    router.push('/admin/agencies');
   };
 
   return (

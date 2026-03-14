@@ -1,12 +1,11 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { SERVICE_CATEGORIES, MOCK_AGENCIES } from "@/lib/constants";
-import type { Service, ServiceCategory } from "@/types";
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { SERVICE_CATEGORIES, MOCK_AGENCIES } from '@/lib/constants';
+import type { Service, ServiceCategory } from '@/types';
 
 interface ServiceFormProps {
   initialData?: Partial<Service>;
@@ -16,12 +15,12 @@ interface ServiceFormProps {
 export function ServiceForm({ initialData, onSubmit }: ServiceFormProps) {
   const router = useRouter();
   const [form, setForm] = useState({
-    title: initialData?.title ?? "",
-    description: initialData?.description ?? "",
-    category: initialData?.category ?? "identity",
-    agencyId: initialData?.agencyId ?? "",
-    processingTime: initialData?.processingTime ?? "",
-    totalFee: initialData?.totalFee?.toString() ?? "0",
+    title: initialData?.title ?? '',
+    description: initialData?.description ?? '',
+    category: initialData?.category ?? 'identity',
+    agencyId: initialData?.agencyId ?? '',
+    processingTime: initialData?.processingTime ?? '',
+    totalFee: initialData?.totalFee?.toString() ?? '0',
     isFeatured: initialData?.isFeatured ?? false,
   });
 
@@ -35,7 +34,7 @@ export function ServiceForm({ initialData, onSubmit }: ServiceFormProps) {
       requirements: initialData?.requirements ?? [],
     };
     onSubmit?.(data);
-    router.push("/admin/services");
+    router.push('/admin/services');
   };
 
   return (
@@ -72,7 +71,9 @@ export function ServiceForm({ initialData, onSubmit }: ServiceFormProps) {
               className="w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy"
             >
               {SERVICE_CATEGORIES.map((c) => (
-                <option key={c.value} value={c.value}>{c.label}</option>
+                <option key={c.value} value={c.value}>
+                  {c.label}
+                </option>
               ))}
             </select>
           </div>
@@ -87,7 +88,9 @@ export function ServiceForm({ initialData, onSubmit }: ServiceFormProps) {
             >
               <option value="">Select agency...</option>
               {MOCK_AGENCIES.map((a) => (
-                <option key={a.id} value={a.id}>{a.acronym} – {a.name}</option>
+                <option key={a.id} value={a.id}>
+                  {a.acronym} – {a.name}
+                </option>
               ))}
             </select>
           </div>
@@ -126,13 +129,9 @@ export function ServiceForm({ initialData, onSubmit }: ServiceFormProps) {
 
       <div className="flex items-center gap-3 pt-2">
         <Button type="submit" className="bg-navy hover:bg-navy/90 text-white">
-          {initialData ? "Save Changes" : "Create Service"}
+          {initialData ? 'Save Changes' : 'Create Service'}
         </Button>
-        <Button
-          type="button"
-          variant="outline"
-          onClick={() => router.back()}
-        >
+        <Button type="button" variant="outline" onClick={() => router.back()}>
           Cancel
         </Button>
       </div>

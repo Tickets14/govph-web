@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import { useState, useEffect, useCallback } from "react";
-import type { Progress } from "@/types";
+import { useState, useCallback } from 'react';
+import type { Progress } from '@/types';
 
-const STORAGE_KEY = "govph_progress";
+const STORAGE_KEY = 'govph_progress';
 
 function loadProgress(): Record<string, Progress> {
-  if (typeof window === "undefined") return {};
+  if (typeof window === 'undefined') return {};
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     return raw ? JSON.parse(raw) : {};
@@ -16,16 +16,12 @@ function loadProgress(): Record<string, Progress> {
 }
 
 function saveProgress(data: Record<string, Progress>) {
-  if (typeof window === "undefined") return;
+  if (typeof window === 'undefined') return;
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 }
 
 export function useProgress(serviceId: string) {
-  const [allProgress, setAllProgress] = useState<Record<string, Progress>>({});
-
-  useEffect(() => {
-    setAllProgress(loadProgress());
-  }, []);
+  const [allProgress, setAllProgress] = useState<Record<string, Progress>>(() => loadProgress());
 
   const progress: Progress = allProgress[serviceId] ?? {
     serviceId,

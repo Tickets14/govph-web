@@ -1,5 +1,5 @@
-import type { RequirementRow } from "@/src/lib/db-types";
-import type { CreateRequirementDto, UpdateRequirementDto } from "@/src/lib/dtos";
+import type { RequirementRow } from '@/src/lib/db-types';
+import type { CreateRequirementDto, UpdateRequirementDto } from '@/src/lib/dtos';
 
 export interface IRequirementRepository {
   findByStep(stepId: string): Promise<RequirementRow[]>;

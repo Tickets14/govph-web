@@ -1,8 +1,7 @@
-import Link from "next/link";
-import { Clock, PhilippinePeso, ArrowRight, CheckCircle } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import type { Service } from "@/types";
-import { SERVICE_CATEGORIES } from "@/lib/constants";
+import Link from 'next/link';
+import { Clock, PhilippinePeso, ArrowRight, CheckCircle } from 'lucide-react';
+import type { Service } from '@/types';
+import { SERVICE_CATEGORIES } from '@/lib/constants';
 
 interface ServiceCardProps {
   service: Service;
@@ -10,16 +9,16 @@ interface ServiceCardProps {
 }
 
 const categoryColors: Record<string, string> = {
-  identity: "bg-blue-50 text-blue-700",
-  travel: "bg-sky-50 text-sky-700",
-  vehicle: "bg-orange-50 text-orange-700",
-  business: "bg-violet-50 text-violet-700",
-  "social-services": "bg-pink-50 text-pink-700",
-  healthcare: "bg-green-50 text-green-700",
-  education: "bg-yellow-50 text-yellow-700",
-  tax: "bg-red-50 text-red-700",
-  property: "bg-teal-50 text-teal-700",
-  other: "bg-gray-50 text-gray-700",
+  identity: 'bg-blue-50 text-blue-700',
+  travel: 'bg-sky-50 text-sky-700',
+  vehicle: 'bg-orange-50 text-orange-700',
+  business: 'bg-violet-50 text-violet-700',
+  'social-services': 'bg-pink-50 text-pink-700',
+  healthcare: 'bg-green-50 text-green-700',
+  education: 'bg-yellow-50 text-yellow-700',
+  tax: 'bg-red-50 text-red-700',
+  property: 'bg-teal-50 text-teal-700',
+  other: 'bg-gray-50 text-gray-700',
 };
 
 export function ServiceCard({ service, completedSteps }: ServiceCardProps) {
@@ -37,7 +36,7 @@ export function ServiceCard({ service, completedSteps }: ServiceCardProps) {
         <div className="flex-1 min-w-0">
           {category && (
             <span
-              className={`inline-block text-xs font-medium px-2 py-0.5 rounded-full mb-2 ${categoryColors[service.category] ?? "bg-gray-100 text-gray-600"}`}
+              className={`inline-block text-xs font-medium px-2 py-0.5 rounded-full mb-2 ${categoryColors[service.category] ?? 'bg-gray-100 text-gray-600'}`}
             >
               {category.label}
             </span>
@@ -51,9 +50,7 @@ export function ServiceCard({ service, completedSteps }: ServiceCardProps) {
         </div>
       </div>
 
-      <p className="text-xs text-gray-500 line-clamp-2 leading-relaxed mb-3">
-        {service.description}
-      </p>
+      <p className="text-xs text-gray-500 line-clamp-2 leading-relaxed mb-3">{service.description}</p>
 
       <div className="flex items-center gap-3 text-xs text-gray-500">
         {service.processingTime && (
@@ -65,12 +62,10 @@ export function ServiceCard({ service, completedSteps }: ServiceCardProps) {
         {service.totalFee !== undefined && (
           <span className="flex items-center gap-1">
             <PhilippinePeso className="w-3.5 h-3.5" />
-            {service.totalFee === 0 ? "Libre" : `₱${service.totalFee.toLocaleString()}`}
+            {service.totalFee === 0 ? 'Libre' : `₱${service.totalFee.toLocaleString()}`}
           </span>
         )}
-        {service.agency && (
-          <span className="ml-auto font-medium text-navy/70">{service.agency.acronym}</span>
-        )}
+        {service.agency && <span className="ml-auto font-medium text-navy/70">{service.agency.acronym}</span>}
       </div>
 
       {hasProgress && (

@@ -1,9 +1,9 @@
-import { notFound } from "next/navigation";
-import type { Metadata } from "next";
-import Link from "next/link";
-import { ArrowLeft, ExternalLink, Globe } from "lucide-react";
-import { getAgencyBySlug, getAgencies } from "@/lib/api";
-import { ServiceCard } from "@/components/services/ServiceCard";
+import { notFound } from 'next/navigation';
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import { ArrowLeft, ExternalLink, Globe } from 'lucide-react';
+import { getAgencyBySlug, getAgencies } from '@/lib/api';
+import { ServiceCard } from '@/components/services/ServiceCard';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -12,7 +12,7 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const agency = await getAgencyBySlug(slug);
-  if (!agency) return { title: "Agency Not Found" };
+  if (!agency) return { title: 'Agency Not Found' };
   return {
     title: agency.acronym,
     description: agency.description,
@@ -68,9 +68,7 @@ export default async function AgencyDetailPage({ params }: Props) {
 
       {/* Services */}
       <div>
-        <h2 className="font-display font-bold text-xl text-navy mb-4">
-          Mga Serbisyo ({agency.services?.length ?? 0})
-        </h2>
+        <h2 className="font-display font-bold text-xl text-navy mb-4">Mga Serbisyo ({agency.services?.length ?? 0})</h2>
         {agency.services && agency.services.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {agency.services.map((service) => (

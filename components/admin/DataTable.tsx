@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils';
 
 interface Column<T> {
   key: string;
@@ -16,7 +16,7 @@ interface DataTableProps<T> {
 export function DataTable<T extends Record<string, unknown>>({
   columns,
   data,
-  emptyMessage = "No data found.",
+  emptyMessage = 'No data found.',
 }: DataTableProps<T>) {
   return (
     <div className="overflow-x-auto rounded-xl border border-gray-200">
@@ -27,7 +27,7 @@ export function DataTable<T extends Record<string, unknown>>({
               <th
                 key={col.key}
                 className={cn(
-                  "px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider",
+                  'px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider',
                   col.className
                 )}
               >
@@ -47,7 +47,7 @@ export function DataTable<T extends Record<string, unknown>>({
             data.map((row, i) => (
               <tr key={i} className="hover:bg-gray-50 transition-colors">
                 {columns.map((col) => (
-                  <td key={col.key} className={cn("px-4 py-3 text-gray-700", col.className)}>
+                  <td key={col.key} className={cn('px-4 py-3 text-gray-700', col.className)}>
                     {col.render ? col.render(row) : (row[col.key] as React.ReactNode)}
                   </td>
                 ))}

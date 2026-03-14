@@ -1,4 +1,4 @@
-import { SearchX } from "lucide-react";
+import { SearchX } from 'lucide-react';
 
 interface EmptyStateProps {
   title?: string;
@@ -7,8 +7,8 @@ interface EmptyStateProps {
 }
 
 export function EmptyState({
-  title = "Walang resulta",
-  description = "Subukan ang ibang keywords.",
+  title = 'Walang resulta',
+  description = 'Subukan ang ibang keywords.',
   icon,
 }: EmptyStateProps) {
   return (

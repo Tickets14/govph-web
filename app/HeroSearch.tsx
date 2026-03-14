@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { Search } from "lucide-react";
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { Search } from 'lucide-react';
 
 export function HeroSearch() {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
   const router = useRouter();
 
   const handleSubmit = (e: React.FormEvent) => {

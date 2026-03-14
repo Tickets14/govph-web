@@ -11,26 +11,26 @@
  *   const agency = await container.agencyService.getAgencyBySlug("dfa");
  */
 
-import { dbClient } from "@/src/db/client";
+import { dbClient } from '@/src/db/client';
 
 // Repositories
-import { AgencyRepository } from "@/src/repositories/agency.repository";
-import { ServiceRepository } from "@/src/repositories/service.repository";
-import { StepRepository } from "@/src/repositories/step.repository";
-import { RequirementRepository } from "@/src/repositories/requirement.repository";
-import { UserProgressRepository } from "@/src/repositories/user-progress.repository";
+import { AgencyRepository } from '@/src/repositories/agency.repository';
+import { ServiceRepository } from '@/src/repositories/service.repository';
+import { StepRepository } from '@/src/repositories/step.repository';
+import { RequirementRepository } from '@/src/repositories/requirement.repository';
+import { UserProgressRepository } from '@/src/repositories/user-progress.repository';
 
 // Services
-import { AgencyService } from "@/src/services/agency.service";
-import { ServiceService } from "@/src/services/service.service";
-import { ProgressService } from "@/src/services/progress.service";
+import { AgencyService } from '@/src/services/agency.service';
+import { ServiceService } from '@/src/services/service.service';
+import { ProgressService } from '@/src/services/progress.service';
 
 // Re-export types for convenience
-export type { IAgencyRepository } from "@/src/repositories/agency.repository.interface";
-export type { IServiceRepository } from "@/src/repositories/service.repository.interface";
-export type { IStepRepository } from "@/src/repositories/step.repository.interface";
-export type { IRequirementRepository } from "@/src/repositories/requirement.repository.interface";
-export type { IUserProgressRepository } from "@/src/repositories/user-progress.repository.interface";
+export type { IAgencyRepository } from '@/src/repositories/agency.repository.interface';
+export type { IServiceRepository } from '@/src/repositories/service.repository.interface';
+export type { IStepRepository } from '@/src/repositories/step.repository.interface';
+export type { IRequirementRepository } from '@/src/repositories/requirement.repository.interface';
+export type { IUserProgressRepository } from '@/src/repositories/user-progress.repository.interface';
 
 // ── Container class ───────────────────────────────────────────────────────────
 
@@ -51,10 +51,10 @@ class Container {
 
   private constructor() {
     // Repositories
-    this.agencyRepository       = new AgencyRepository(dbClient);
-    this.serviceRepository      = new ServiceRepository(dbClient);
-    this.stepRepository         = new StepRepository(dbClient);
-    this.requirementRepository  = new RequirementRepository(dbClient);
+    this.agencyRepository = new AgencyRepository(dbClient);
+    this.serviceRepository = new ServiceRepository(dbClient);
+    this.stepRepository = new StepRepository(dbClient);
+    this.requirementRepository = new RequirementRepository(dbClient);
     this.userProgressRepository = new UserProgressRepository(dbClient);
 
     // Services

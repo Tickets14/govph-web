@@ -1,5 +1,5 @@
-import Link from "next/link";
-import { Shield, Heart } from "lucide-react";
+import Link from 'next/link';
+import { Shield, Heart } from 'lucide-react';
 
 export function Footer() {
   return (
@@ -17,7 +17,8 @@ export function Footer() {
               </span>
             </div>
             <p className="text-sm text-blue-200 leading-relaxed max-w-xs">
-              A community tool to help Filipinos navigate government services. Not affiliated with any government agency.
+              A community tool to help Filipinos navigate government services. Not affiliated with any government
+              agency.
             </p>
           </div>
 
@@ -26,15 +27,12 @@ export function Footer() {
             <h3 className="font-semibold text-sm uppercase tracking-wider text-blue-300 mb-3">Quick Links</h3>
             <ul className="space-y-2">
               {[
-                { href: "/", label: "Home" },
-                { href: "/services", label: "Services" },
-                { href: "/agencies", label: "Agencies" },
+                { href: '/', label: 'Home' },
+                { href: '/services', label: 'Services' },
+                { href: '/agencies', label: 'Agencies' },
               ].map((link) => (
                 <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-blue-200 hover:text-gold transition-colors"
-                  >
+                  <Link href={link.href} className="text-sm text-blue-200 hover:text-gold transition-colors">
                     {link.label}
                   </Link>
                 </li>
@@ -46,15 +44,14 @@ export function Footer() {
           <div>
             <h3 className="font-semibold text-sm uppercase tracking-wider text-blue-300 mb-3">Disclaimer</h3>
             <p className="text-sm text-blue-200 leading-relaxed">
-              Information may change. Always verify requirements directly with the relevant government agency before applying.
+              Information may change. Always verify requirements directly with the relevant government agency before
+              applying.
             </p>
           </div>
         </div>
 
         <div className="border-t border-white/10 mt-8 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-blue-300">
-            © {new Date().getFullYear()} GovPH Tracker. For the Filipino people.
-          </p>
+          <p className="text-xs text-blue-300">© {new Date().getFullYear()} GovPH Tracker. For the Filipino people.</p>
           <p className="text-xs text-blue-300 flex items-center gap-1">
             Made with <Heart className="w-3 h-3 text-gold fill-gold" /> for everyday Filipinos
           </p>

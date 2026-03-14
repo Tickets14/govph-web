@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { ArrowRight, ExternalLink } from "lucide-react";
-import type { Agency } from "@/types";
+import Link from 'next/link';
+import { ArrowRight, ExternalLink } from 'lucide-react';
+import type { Agency } from '@/types';
 
 interface AgencyCardProps {
   agency: Agency;
@@ -33,14 +33,12 @@ export function AgencyCard({ agency, serviceCount }: AgencyCardProps) {
       </div>
 
       <h3 className="font-semibold text-gray-900 text-sm leading-snug mb-1">{agency.name}</h3>
-      <p className="text-xs text-gray-500 leading-relaxed line-clamp-2 flex-1">
-        {agency.description}
-      </p>
+      <p className="text-xs text-gray-500 leading-relaxed line-clamp-2 flex-1">{agency.description}</p>
 
       <div className="flex items-center justify-between mt-4 pt-3 border-t border-gray-100">
         {serviceCount !== undefined && (
           <span className="text-xs text-gray-400">
-            {serviceCount} {serviceCount === 1 ? "serbisyo" : "mga serbisyo"}
+            {serviceCount} {serviceCount === 1 ? 'serbisyo' : 'mga serbisyo'}
           </span>
         )}
         <Link

@@ -1,10 +1,10 @@
-import { notFound } from "next/navigation";
-import type { Metadata } from "next";
-import Link from "next/link";
-import { ArrowLeft, Clock, PhilippinePeso, ExternalLink, Building2 } from "lucide-react";
-import { getServiceBySlug, getServices } from "@/lib/api";
-import { SERVICE_CATEGORIES } from "@/lib/constants";
-import { ServiceDetailClient } from "./ServiceDetailClient";
+import { notFound } from 'next/navigation';
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import { ArrowLeft, Clock, PhilippinePeso, ExternalLink, Building2 } from 'lucide-react';
+import { getServiceBySlug, getServices } from '@/lib/api';
+import { SERVICE_CATEGORIES } from '@/lib/constants';
+import { ServiceDetailClient } from './ServiceDetailClient';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -13,7 +13,7 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const service = await getServiceBySlug(slug);
-  if (!service) return { title: "Service Not Found" };
+  if (!service) return { title: 'Service Not Found' };
   return {
     title: service.title,
     description: service.description,
@@ -51,9 +51,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 {category.label}
               </span>
             )}
-            <h1 className="font-display font-bold text-2xl sm:text-3xl text-navy mb-2">
-              {service.title}
-            </h1>
+            <h1 className="font-display font-bold text-2xl sm:text-3xl text-navy mb-2">{service.title}</h1>
             <p className="text-gray-600 leading-relaxed mb-4">{service.description}</p>
 
             <div className="flex flex-wrap gap-4 text-sm text-gray-500">
@@ -66,7 +64,7 @@ export default async function ServiceDetailPage({ params }: Props) {
               {service.totalFee !== undefined && (
                 <span className="flex items-center gap-1.5">
                   <PhilippinePeso className="w-4 h-4 text-navy/50" />
-                  {service.totalFee === 0 ? "Libre" : `₱${service.totalFee.toLocaleString()} total`}
+                  {service.totalFee === 0 ? 'Libre' : `₱${service.totalFee.toLocaleString()} total`}
                 </span>
               )}
             </div>
@@ -124,8 +122,8 @@ export default async function ServiceDetailPage({ params }: Props) {
           <div className="bg-gold/10 rounded-2xl border border-gold/20 p-5">
             <p className="text-xs font-semibold text-gold/80 uppercase tracking-wider mb-2">💡 Tip</p>
             <p className="text-xs text-gray-700 leading-relaxed">
-              I-verify palagi ang mga requirements direkta sa opisyal na website ng ahensya bago pumunta.
-              Maaaring magbago ang mga requirement.
+              I-verify palagi ang mga requirements direkta sa opisyal na website ng ahensya bago pumunta. Maaaring
+              magbago ang mga requirement.
             </p>
           </div>
         </div>

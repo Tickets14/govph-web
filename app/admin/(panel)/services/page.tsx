@@ -1,10 +1,10 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import { Plus, Pencil } from "lucide-react";
-import { getServices } from "@/lib/api";
-import { Badge } from "@/components/ui/badge";
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import { Plus, Pencil } from 'lucide-react';
+import { getServices } from '@/lib/api';
+import { Badge } from '@/components/ui/badge';
 
-export const metadata: Metadata = { title: "Manage Services" };
+export const metadata: Metadata = { title: 'Manage Services' };
 
 export default async function AdminServicesPage() {
   const services = await getServices();
@@ -28,11 +28,21 @@ export default async function AdminServicesPage() {
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-gray-200 bg-gray-50">
-              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Title</th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider hidden sm:table-cell">Agency</th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider hidden md:table-cell">Category</th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider hidden lg:table-cell">Featured</th>
-              <th className="px-4 py-3 text-right text-xs font-semibold text-gray-500 uppercase tracking-wider">Actions</th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                Title
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider hidden sm:table-cell">
+                Agency
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider hidden md:table-cell">
+                Category
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider hidden lg:table-cell">
+                Featured
+              </th>
+              <th className="px-4 py-3 text-right text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                Actions
+              </th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100">
@@ -42,9 +52,7 @@ export default async function AdminServicesPage() {
                   <p className="font-medium text-gray-900">{service.title}</p>
                   <p className="text-xs text-gray-400 sm:hidden">{service.agency?.acronym}</p>
                 </td>
-                <td className="px-4 py-3 hidden sm:table-cell text-gray-600">
-                  {service.agency?.acronym}
-                </td>
+                <td className="px-4 py-3 hidden sm:table-cell text-gray-600">{service.agency?.acronym}</td>
                 <td className="px-4 py-3 hidden md:table-cell">
                   <Badge variant="secondary" className="text-xs capitalize">
                     {service.category}

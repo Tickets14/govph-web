@@ -1,10 +1,9 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import { Plus, ExternalLink } from "lucide-react";
-import { getAgencies } from "@/lib/api";
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import { Plus, ExternalLink } from 'lucide-react';
+import { getAgencies } from '@/lib/api';
 
-
-export const metadata: Metadata = { title: "Manage Agencies" };
+export const metadata: Metadata = { title: 'Manage Agencies' };
 
 export default async function AdminAgenciesPage() {
   const agencies = await getAgencies();
@@ -28,9 +27,15 @@ export default async function AdminAgenciesPage() {
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-gray-200 bg-gray-50">
-              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Agency</th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider hidden md:table-cell">Description</th>
-              <th className="px-4 py-3 text-right text-xs font-semibold text-gray-500 uppercase tracking-wider">Website</th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                Agency
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider hidden md:table-cell">
+                Description
+              </th>
+              <th className="px-4 py-3 text-right text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                Website
+              </th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100">

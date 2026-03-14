@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { SearchInput } from "@/components/common/SearchInput";
-import { SERVICE_CATEGORIES } from "@/lib/constants";
-import type { ServiceCategory } from "@/types";
-import { cn } from "@/lib/utils";
+import { SearchInput } from '@/components/common/SearchInput';
+import { SERVICE_CATEGORIES } from '@/lib/constants';
+import type { ServiceCategory } from '@/types';
+import { cn } from '@/lib/utils';
 
 interface ServiceSearchProps {
   query: string;
@@ -20,10 +20,10 @@ export function ServiceSearch({ query, category, onQueryChange, onCategoryChange
         <button
           onClick={() => onCategoryChange(undefined)}
           className={cn(
-            "px-3 py-1.5 rounded-full text-xs font-medium transition-all border",
+            'px-3 py-1.5 rounded-full text-xs font-medium transition-all border',
             !category
-              ? "bg-navy text-white border-navy"
-              : "bg-white text-gray-600 border-gray-200 hover:border-gray-300"
+              ? 'bg-navy text-white border-navy'
+              : 'bg-white text-gray-600 border-gray-200 hover:border-gray-300'
           )}
         >
           Lahat
@@ -33,10 +33,10 @@ export function ServiceSearch({ query, category, onQueryChange, onCategoryChange
             key={c.value}
             onClick={() => onCategoryChange(category === c.value ? undefined : (c.value as ServiceCategory))}
             className={cn(
-              "px-3 py-1.5 rounded-full text-xs font-medium transition-all border",
+              'px-3 py-1.5 rounded-full text-xs font-medium transition-all border',
               category === c.value
-                ? "bg-navy text-white border-navy"
-                : "bg-white text-gray-600 border-gray-200 hover:border-gray-300"
+                ? 'bg-navy text-white border-navy'
+                : 'bg-white text-gray-600 border-gray-200 hover:border-gray-300'
             )}
           >
             {c.label}

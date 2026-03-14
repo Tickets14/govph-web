@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils';
 
 interface ProgressBarProps {
   value: number; // 0-100
@@ -9,7 +9,7 @@ interface ProgressBarProps {
 export function ProgressBar({ value, label, className }: ProgressBarProps) {
   const clamped = Math.min(100, Math.max(0, value));
   return (
-    <div className={cn("w-full", className)}>
+    <div className={cn('w-full', className)}>
       {label && (
         <div className="flex items-center justify-between mb-1.5">
           <span className="text-xs text-gray-500">{label}</span>

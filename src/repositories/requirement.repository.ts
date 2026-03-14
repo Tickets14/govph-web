@@ -1,8 +1,8 @@
-import type { DbClient } from "@/src/db/client";
-import type { RequirementRow } from "@/src/lib/db-types";
-import type { CreateRequirementDto, UpdateRequirementDto } from "@/src/lib/dtos";
-import { generateId } from "@/src/db/mock-db";
-import type { IRequirementRepository } from "./requirement.repository.interface";
+import type { DbClient } from '@/src/db/client';
+import type { RequirementRow } from '@/src/lib/db-types';
+import type { CreateRequirementDto, UpdateRequirementDto } from '@/src/lib/dtos';
+import { generateId } from '@/src/db/mock-db';
+import type { IRequirementRepository } from './requirement.repository.interface';
 
 export class RequirementRepository implements IRequirementRepository {
   constructor(private readonly db: DbClient) {}
@@ -37,10 +37,10 @@ export class RequirementRepository implements IRequirementRepository {
 
   async update(id: string, data: UpdateRequirementDto): Promise<RequirementRow | null> {
     const patch: Partial<RequirementRow> = {};
-    if (data.label !== undefined)       patch.label = data.label;
+    if (data.label !== undefined) patch.label = data.label;
     if (data.description !== undefined) patch.description = data.description;
-    if (data.isOptional !== undefined)  patch.is_optional = data.isOptional;
-    if (data.copies !== undefined)      patch.copies = data.copies;
+    if (data.isOptional !== undefined) patch.is_optional = data.isOptional;
+    if (data.copies !== undefined) patch.copies = data.copies;
     return this.db.requirements.update(id, patch);
   }
 

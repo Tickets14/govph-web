@@ -49,16 +49,16 @@ export interface Service {
 }
 
 export type ServiceCategory =
-  | "identity"
-  | "travel"
-  | "business"
-  | "social-services"
-  | "education"
-  | "healthcare"
-  | "property"
-  | "vehicle"
-  | "tax"
-  | "other";
+  | 'identity'
+  | 'travel'
+  | 'business'
+  | 'social-services'
+  | 'education'
+  | 'healthcare'
+  | 'property'
+  | 'vehicle'
+  | 'tax'
+  | 'other';
 
 export interface Progress {
   serviceId: string;

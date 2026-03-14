@@ -1,5 +1,5 @@
-import type { ServiceRow } from "@/src/lib/db-types";
-import type { CreateServiceDto, UpdateServiceDto, ServiceFiltersDto } from "@/src/lib/dtos";
+import type { ServiceRow } from '@/src/lib/db-types';
+import type { CreateServiceDto, UpdateServiceDto, ServiceFiltersDto } from '@/src/lib/dtos';
 
 export interface IServiceRepository {
   findAll(filters?: ServiceFiltersDto): Promise<ServiceRow[]>;

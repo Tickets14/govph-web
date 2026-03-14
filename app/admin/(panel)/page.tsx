@@ -1,34 +1,34 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import { FileText, Building2, ArrowRight, TrendingUp } from "lucide-react";
-import { getServices, getAgencies } from "@/lib/api";
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import { FileText, Building2, ArrowRight, TrendingUp } from 'lucide-react';
+import { getServices, getAgencies } from '@/lib/api';
 
-export const metadata: Metadata = { title: "Dashboard" };
+export const metadata: Metadata = { title: 'Dashboard' };
 
 export default async function AdminDashboardPage() {
   const [services, agencies] = await Promise.all([getServices(), getAgencies()]);
 
   const stats = [
     {
-      label: "Total Services",
+      label: 'Total Services',
       value: services.length,
       icon: FileText,
-      href: "/admin/services",
-      color: "bg-blue-50 text-blue-600",
+      href: '/admin/services',
+      color: 'bg-blue-50 text-blue-600',
     },
     {
-      label: "Total Agencies",
+      label: 'Total Agencies',
       value: agencies.length,
       icon: Building2,
-      href: "/admin/agencies",
-      color: "bg-violet-50 text-violet-600",
+      href: '/admin/agencies',
+      color: 'bg-violet-50 text-violet-600',
     },
     {
-      label: "Featured Services",
+      label: 'Featured Services',
       value: services.filter((s) => s.isFeatured).length,
       icon: TrendingUp,
-      href: "/admin/services",
-      color: "bg-amber-50 text-amber-600",
+      href: '/admin/services',
+      color: 'bg-amber-50 text-amber-600',
     },
   ];
 
@@ -75,12 +75,11 @@ export default async function AdminDashboardPage() {
             >
               <div>
                 <p className="text-sm font-medium text-gray-800">{service.title}</p>
-                <p className="text-xs text-gray-400">{service.agency?.acronym} · {service.category}</p>
+                <p className="text-xs text-gray-400">
+                  {service.agency?.acronym} · {service.category}
+                </p>
               </div>
-              <Link
-                href={`/admin/services/${service.id}/edit`}
-                className="text-xs text-navy hover:underline"
-              >
+              <Link href={`/admin/services/${service.id}/edit`} className="text-xs text-navy hover:underline">
                 Edit
               </Link>
             </div>

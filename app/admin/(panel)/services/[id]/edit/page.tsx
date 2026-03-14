@@ -1,9 +1,9 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import { notFound } from "next/navigation";
-import { ArrowLeft } from "lucide-react";
-import { getServiceById } from "@/lib/api";
-import { ServiceForm } from "@/components/admin/ServiceForm";
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
+import { ArrowLeft } from 'lucide-react';
+import { getServiceById } from '@/lib/api';
+import { ServiceForm } from '@/components/admin/ServiceForm';
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -12,7 +12,7 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   const service = await getServiceById(id);
-  return { title: service ? `Edit: ${service.title}` : "Edit Service" };
+  return { title: service ? `Edit: ${service.title}` : 'Edit Service' };
 }
 
 export default async function EditServicePage({ params }: Props) {

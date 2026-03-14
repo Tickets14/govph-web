@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { CheckCircle2, Circle, Clock, PhilippinePeso, MapPin } from "lucide-react";
-import { cn } from "@/lib/utils";
-import type { Step } from "@/types";
-import { RequirementBadge } from "./RequirementBadge";
+import { CheckCircle2, Clock, PhilippinePeso, MapPin } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import type { Step } from '@/types';
+import { RequirementBadge } from './RequirementBadge';
 
 interface StepChecklistProps {
   steps: Step[];
@@ -28,31 +28,26 @@ export function StepChecklist({
           <div
             key={step.id}
             className={cn(
-              "relative rounded-2xl border p-5 transition-all duration-200",
-              done ? "bg-green-50/60 border-green-200" : "bg-white border-gray-200"
+              'relative rounded-2xl border p-5 transition-all duration-200',
+              done ? 'bg-green-50/60 border-green-200' : 'bg-white border-gray-200'
             )}
           >
             {/* Step connector line */}
-            {index < steps.length - 1 && (
-              <div className="absolute left-[28px] top-full w-0.5 h-4 bg-gray-200 z-10" />
-            )}
+            {index < steps.length - 1 && <div className="absolute left-7 top-full w-0.5 h-4 bg-gray-200 z-10" />}
 
             {/* Header */}
-            <button
-              onClick={() => onToggleStep(step.id)}
-              className="flex items-start gap-4 w-full text-left"
-            >
+            <button onClick={() => onToggleStep(step.id)} className="flex items-start gap-4 w-full text-left">
               <div
                 className={cn(
-                  "flex items-center justify-center w-9 h-9 rounded-xl text-sm font-bold shrink-0 transition-all",
-                  done ? "bg-green-500 text-white" : "bg-navy/10 text-navy"
+                  'flex items-center justify-center w-9 h-9 rounded-xl text-sm font-bold shrink-0 transition-all',
+                  done ? 'bg-green-500 text-white' : 'bg-navy/10 text-navy'
                 )}
               >
                 {done ? <CheckCircle2 className="w-5 h-5" /> : <span>{step.order}</span>}
               </div>
 
               <div className="flex-1 min-w-0">
-                <h4 className={cn("font-semibold text-sm leading-snug", done ? "text-green-700" : "text-gray-900")}>
+                <h4 className={cn('font-semibold text-sm leading-snug', done ? 'text-green-700' : 'text-gray-900')}>
                   {step.title}
                 </h4>
                 <p className="text-xs text-gray-500 mt-0.5 leading-relaxed">{step.description}</p>

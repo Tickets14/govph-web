@@ -1,5 +1,5 @@
-import type { AgencyRow } from "@/src/lib/db-types";
-import type { CreateAgencyDto, UpdateAgencyDto } from "@/src/lib/dtos";
+import type { AgencyRow } from '@/src/lib/db-types';
+import type { CreateAgencyDto, UpdateAgencyDto } from '@/src/lib/dtos';
 
 export interface IAgencyRepository {
   findAll(): Promise<AgencyRow[]>;

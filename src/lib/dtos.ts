@@ -1,4 +1,4 @@
-import type { ServiceCategory } from "@/types";
+import type { ServiceCategory } from '@/types';
 
 // ── Agency DTOs ───────────────────────────────────────────────────────────────
 

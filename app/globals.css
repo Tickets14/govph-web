@@ -1,6 +1,6 @@
-@import "tailwindcss";
-@import "tw-animate-css";
-@import "shadcn/tailwind.css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -42,14 +42,14 @@
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
   /* GovPH Brand Colors */
-  --color-navy: #1B2A4A;
+  --color-navy: #1b2a4a;
   --color-navy-light: #243561;
-  --color-navy-dark: #111B30;
-  --color-gold: #F0A500;
-  --color-gold-light: #FFB829;
-  --color-gold-dark: #C88A00;
-  --color-surface: #F7F8FA;
-  --color-surface-2: #ECEEF2;
+  --color-navy-dark: #111b30;
+  --color-gold: #f0a500;
+  --color-gold-light: #ffb829;
+  --color-gold-dark: #c88a00;
+  --color-surface: #f7f8fa;
+  --color-surface-2: #eceef2;
 }
 
 :root {
@@ -59,27 +59,27 @@
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: #1B2A4A;
+  --primary: #1b2a4a;
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
-  --muted: #F7F8FA;
+  --muted: #f7f8fa;
   --muted-foreground: oklch(0.556 0 0);
-  --accent: #F0A500;
-  --accent-foreground: #1B2A4A;
+  --accent: #f0a500;
+  --accent-foreground: #1b2a4a;
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
-  --ring: #1B2A4A;
+  --ring: #1b2a4a;
   --radius: 0.75rem;
-  --sidebar: #1B2A4A;
+  --sidebar: #1b2a4a;
   --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: #F0A500;
-  --sidebar-primary-foreground: #1B2A4A;
+  --sidebar-primary: #f0a500;
+  --sidebar-primary-foreground: #1b2a4a;
   --sidebar-accent: #243561;
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: #243561;
-  --sidebar-ring: #F0A500;
+  --sidebar-ring: #f0a500;
 }
 
 @layer base {
@@ -100,25 +100,25 @@
     font-family: var(--font-display);
   }
   .text-navy {
-    color: #1B2A4A;
+    color: #1b2a4a;
   }
   .text-gold {
-    color: #F0A500;
+    color: #f0a500;
   }
   .bg-navy {
-    background-color: #1B2A4A;
+    background-color: #1b2a4a;
   }
   .bg-gold {
-    background-color: #F0A500;
+    background-color: #f0a500;
   }
   .bg-surface {
-    background-color: #F7F8FA;
+    background-color: #f7f8fa;
   }
   .border-navy {
-    border-color: #1B2A4A;
+    border-color: #1b2a4a;
   }
   .border-gold {
-    border-color: #F0A500;
+    border-color: #f0a500;
   }
 }
 
@@ -127,14 +127,14 @@
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #F7F8FA;
+  background: #f7f8fa;
 }
 ::-webkit-scrollbar-thumb {
-  background: #CBD0DA;
+  background: #cbd0da;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #1B2A4A;
+  background: #1b2a4a;
 }
 
 /* Smooth fade-in animation */
@@ -153,7 +153,15 @@
   animation: fadeInUp 0.6s ease-out forwards;
 }
 
-.animation-delay-100 { animation-delay: 0.1s; }
-.animation-delay-200 { animation-delay: 0.2s; }
-.animation-delay-300 { animation-delay: 0.3s; }
-.animation-delay-400 { animation-delay: 0.4s; }
+.animation-delay-100 {
+  animation-delay: 0.1s;
+}
+.animation-delay-200 {
+  animation-delay: 0.2s;
+}
+.animation-delay-300 {
+  animation-delay: 0.3s;
+}
+.animation-delay-400 {
+  animation-delay: 0.4s;
+}

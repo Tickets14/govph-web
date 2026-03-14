@@ -1,9 +1,9 @@
-import type { IServiceRepository } from "@/src/repositories/service.repository.interface";
-import type { IAgencyRepository } from "@/src/repositories/agency.repository.interface";
-import type { IStepRepository } from "@/src/repositories/step.repository.interface";
-import type { IRequirementRepository } from "@/src/repositories/requirement.repository.interface";
-import type { IUserProgressRepository } from "@/src/repositories/user-progress.repository.interface";
-import type { ServiceRow, AgencyRow, StepRow, RequirementRow } from "@/src/lib/db-types";
+import type { IServiceRepository } from '@/src/repositories/service.repository.interface';
+import type { IAgencyRepository } from '@/src/repositories/agency.repository.interface';
+import type { IStepRepository } from '@/src/repositories/step.repository.interface';
+import type { IRequirementRepository } from '@/src/repositories/requirement.repository.interface';
+import type { IUserProgressRepository } from '@/src/repositories/user-progress.repository.interface';
+import type { ServiceRow, AgencyRow, StepRow, RequirementRow } from '@/src/lib/db-types';
 import type {
   CreateServiceDto,
   UpdateServiceDto,
@@ -11,9 +11,9 @@ import type {
   ServiceWithProgressDto,
   StepWithProgressDto,
   RequirementDto,
-} from "@/src/lib/dtos";
-import { AppError } from "@/src/lib/errors";
-import type { ServiceCategory } from "@/types";
+} from '@/src/lib/dtos';
+import { AppError } from '@/src/lib/errors';
+import type { ServiceCategory } from '@/types';
 
 // ── Domain type (service + nested relations) ──────────────────────────────────
 
@@ -41,13 +41,13 @@ export class ServiceService {
 
   async getServiceBySlug(slug: string): Promise<FullService> {
     const service = await this.serviceRepo.findBySlug(slug);
-    if (!service) throw AppError.notFoundBySlug("Service", slug);
+    if (!service) throw AppError.notFoundBySlug('Service', slug);
     return this.hydrate(service);
   }
 
   async getServiceById(id: string): Promise<FullService> {
     const service = await this.serviceRepo.findById(id);
-    if (!service) throw AppError.notFound("Service", id);
+    if (!service) throw AppError.notFound('Service', id);
     return this.hydrate(service);
   }
 
@@ -56,12 +56,10 @@ export class ServiceService {
    * the calling user's completion status.
    */
   async getServiceWithProgress(slug: string, userId: string): Promise<ServiceWithProgressDto> {
-    const { service, agency, steps, requirements } = await this.getServiceBySlug(slug);
+    const { service, steps, requirements } = await this.getServiceBySlug(slug);
     const progressRows = await this.progressRepo.findByUserAndService(userId, service.id);
 
-    const progressMap = new Map(
-      progressRows.map((p) => [p.step_id, p])
-    );
+    const progressMap = new Map(progressRows.map((p) => [p.step_id, p]));
 
     const completedCount = progressRows.filter((p) => p.is_completed).length;
     const totalSteps = steps.length;
@@ -96,8 +94,7 @@ export class ServiceService {
       tags: service.tags,
       steps: stepsWithProgress,
       requirements: requirements.map(toRequirementDto),
-      completionPercentage:
-        totalSteps > 0 ? Math.round((completedCount / totalSteps) * 100) : 0,
+      completionPercentage: totalSteps > 0 ? Math.round((completedCount / totalSteps) * 100) : 0,
     };
   }
 
@@ -107,26 +104,26 @@ export class ServiceService {
     this.validateCreateDto(dto);
 
     const agency = await this.agencyRepo.findById(dto.agencyId);
-    if (!agency) throw AppError.notFound("Agency", dto.agencyId);
+    if (!agency) throw AppError.notFound('Agency', dto.agencyId);
 
     const existing = await this.serviceRepo.findBySlug(dto.slug);
-    if (existing) throw AppError.alreadyExists("Service", "slug", dto.slug);
+    if (existing) throw AppError.alreadyExists('Service', 'slug', dto.slug);
 
     return this.serviceRepo.create(dto);
   }
 
   async updateService(id: string, dto: UpdateServiceDto): Promise<ServiceRow> {
     const service = await this.serviceRepo.findById(id);
-    if (!service) throw AppError.notFound("Service", id);
+    if (!service) throw AppError.notFound('Service', id);
 
     if (dto.agencyId && dto.agencyId !== service.agency_id) {
       const agency = await this.agencyRepo.findById(dto.agencyId);
-      if (!agency) throw AppError.notFound("Agency", dto.agencyId);
+      if (!agency) throw AppError.notFound('Agency', dto.agencyId);
     }
 
     if (dto.slug && dto.slug !== service.slug) {
       const conflict = await this.serviceRepo.findBySlug(dto.slug);
-      if (conflict) throw AppError.alreadyExists("Service", "slug", dto.slug);
+      if (conflict) throw AppError.alreadyExists('Service', 'slug', dto.slug);
     }
 
     const updated = await this.serviceRepo.update(id, dto);
@@ -136,7 +133,7 @@ export class ServiceService {
 
   async deleteService(id: string): Promise<void> {
     const deleted = await this.serviceRepo.delete(id);
-    if (!deleted) throw AppError.notFound("Service", id);
+    if (!deleted) throw AppError.notFound('Service', id);
   }
 
   // ── Private helpers ────────────────────────────────────────────────────────
@@ -170,15 +167,12 @@ export class ServiceService {
   }
 
   private validateCreateDto(dto: CreateServiceDto): void {
-    if (!dto.slug?.trim())        throw AppError.validation("Slug is required");
-    if (!dto.title?.trim())       throw AppError.validation("Title is required");
-    if (!dto.agencyId?.trim())    throw AppError.validation("Agency ID is required");
-    if (!dto.category)            throw AppError.validation("Category is required");
+    if (!dto.slug?.trim()) throw AppError.validation('Slug is required');
+    if (!dto.title?.trim()) throw AppError.validation('Title is required');
+    if (!dto.agencyId?.trim()) throw AppError.validation('Agency ID is required');
+    if (!dto.category) throw AppError.validation('Category is required');
     if (!/^[a-z0-9-]+$/.test(dto.slug)) {
-      throw AppError.validation(
-        "Slug may only contain lowercase letters, numbers, and hyphens",
-        { slug: dto.slug }
-      );
+      throw AppError.validation('Slug may only contain lowercase letters, numbers, and hyphens', { slug: dto.slug });
     }
   }
 }

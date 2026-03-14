@@ -1,9 +1,9 @@
-import type { Metadata } from "next";
-import { LoginForm } from "./LoginForm";
-import { Shield } from "lucide-react";
+import type { Metadata } from 'next';
+import { LoginForm } from './LoginForm';
+import { Shield } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: "Admin Login — GovPH Tracker",
+  title: 'Admin Login — GovPH Tracker',
 };
 
 export default function LoginPage() {

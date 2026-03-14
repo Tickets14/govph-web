@@ -1,8 +1,8 @@
-import type { IUserProgressRepository } from "@/src/repositories/user-progress.repository.interface";
-import type { IStepRepository } from "@/src/repositories/step.repository.interface";
-import type { IServiceRepository } from "@/src/repositories/service.repository.interface";
-import type { ProgressSummaryDto } from "@/src/lib/dtos";
-import { AppError } from "@/src/lib/errors";
+import type { IUserProgressRepository } from '@/src/repositories/user-progress.repository.interface';
+import type { IStepRepository } from '@/src/repositories/step.repository.interface';
+import type { IServiceRepository } from '@/src/repositories/service.repository.interface';
+import type { ProgressSummaryDto } from '@/src/lib/dtos';
+import { AppError } from '@/src/lib/errors';
 
 export class ProgressService {
   constructor(
@@ -26,7 +26,7 @@ export class ProgressService {
 
     const lastUpdated =
       progressRows.length > 0
-        ? progressRows.reduce((latest, p) => (p.updated_at > latest ? p.updated_at : latest), "")
+        ? progressRows.reduce((latest, p) => (p.updated_at > latest ? p.updated_at : latest), '')
         : null;
 
     return {
@@ -85,20 +85,14 @@ export class ProgressService {
 
   private async assertServiceExists(serviceId: string): Promise<void> {
     const service = await this.serviceRepo.findById(serviceId);
-    if (!service) throw AppError.notFound("Service", serviceId);
+    if (!service) throw AppError.notFound('Service', serviceId);
   }
 
-  private async assertStepBelongsToService(
-    stepId: string,
-    serviceId: string
-  ): Promise<void> {
+  private async assertStepBelongsToService(stepId: string, serviceId: string): Promise<void> {
     const step = await this.stepRepo.findById(stepId);
-    if (!step) throw AppError.notFound("Step", stepId);
+    if (!step) throw AppError.notFound('Step', stepId);
     if (step.service_id !== serviceId) {
-      throw AppError.validation(
-        `Step "${stepId}" does not belong to service "${serviceId}"`,
-        { stepId, serviceId }
-      );
+      throw AppError.validation(`Step "${stepId}" does not belong to service "${serviceId}"`, { stepId, serviceId });
     }
   }
 

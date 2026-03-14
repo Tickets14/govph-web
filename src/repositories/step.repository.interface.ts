@@ -1,5 +1,5 @@
-import type { StepRow } from "@/src/lib/db-types";
-import type { CreateStepDto, UpdateStepDto } from "@/src/lib/dtos";
+import type { StepRow } from '@/src/lib/db-types';
+import type { CreateStepDto, UpdateStepDto } from '@/src/lib/dtos';
 
 export interface IStepRepository {
   findByService(serviceId: string): Promise<StepRow[]>;

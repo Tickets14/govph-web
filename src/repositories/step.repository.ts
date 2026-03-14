@@ -1,9 +1,9 @@
-import type { DbClient } from "@/src/db/client";
-import type { StepRow } from "@/src/lib/db-types";
-import type { CreateStepDto, UpdateStepDto } from "@/src/lib/dtos";
-import { AppError } from "@/src/lib/errors";
-import { generateId } from "@/src/db/mock-db";
-import type { IStepRepository } from "./step.repository.interface";
+import type { DbClient } from '@/src/db/client';
+import type { StepRow } from '@/src/lib/db-types';
+import type { CreateStepDto, UpdateStepDto } from '@/src/lib/dtos';
+import { AppError } from '@/src/lib/errors';
+import { generateId } from '@/src/db/mock-db';
+import type { IStepRepository } from './step.repository.interface';
 
 export class StepRepository implements IStepRepository {
   constructor(private readonly db: DbClient) {}
@@ -36,12 +36,12 @@ export class StepRepository implements IStepRepository {
 
   async update(id: string, data: UpdateStepDto): Promise<StepRow | null> {
     const patch: Partial<StepRow> = {};
-    if (data.order !== undefined)       patch.order = data.order;
-    if (data.title !== undefined)       patch.title = data.title;
+    if (data.order !== undefined) patch.order = data.order;
+    if (data.title !== undefined) patch.title = data.title;
     if (data.description !== undefined) patch.description = data.description;
-    if (data.duration !== undefined)    patch.duration = data.duration;
-    if (data.fee !== undefined)         patch.fee = data.fee;
-    if (data.location !== undefined)    patch.location = data.location;
+    if (data.duration !== undefined) patch.duration = data.duration;
+    if (data.fee !== undefined) patch.fee = data.fee;
+    if (data.location !== undefined) patch.location = data.location;
     return this.db.steps.update(id, patch);
   }
 
@@ -52,10 +52,7 @@ export class StepRepository implements IStepRepository {
     // Validate that all supplied IDs belong to this service
     for (const id of stepIds) {
       if (!existingIds.has(id)) {
-        throw AppError.validation(
-          `Step "${id}" does not belong to service "${serviceId}"`,
-          { stepId: id, serviceId }
-        );
+        throw AppError.validation(`Step "${id}" does not belong to service "${serviceId}"`, { stepId: id, serviceId });
       }
     }
 

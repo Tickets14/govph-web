@@ -1,39 +1,43 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { getServices } from "@/lib/api";
-import type { Service, SearchFilters } from "@/types";
-import { useDebounce } from "./useDebounce";
+import { useState, useEffect } from 'react';
+import { getServices } from '@/lib/api';
+import type { Service, SearchFilters } from '@/types';
+import { useDebounce } from './useDebounce';
 
 export function useServices(initialFilters?: Partial<SearchFilters>) {
   const [services, setServices] = useState<Service[]>([]);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [filters, setFilters] = useState<Partial<SearchFilters>>(initialFilters ?? {});
 
-  const debouncedQuery = useDebounce(filters.query ?? "", 400);
+  const debouncedQuery = useDebounce(filters.query ?? '', 400);
+  const category = filters.category;
+  const agencyId = filters.agencyId;
+  const requestKey = `${debouncedQuery}|${category ?? ''}|${agencyId ?? ''}`;
+  const [resolvedKey, setResolvedKey] = useState<string | null>(null);
+  const loading = resolvedKey !== requestKey;
 
   useEffect(() => {
     let cancelled = false;
-    setLoading(true);
-    getServices({ ...filters, query: debouncedQuery })
+    getServices({ query: debouncedQuery, category, agencyId })
       .then((data) => {
         if (!cancelled) {
           setServices(data);
           setError(null);
+          setResolvedKey(requestKey);
         }
       })
       .catch(() => {
-        if (!cancelled) setError("Failed to load services.");
-      })
-      .finally(() => {
-        if (!cancelled) setLoading(false);
+        if (!cancelled) {
+          setError('Failed to load services.');
+          setResolvedKey(requestKey);
+        }
       });
 
     return () => {
       cancelled = true;
     };
-  }, [debouncedQuery, filters.category, filters.agencyId]);
+  }, [debouncedQuery, category, agencyId, requestKey]);
 
   return { services, loading, error, filters, setFilters };
 }

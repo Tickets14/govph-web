@@ -1,8 +1,8 @@
-import type { DbClient } from "@/src/db/client";
-import type { AgencyRow } from "@/src/lib/db-types";
-import type { CreateAgencyDto, UpdateAgencyDto } from "@/src/lib/dtos";
-import { generateId } from "@/src/db/mock-db";
-import type { IAgencyRepository } from "./agency.repository.interface";
+import type { DbClient } from '@/src/db/client';
+import type { AgencyRow } from '@/src/lib/db-types';
+import type { CreateAgencyDto, UpdateAgencyDto } from '@/src/lib/dtos';
+import { generateId } from '@/src/db/mock-db';
+import type { IAgencyRepository } from './agency.repository.interface';
 
 export class AgencyRepository implements IAgencyRepository {
   constructor(private readonly db: DbClient) {}
@@ -38,13 +38,13 @@ export class AgencyRepository implements IAgencyRepository {
 
   async update(id: string, data: UpdateAgencyDto): Promise<AgencyRow | null> {
     const patch: Partial<AgencyRow> = {};
-    if (data.slug !== undefined)        patch.slug = data.slug;
-    if (data.name !== undefined)        patch.name = data.name;
-    if (data.acronym !== undefined)     patch.acronym = data.acronym;
+    if (data.slug !== undefined) patch.slug = data.slug;
+    if (data.name !== undefined) patch.name = data.name;
+    if (data.acronym !== undefined) patch.acronym = data.acronym;
     if (data.description !== undefined) patch.description = data.description;
-    if (data.logoUrl !== undefined)     patch.logo_url = data.logoUrl;
-    if (data.website !== undefined)     patch.website = data.website;
-    if (data.isActive !== undefined)    patch.is_active = data.isActive;
+    if (data.logoUrl !== undefined) patch.logo_url = data.logoUrl;
+    if (data.website !== undefined) patch.website = data.website;
+    if (data.isActive !== undefined) patch.is_active = data.isActive;
     return this.db.agencies.update(id, patch);
   }
 

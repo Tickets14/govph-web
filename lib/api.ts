@@ -3,10 +3,10 @@
  * Next.js Server Components and Route Handlers import from here.
  */
 
-import { agencyService, serviceService, progressService } from "@/src/container";
-import type { Agency, Service, Progress, SearchFilters, PaginatedResponse } from "@/types";
-import type { ServiceFiltersDto } from "@/src/lib/dtos";
-import type { ServiceCategory } from "@/types";
+import { agencyService, serviceService, progressService } from '@/src/container';
+import type { Agency, Service, Progress, SearchFilters, PaginatedResponse } from '@/types';
+import type { ServiceFiltersDto } from '@/src/lib/dtos';
+import type { ServiceCategory } from '@/types';
 
 // ── Mappers ───────────────────────────────────────────────────────────────────
 
@@ -24,9 +24,7 @@ function rowToAgency(row: Awaited<ReturnType<typeof agencyService.getAgencyById>
   };
 }
 
-function fullServiceToService(
-  full: Awaited<ReturnType<typeof serviceService.getServiceBySlug>>
-): Service {
+function fullServiceToService(full: Awaited<ReturnType<typeof serviceService.getServiceBySlug>>): Service {
   const { service, agency, steps, requirements } = full;
   return {
     id: service.id,
@@ -143,20 +141,14 @@ export async function getServicesByAgency(agencyId: string): Promise<Service[]> 
 
 // ── Paginated (admin) ─────────────────────────────────────────────────────────
 
-export async function getPaginatedServices(
-  page = 1,
-  limit = 10
-): Promise<PaginatedResponse<Service>> {
+export async function getPaginatedServices(page = 1, limit = 10): Promise<PaginatedResponse<Service>> {
   const all = await getServices();
   const total = all.length;
   const data = all.slice((page - 1) * limit, page * limit);
   return { data, total, page, limit, totalPages: Math.ceil(total / limit) };
 }
 
-export async function getPaginatedAgencies(
-  page = 1,
-  limit = 10
-): Promise<PaginatedResponse<Agency>> {
+export async function getPaginatedAgencies(page = 1, limit = 10): Promise<PaginatedResponse<Agency>> {
   const all = await getAgencies();
   const total = all.length;
   const data = all.slice((page - 1) * limit, page * limit);
@@ -165,15 +157,12 @@ export async function getPaginatedAgencies(
 
 // ── Progress (client-facing) ──────────────────────────────────────────────────
 
-export async function getProgressSummary(
-  userId: string,
-  serviceId: string
-): Promise<Progress> {
+export async function getProgressSummary(userId: string, serviceId: string): Promise<Progress> {
   const summary = await progressService.getProgress(userId, serviceId);
   return {
     serviceId: summary.serviceId,
     completedSteps: summary.completedStepIds,
-    completedRequirements: [],          // requirements stored client-side via useProgress hook
+    completedRequirements: [], // requirements stored client-side via useProgress hook
     lastUpdated: summary.lastUpdated ?? new Date().toISOString(),
   };
 }

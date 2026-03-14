@@ -1,10 +1,10 @@
-import type { Metadata } from "next";
-import { PageHeader } from "@/components/common/PageHeader";
-import { ServicesClient } from "./ServicesClient";
+import type { Metadata } from 'next';
+import { PageHeader } from '@/components/common/PageHeader';
+import { ServicesClient } from './ServicesClient';
 
 export const metadata: Metadata = {
-  title: "Services",
-  description: "Browse all Philippine government services with step-by-step guides and requirements.",
+  title: 'Services',
+  description: 'Browse all Philippine government services with step-by-step guides and requirements.',
 };
 
 export default function ServicesPage() {

@@ -1,34 +1,34 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { Eye, EyeOff, Loader2 } from "lucide-react";
+import { useState } from 'react';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { Eye, EyeOff, Loader2 } from 'lucide-react';
 
 export function LoginForm() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setError("");
+    setError('');
     setLoading(true);
 
     const form = new FormData(e.currentTarget);
-    const result = await signIn("credentials", {
-      username: form.get("username"),
-      password: form.get("password"),
+    const result = await signIn('credentials', {
+      username: form.get('username'),
+      password: form.get('password'),
       redirect: false,
     });
 
     setLoading(false);
 
     if (result?.error) {
-      setError("Invalid username or password.");
+      setError('Invalid username or password.');
     } else {
-      router.push("/admin");
+      router.push('/admin');
       router.refresh();
     }
   }
@@ -58,7 +58,7 @@ export function LoginForm() {
           <input
             id="password"
             name="password"
-            type={showPassword ? "text" : "password"}
+            type={showPassword ? 'text' : 'password'}
             required
             autoComplete="current-password"
             className="w-full px-3.5 py-2.5 pr-10 rounded-lg border border-gray-200 text-sm outline-none focus:border-navy focus:ring-2 focus:ring-navy/10 transition-all"
@@ -75,9 +75,7 @@ export function LoginForm() {
         </div>
       </div>
 
-      {error && (
-        <p className="text-sm text-red-500 bg-red-50 px-3 py-2 rounded-lg">{error}</p>
-      )}
+      {error && <p className="text-sm text-red-500 bg-red-50 px-3 py-2 rounded-lg">{error}</p>}
 
       <button
         type="submit"
@@ -85,7 +83,7 @@ export function LoginForm() {
         className="w-full flex items-center justify-center gap-2 bg-navy text-white py-2.5 rounded-lg text-sm font-medium hover:bg-navy/90 transition-colors disabled:opacity-60 disabled:cursor-not-allowed mt-2"
       >
         {loading && <Loader2 className="w-4 h-4 animate-spin" />}
-        {loading ? "Signing in…" : "Sign in"}
+        {loading ? 'Signing in…' : 'Sign in'}
       </button>
     </form>
   );

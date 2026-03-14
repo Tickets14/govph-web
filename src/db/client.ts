@@ -4,14 +4,8 @@
  * Replace with a Prisma/Drizzle/pg adapter without touching repositories.
  */
 
-import type {
-  AgencyRow,
-  ServiceRow,
-  StepRow,
-  RequirementRow,
-  UserProgressRow,
-} from "@/src/lib/db-types";
-import * as db from "./mock-db";
+import type { AgencyRow, ServiceRow, StepRow, RequirementRow, UserProgressRow } from '@/src/lib/db-types';
+import * as db from './mock-db';
 
 export interface DbClient {
   agencies: DbTable<AgencyRow>;
@@ -25,7 +19,7 @@ export interface DbTable<T extends { id: string }> {
   findMany(predicate?: (row: T) => boolean): Promise<T[]>;
   findOne(predicate: (row: T) => boolean): Promise<T | null>;
   insert(row: T): Promise<T>;
-  update(id: string, patch: Partial<Omit<T, "id" | "created_at">>): Promise<T | null>;
+  update(id: string, patch: Partial<Omit<T, 'id' | 'created_at'>>): Promise<T | null>;
   delete(id: string): Promise<boolean>;
 }
 

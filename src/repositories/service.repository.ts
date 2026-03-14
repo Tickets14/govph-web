@@ -1,8 +1,8 @@
-import type { DbClient } from "@/src/db/client";
-import type { ServiceRow } from "@/src/lib/db-types";
-import type { CreateServiceDto, UpdateServiceDto, ServiceFiltersDto } from "@/src/lib/dtos";
-import { generateId } from "@/src/db/mock-db";
-import type { IServiceRepository } from "./service.repository.interface";
+import type { DbClient } from '@/src/db/client';
+import type { ServiceRow } from '@/src/lib/db-types';
+import type { CreateServiceDto, UpdateServiceDto, ServiceFiltersDto } from '@/src/lib/dtos';
+import { generateId } from '@/src/db/mock-db';
+import type { IServiceRepository } from './service.repository.interface';
 
 export class ServiceRepository implements IServiceRepository {
   constructor(private readonly db: DbClient) {}
@@ -58,16 +58,16 @@ export class ServiceRepository implements IServiceRepository {
 
   async update(id: string, data: UpdateServiceDto): Promise<ServiceRow | null> {
     const patch: Partial<ServiceRow> = {};
-    if (data.slug !== undefined)           patch.slug = data.slug;
-    if (data.agencyId !== undefined)       patch.agency_id = data.agencyId;
-    if (data.title !== undefined)          patch.title = data.title;
-    if (data.description !== undefined)    patch.description = data.description;
-    if (data.category !== undefined)       patch.category = data.category;
-    if (data.totalFee !== undefined)       patch.total_fee = data.totalFee;
+    if (data.slug !== undefined) patch.slug = data.slug;
+    if (data.agencyId !== undefined) patch.agency_id = data.agencyId;
+    if (data.title !== undefined) patch.title = data.title;
+    if (data.description !== undefined) patch.description = data.description;
+    if (data.category !== undefined) patch.category = data.category;
+    if (data.totalFee !== undefined) patch.total_fee = data.totalFee;
     if (data.processingTime !== undefined) patch.processing_time = data.processingTime;
-    if (data.isFeatured !== undefined)     patch.is_featured = data.isFeatured;
-    if (data.isActive !== undefined)       patch.is_active = data.isActive;
-    if (data.tags !== undefined)           patch.tags = data.tags;
+    if (data.isFeatured !== undefined) patch.is_featured = data.isFeatured;
+    if (data.isActive !== undefined) patch.is_active = data.isActive;
+    if (data.tags !== undefined) patch.tags = data.tags;
     return this.db.services.update(id, patch);
   }
 

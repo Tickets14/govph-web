@@ -1,11 +1,11 @@
-import type { Metadata } from "next";
-import { getAgencies, getServices } from "@/lib/api";
-import { PageHeader } from "@/components/common/PageHeader";
-import { AgencyCard } from "@/components/agencies/AgencyCard";
+import type { Metadata } from 'next';
+import { getAgencies, getServices } from '@/lib/api';
+import { PageHeader } from '@/components/common/PageHeader';
+import { AgencyCard } from '@/components/agencies/AgencyCard';
 
 export const metadata: Metadata = {
-  title: "Agencies",
-  description: "Browse all Philippine government agencies covered by GovPH Tracker.",
+  title: 'Agencies',
+  description: 'Browse all Philippine government agencies covered by GovPH Tracker.',
 };
 
 export default async function AgenciesPage() {
@@ -25,11 +25,7 @@ export default async function AgenciesPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {agencies.map((agency) => (
-            <AgencyCard
-              key={agency.id}
-              agency={agency}
-              serviceCount={serviceCountByAgency[agency.id] ?? 0}
-            />
+            <AgencyCard key={agency.id} agency={agency} serviceCount={serviceCountByAgency[agency.id] ?? 0} />
           ))}
         </div>
       </div>
