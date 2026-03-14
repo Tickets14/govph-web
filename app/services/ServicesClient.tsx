@@ -1,6 +1,5 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { useServices } from '@/hooks/useServices';
 import { ServiceCard } from '@/components/services/ServiceCard';
@@ -8,11 +7,14 @@ import { ServiceSearch } from '@/components/services/ServiceSearch';
 import { EmptyState } from '@/components/common/EmptyState';
 import { LoadingGrid } from '@/components/common/LoadingState';
 
-export function ServicesClient() {
-  const searchParams = useSearchParams();
-  const initialQuery = searchParams.get('q') ?? '';
+interface ServicesClientProps {
+  initialQuery?: string;
+}
 
-  const { services, loading, filters, setFilters } = useServices({ query: initialQuery });
+export function ServicesClient({ initialQuery = '' }: ServicesClientProps) {
+  const { services, loading, filters, setFilters } = useServices({
+    query: initialQuery,
+  });
 
   useEffect(() => {
     if (initialQuery) {
