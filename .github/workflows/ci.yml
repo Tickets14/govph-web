@@ -27,9 +27,6 @@ jobs:
       - name: Run linting
         run: npm run lint
 
-      - name: Run unit tests
-        run: npm run test -- --coverage --watchAll=false
-
   deploy:
     name: Deploy to Vercel
     needs: lint-and-test

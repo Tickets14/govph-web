@@ -23,7 +23,19 @@
 
 # misc
 .DS_Store
+Thumbs.db
+Desktop.ini
 *.pem
+
+# editor
+/.vscode/
+/.idea/
+/*.code-workspace
+/.history/
+
+# tooling cache
+.eslintcache
+/.turbo/
 
 # debug
 npm-debug.log*
@@ -40,5 +52,3 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
-.vercel
