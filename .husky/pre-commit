@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "Running Prettier + ESLint on staged files..."
+
+npx lint-staged
+status=$?
+
+if [ $status -ne 0 ]; then
+  echo ""
+  echo "Lint/format failed. Please fix the errors above before committing."
+  exit $status
+fi

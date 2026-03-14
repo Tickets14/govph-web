@@ -1,0 +1,13 @@
+.next
+out
+build
+dist
+.vercel
+.turbo
+coverage
+node_modules
+tsconfig.tsbuildinfo
+*.min.js
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
