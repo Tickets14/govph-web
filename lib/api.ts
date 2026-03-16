@@ -1,142 +1,164 @@
 /**
- * Public API helpers — thin wrappers over the service layer.
- * Next.js Server Components and Route Handlers import from here.
+ * Public API helpers — fetch wrappers over the govph-api REST API.
+ * Works in both server components (Node.js fetch) and client components (browser fetch).
  */
 
-import { agencyService, serviceService, progressService } from '@/src/container';
-import type { Agency, Service, Progress, SearchFilters, PaginatedResponse } from '@/types';
-import type { ServiceFiltersDto } from '@/src/lib/dtos';
-import type { ServiceCategory } from '@/types';
+import type { Agency, Service, Progress, SearchFilters, PaginatedResponse, ServiceCategory } from '@/types';
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3000/api/v1';
+
+// ── API response shapes (govph-api) ───────────────────────────────────────────
+
+interface ApiAgency {
+  id: string;
+  name: string;
+  acronym: string;
+  description: string;
+  logo_url?: string | null;
+  website_url?: string | null;
+}
+
+interface ApiRequirement {
+  id: string;
+  name: string;
+  description?: string | null;
+  is_optional?: boolean;
+  copies?: number;
+}
+
+interface ApiStep {
+  id: string;
+  order: number;
+  title: string;
+  description: string;
+  duration?: string | null;
+  fee?: number | null;
+  location?: string | null;
+  requirements?: ApiRequirement[];
+}
+
+interface ApiService {
+  id: string;
+  slug: string;
+  name: string;
+  description: string;
+  agency_id: string;
+  agency?: ApiAgency;
+  category?: string;
+  steps?: ApiStep[];
+  requirements?: ApiRequirement[];
+  estimated_time?: string | null;
+  total_fee?: number | null;
+  is_featured?: boolean;
+  tags?: string[];
+}
 
 // ── Mappers ───────────────────────────────────────────────────────────────────
 
-function rowToAgency(row: Awaited<ReturnType<typeof agencyService.getAgencyById>>): Agency {
+function mapAgency(a: ApiAgency): Agency {
   return {
-    id: row.id,
-    slug: row.slug,
-    name: row.name,
-    acronym: row.acronym,
-    description: row.description,
-    logoUrl: row.logo_url ?? undefined,
-    website: row.website ?? undefined,
-    createdAt: row.created_at,
-    updatedAt: row.updated_at,
+    id: a.id,
+    slug: a.acronym,
+    name: a.name,
+    acronym: a.acronym,
+    description: a.description,
+    logoUrl: a.logo_url ?? undefined,
+    website: a.website_url ?? undefined,
   };
 }
 
-function fullServiceToService(full: Awaited<ReturnType<typeof serviceService.getServiceBySlug>>): Service {
-  const { service, agency, steps, requirements } = full;
+function mapRequirement(r: ApiRequirement) {
   return {
-    id: service.id,
-    slug: service.slug,
-    title: service.title,
-    description: service.description,
-    agencyId: service.agency_id,
-    agency: agency
-      ? {
-          id: agency.id,
-          slug: agency.slug,
-          name: agency.name,
-          acronym: agency.acronym,
-          description: agency.description,
-          logoUrl: agency.logo_url ?? undefined,
-          website: agency.website ?? undefined,
-        }
-      : undefined,
-    category: service.category as ServiceCategory,
-    steps: steps.map((s) => ({
-      id: s.id,
-      order: s.order,
-      title: s.title,
-      description: s.description,
-      duration: s.duration ?? undefined,
-      fee: s.fee ?? undefined,
-      location: s.location ?? undefined,
-      requirements: s.requirements.map((r) => ({
-        id: r.id,
-        label: r.label,
-        description: r.description ?? undefined,
-        isOptional: r.is_optional,
-        copies: r.copies,
-      })),
+    id: r.id,
+    label: r.name,
+    description: r.description ?? undefined,
+    isOptional: r.is_optional,
+    copies: r.copies,
+  };
+}
+
+function mapService(s: ApiService): Service {
+  return {
+    id: s.id,
+    slug: s.slug,
+    title: s.name,
+    description: s.description,
+    agencyId: s.agency_id,
+    agency: s.agency ? mapAgency(s.agency) : undefined,
+    category: (s.category as ServiceCategory) ?? 'other',
+    steps: (s.steps ?? []).map((step) => ({
+      id: step.id,
+      order: step.order,
+      title: step.title,
+      description: step.description,
+      duration: step.duration ?? undefined,
+      fee: step.fee ?? undefined,
+      location: step.location ?? undefined,
+      requirements: step.requirements?.map(mapRequirement),
     })),
-    requirements: requirements.map((r) => ({
-      id: r.id,
-      label: r.label,
-      description: r.description ?? undefined,
-      isOptional: r.is_optional,
-      copies: r.copies,
-    })),
-    totalFee: service.total_fee ?? undefined,
-    processingTime: service.processing_time ?? undefined,
-    isFeatured: service.is_featured,
-    tags: service.tags,
-    createdAt: service.created_at,
-    updatedAt: service.updated_at,
+    requirements: (s.requirements ?? []).map(mapRequirement),
+    processingTime: s.estimated_time ?? undefined,
+    totalFee: s.total_fee ?? undefined,
+    isFeatured: s.is_featured ?? false,
+    tags: s.tags ?? [],
   };
 }
 
 // ── Services ──────────────────────────────────────────────────────────────────
 
 export async function getServices(filters?: Partial<SearchFilters>): Promise<Service[]> {
-  const dto: ServiceFiltersDto = {
-    search: filters?.query,
-    category: filters?.category,
-    agencyId: filters?.agencyId,
-    isActive: true,
-  };
-  const rows = await serviceService.getAllServices(dto);
-  const fulls = await Promise.all(rows.map((r) => serviceService.getServiceById(r.id)));
-  return fulls.map(fullServiceToService);
+  const params = new URLSearchParams();
+  if (filters?.query) params.set('search', filters.query);
+  if (filters?.category) params.set('category', filters.category);
+  if (filters?.agencyId) params.set('agency_id', filters.agencyId);
+
+  const res = await fetch(`${API_URL}/services?${params}`, { cache: 'no-store' });
+  if (!res.ok) return [];
+  const json = await res.json();
+  const data: ApiService[] = json.data ?? json;
+  return data.map(mapService);
 }
 
 export async function getFeaturedServices(): Promise<Service[]> {
-  const rows = await serviceService.getAllServices({ isActive: true });
-  const featured = rows.filter((r) => r.is_featured);
-  const fulls = await Promise.all(featured.map((r) => serviceService.getServiceById(r.id)));
-  return fulls.map(fullServiceToService);
+  const services = await getServices();
+  return services.filter((s) => s.isFeatured);
 }
 
 export async function getServiceBySlug(slug: string): Promise<Service | null> {
-  try {
-    const full = await serviceService.getServiceBySlug(slug);
-    return fullServiceToService(full);
-  } catch {
-    return null;
-  }
+  const res = await fetch(`${API_URL}/services/${slug}`, { cache: 'no-store' });
+  if (!res.ok) return null;
+  const json = await res.json();
+  return mapService(json.data ?? json);
 }
 
 export async function getServiceById(id: string): Promise<Service | null> {
-  try {
-    const full = await serviceService.getServiceById(id);
-    return fullServiceToService(full);
-  } catch {
-    return null;
-  }
+  const res = await fetch(`${API_URL}/services/${id}`, { cache: 'no-store' });
+  if (!res.ok) return null;
+  const json = await res.json();
+  return mapService(json.data ?? json);
 }
 
 // ── Agencies ──────────────────────────────────────────────────────────────────
 
 export async function getAgencies(): Promise<Agency[]> {
-  const rows = await agencyService.getAllAgencies();
-  return rows.map(rowToAgency);
+  const res = await fetch(`${API_URL}/agencies`, { cache: 'no-store' });
+  if (!res.ok) return [];
+  const json = await res.json();
+  const data: ApiAgency[] = json.data ?? json;
+  return data.map(mapAgency);
 }
 
 export async function getAgencyBySlug(slug: string): Promise<Agency | null> {
-  try {
-    const agency = await agencyService.getAgencyBySlug(slug);
-    const services = await serviceService.getAllServices({ agencyId: agency.id, isActive: true });
-    const fulls = await Promise.all(services.map((s) => serviceService.getServiceById(s.id)));
-    return { ...rowToAgency(agency), services: fulls.map(fullServiceToService) };
-  } catch {
-    return null;
-  }
+  const res = await fetch(`${API_URL}/agencies/${slug}`, { cache: 'no-store' });
+  if (!res.ok) return null;
+  const json = await res.json();
+  const agency = mapAgency(json.data ?? json);
+  const services = await getServices({ agencyId: agency.id });
+  return { ...agency, services };
 }
 
 export async function getServicesByAgency(agencyId: string): Promise<Service[]> {
-  const rows = await serviceService.getAllServices({ agencyId, isActive: true });
-  const fulls = await Promise.all(rows.map((r) => serviceService.getServiceById(r.id)));
-  return fulls.map(fullServiceToService);
+  return getServices({ agencyId });
 }
 
 // ── Paginated (admin) ─────────────────────────────────────────────────────────
@@ -155,15 +177,23 @@ export async function getPaginatedAgencies(page = 1, limit = 10): Promise<Pagina
   return { data, total, page, limit, totalPages: Math.ceil(total / limit) };
 }
 
-// ── Progress (client-facing) ──────────────────────────────────────────────────
+// ── Progress ──────────────────────────────────────────────────────────────────
 
 export async function getProgressSummary(userId: string, serviceId: string): Promise<Progress> {
-  const summary = await progressService.getProgress(userId, serviceId);
+  const res = await fetch(`${API_URL}/progress/${serviceId}`, {
+    headers: { 'X-User-Id': userId },
+    cache: 'no-store',
+  });
+  if (!res.ok) {
+    return { serviceId, completedSteps: [], completedRequirements: [], lastUpdated: new Date().toISOString() };
+  }
+  const json = await res.json();
+  const data = json.data ?? json;
   return {
-    serviceId: summary.serviceId,
-    completedSteps: summary.completedStepIds,
-    completedRequirements: [], // requirements stored client-side via useProgress hook
-    lastUpdated: summary.lastUpdated ?? new Date().toISOString(),
+    serviceId,
+    completedSteps: (data.records ?? []).map((r: { step_id: string }) => r.step_id),
+    completedRequirements: [],
+    lastUpdated: new Date().toISOString(),
   };
 }
 
@@ -172,5 +202,11 @@ export async function toggleStep(
   serviceId: string,
   stepId: string
 ): Promise<{ isCompleted: boolean; completionPercentage: number }> {
-  return progressService.toggleStep(userId, serviceId, stepId);
+  const res = await fetch(`${API_URL}/progress/${serviceId}/toggle`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'X-User-Id': userId },
+    body: JSON.stringify({ step_id: stepId }),
+  });
+  if (!res.ok) return { isCompleted: false, completionPercentage: 0 };
+  return res.json();
 }

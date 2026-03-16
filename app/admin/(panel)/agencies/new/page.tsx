@@ -9,17 +9,37 @@ import { Button } from '@/components/ui/button';
 
 export default function NewAgencyPage() {
   const router = useRouter();
-  const [form, setForm] = useState({
-    name: '',
-    acronym: '',
-    description: '',
-    website: '',
-  });
+  const [form, setForm] = useState({ name: '', acronym: '', description: '', website_url: '' });
+  const [error, setError] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // In a real app, POST to API
+    setSubmitting(true);
+    setError(null);
+
+    const body: Record<string, string> = {
+      name: form.name,
+      acronym: form.acronym,
+      description: form.description,
+    };
+    if (form.website_url) body.website_url = form.website_url;
+
+    const res = await fetch('/api/admin/agencies', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+
+    if (!res.ok) {
+      const json = await res.json().catch(() => ({}));
+      setError(json?.error?.message ?? 'Failed to create agency.');
+      setSubmitting(false);
+      return;
+    }
+
     router.push('/admin/agencies');
+    router.refresh();
   };
 
   return (
@@ -51,15 +71,16 @@ export default function NewAgencyPage() {
               placeholder="e.g., DFA"
               required
             />
+            <p className="text-xs text-gray-400 mt-1">
+              Alphanumeric with optional hyphens (e.g., DFA, SSS, PhilHealth).
+            </p>
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1.5">Description</label>
-            <textarea
+            <Input
               value={form.description}
               onChange={(e) => setForm({ ...form, description: e.target.value })}
-              rows={3}
-              placeholder="Brief description..."
-              className="w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition-all"
+              placeholder="e.g., Handles passport and foreign affairs services"
               required
             />
           </div>
@@ -67,14 +88,15 @@ export default function NewAgencyPage() {
             <label className="block text-sm font-medium text-gray-700 mb-1.5">Website URL</label>
             <Input
               type="url"
-              value={form.website}
-              onChange={(e) => setForm({ ...form, website: e.target.value })}
+              value={form.website_url}
+              onChange={(e) => setForm({ ...form, website_url: e.target.value })}
               placeholder="https://agency.gov.ph"
             />
           </div>
+          {error && <p className="text-sm text-red-600">{error}</p>}
           <div className="flex gap-3 pt-2">
-            <Button type="submit" className="bg-navy hover:bg-navy/90 text-white">
-              Create Agency
+            <Button type="submit" disabled={submitting} className="bg-navy hover:bg-navy/90 text-white">
+              {submitting ? 'Creating…' : 'Create Agency'}
             </Button>
             <Button type="button" variant="outline" onClick={() => router.back()}>
               Cancel

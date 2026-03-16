@@ -32,6 +32,8 @@ jobs:
     needs: lint-and-test
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    env:
+      ADMIN_API_KEY: ${{ secrets.ADMIN_API_KEY }}
 
     steps:
       - name: Checkout code

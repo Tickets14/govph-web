@@ -1,8 +1,10 @@
+export const dynamic = 'force-dynamic';
+
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowLeft, Clock, PhilippinePeso, ExternalLink, Building2 } from 'lucide-react';
-import { getServiceBySlug, getServices } from '@/lib/api';
+import { getServiceBySlug } from '@/lib/api';
 import { SERVICE_CATEGORIES } from '@/lib/constants';
 import { ServiceDetailClient } from './ServiceDetailClient';
 
@@ -18,11 +20,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: service.title,
     description: service.description,
   };
-}
-
-export async function generateStaticParams() {
-  const services = await getServices();
-  return services.map((s) => ({ slug: s.slug }));
 }
 
 export default async function ServiceDetailPage({ params }: Props) {

@@ -37,9 +37,7 @@ export function AgencyLogo({ agency, size = 'md' }: AgencyLogoProps) {
         </span>
       </div>
       {size !== 'sm' && (
-        <span className="text-xs text-gray-500 text-center leading-tight max-w-[80px] line-clamp-2">
-          {agency.acronym}
-        </span>
+        <span className="text-xs text-gray-500 text-center leading-tight max-w-20 line-clamp-2">{agency.acronym}</span>
       )}
     </Link>
   );

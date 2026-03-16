@@ -1,8 +1,10 @@
+export const dynamic = 'force-dynamic';
+
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowLeft, ExternalLink, Globe } from 'lucide-react';
-import { getAgencyBySlug, getAgencies } from '@/lib/api';
+import { getAgencyBySlug } from '@/lib/api';
 import { ServiceCard } from '@/components/services/ServiceCard';
 
 interface Props {
@@ -17,11 +19,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: agency.acronym,
     description: agency.description,
   };
-}
-
-export async function generateStaticParams() {
-  const agencies = await getAgencies();
-  return agencies.map((a) => ({ slug: a.slug }));
 }
 
 export default async function AgencyDetailPage({ params }: Props) {
