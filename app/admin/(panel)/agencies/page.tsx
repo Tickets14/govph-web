@@ -4,6 +4,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Plus, ExternalLink } from 'lucide-react';
 import { getAgencies } from '@/lib/api';
+import { AgencyActions } from '@/components/admin/AgencyActions';
 
 export const metadata: Metadata = { title: 'Manage Agencies' };
 
@@ -35,8 +36,11 @@ export default async function AdminAgenciesPage() {
               <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider hidden md:table-cell">
                 Description
               </th>
-              <th className="px-4 py-3 text-right text-xs font-semibold text-gray-500 uppercase tracking-wider">
+              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider hidden lg:table-cell">
                 Website
+              </th>
+              <th className="px-4 py-3 text-right text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                Actions
               </th>
             </tr>
           </thead>
@@ -50,8 +54,8 @@ export default async function AdminAgenciesPage() {
                 <td className="px-4 py-3 hidden md:table-cell text-gray-600 text-xs max-w-xs">
                   <p className="line-clamp-1">{agency.description}</p>
                 </td>
-                <td className="px-4 py-3 text-right">
-                  {agency.website && (
+                <td className="px-4 py-3 hidden lg:table-cell">
+                  {agency.website ? (
                     <a
                       href={agency.website}
                       target="_blank"
@@ -60,7 +64,12 @@ export default async function AdminAgenciesPage() {
                     >
                       <ExternalLink className="w-3.5 h-3.5" />
                     </a>
+                  ) : (
+                    <span className="text-gray-300">—</span>
                   )}
+                </td>
+                <td className="px-4 py-3">
+                  <AgencyActions id={agency.id} acronym={agency.acronym} />
                 </td>
               </tr>
             ))}

@@ -42,6 +42,8 @@ export interface Service {
   requirements: Requirement[];
   totalFee?: number;
   processingTime?: string;
+  appointmentUrl?: string;
+  isActive?: boolean;
   isFeatured?: boolean;
   tags?: string[];
   createdAt?: string;

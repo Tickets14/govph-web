@@ -48,7 +48,9 @@ interface ApiService {
   steps?: ApiStep[];
   requirements?: ApiRequirement[];
   estimated_time?: string | null;
+  appointment_url?: string | null;
   total_fee?: number | null;
+  is_active?: boolean;
   is_featured?: boolean;
   tags?: string[];
 }
@@ -98,7 +100,9 @@ function mapService(s: ApiService): Service {
     })),
     requirements: (s.requirements ?? []).map(mapRequirement),
     processingTime: s.estimated_time ?? undefined,
+    appointmentUrl: s.appointment_url ?? undefined,
     totalFee: s.total_fee ?? undefined,
+    isActive: s.is_active ?? true,
     isFeatured: s.is_featured ?? false,
     tags: s.tags ?? [],
   };

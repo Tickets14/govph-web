@@ -1,8 +1,10 @@
+export const dynamic = 'force-dynamic';
+
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
-import { getServiceById } from '@/lib/api';
+import { getServiceBySlug, getAgencies } from '@/lib/api';
 import { ServiceForm } from '@/components/admin/ServiceForm';
 
 interface Props {
@@ -10,14 +12,14 @@ interface Props {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { id } = await params;
-  const service = await getServiceById(id);
+  const { id: slug } = await params;
+  const service = await getServiceBySlug(slug);
   return { title: service ? `Edit: ${service.title}` : 'Edit Service' };
 }
 
 export default async function EditServicePage({ params }: Props) {
-  const { id } = await params;
-  const service = await getServiceById(id);
+  const { id: slug } = await params;
+  const [service, agencies] = await Promise.all([getServiceBySlug(slug), getAgencies()]);
   if (!service) notFound();
 
   return (
@@ -31,7 +33,7 @@ export default async function EditServicePage({ params }: Props) {
       <h1 className="font-display font-bold text-2xl text-navy mb-1">Edit Service</h1>
       <p className="text-sm text-gray-500 mb-6">{service.title}</p>
       <div className="bg-white rounded-2xl border border-gray-100 p-6">
-        <ServiceForm initialData={service} />
+        <ServiceForm initialData={service} agencies={agencies} />
       </div>
     </div>
   );

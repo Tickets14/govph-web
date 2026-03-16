@@ -1,11 +1,16 @@
+export const dynamic = 'force-dynamic';
+
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
+import { getAgencies } from '@/lib/api';
 import { ServiceForm } from '@/components/admin/ServiceForm';
 
 export const metadata: Metadata = { title: 'New Service' };
 
-export default function NewServicePage() {
+export default async function NewServicePage() {
+  const agencies = await getAgencies();
+
   return (
     <div className="p-6">
       <Link
@@ -16,7 +21,7 @@ export default function NewServicePage() {
       </Link>
       <h1 className="font-display font-bold text-2xl text-navy mb-6">Create New Service</h1>
       <div className="bg-white rounded-2xl border border-gray-100 p-6">
-        <ServiceForm />
+        <ServiceForm agencies={agencies} />
       </div>
     </div>
   );
