@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Loader2 } from 'lucide-react';
+import { toast } from 'sonner';
 import type { Agency, Service } from '@/types';
 
 interface ServiceFormProps {
@@ -33,7 +34,6 @@ export function ServiceForm({ initialData, agencies }: ServiceFormProps) {
     appointmentUrl: initialData?.appointmentUrl ?? '',
     isActive: initialData?.isActive ?? true,
   });
-  const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
   const handleNameChange = (name: string) => {
@@ -47,7 +47,6 @@ export function ServiceForm({ initialData, agencies }: ServiceFormProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
-    setError(null);
 
     const body: Record<string, unknown> = {
       agency_id: form.agencyId,
@@ -70,11 +69,12 @@ export function ServiceForm({ initialData, agencies }: ServiceFormProps) {
 
     if (!res.ok) {
       const json = await res.json().catch(() => ({}));
-      setError(json?.error?.message ?? 'Failed to save service.');
+      toast.error(json?.error?.message ?? 'Failed to save service.');
       setSubmitting(false);
       return;
     }
 
+    toast.success(initialData ? 'Service updated.' : 'Service created.');
     router.push('/admin/services');
     router.refresh();
   };
@@ -176,12 +176,6 @@ export function ServiceForm({ initialData, agencies }: ServiceFormProps) {
         />
         <span className="text-sm text-gray-600">Active (visible to users)</span>
       </label>
-
-      {error && (
-        <p className="text-xs text-red-500 bg-red-50 border border-red-100 px-3 py-2.5 rounded-xl animate-scale-in">
-          {error}
-        </p>
-      )}
 
       <div className="flex items-center gap-3 pt-1">
         <button

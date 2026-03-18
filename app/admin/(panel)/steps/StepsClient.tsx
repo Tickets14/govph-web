@@ -2,7 +2,9 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { ChevronUp, ChevronDown, Pencil, Trash2, Plus, Loader2, Save, X, Upload } from 'lucide-react';
+import { createPortal } from 'react-dom';
+import { ChevronUp, ChevronDown, Pencil, Trash2, Plus, Loader2, Save, X, Upload, AlertTriangle } from 'lucide-react';
+import { toast } from 'sonner';
 import type { Agency, Service, Step } from '@/types';
 import { cn } from '@/lib/utils';
 
@@ -49,6 +51,7 @@ export function StepsClient({ services, agencies }: StepsClientProps) {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editDraft, setEditDraft] = useState<StepDraft>(emptyDraft);
   const [savingId, setSavingId] = useState<string | null>(null);
+  const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [reordering, setReordering] = useState(false);
   const [orderDirty, setOrderDirty] = useState(false);
@@ -59,15 +62,12 @@ export function StepsClient({ services, agencies }: StepsClientProps) {
   const [showDraftForm, setShowDraftForm] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
-  const [error, setError] = useState<string | null>(null);
-
   // ── fetch steps for selected service ─────────────────────
 
   const fetchSteps = useCallback(
     async (serviceId: string) => {
       if (!serviceId) return;
       setLoadingSteps(true);
-      setError(null);
 
       try {
         const service = services.find((s) => s.id === serviceId);
@@ -79,7 +79,7 @@ export function StepsClient({ services, agencies }: StepsClientProps) {
         const raw: { id: string; order: number; title: string; description: string }[] = data.steps ?? [];
         setSteps([...raw].sort((a, b) => a.order - b.order).map(mapStep));
       } catch {
-        setError('Could not load steps for this service.');
+        toast.error('Could not load steps for this service.');
       } finally {
         setLoadingSteps(false);
       }
@@ -103,12 +103,10 @@ export function StepsClient({ services, agencies }: StepsClientProps) {
     setSelectedAgencyId(agencyId);
     const first = services.find((s) => s.agencyId === agencyId);
     setSelectedServiceId(first?.id ?? '');
-    setError(null);
   }
 
   function switchService(serviceId: string) {
     setSelectedServiceId(serviceId);
-    setError(null);
   }
 
   // ── pending queue (local only) ────────────────────────────
@@ -133,7 +131,6 @@ export function StepsClient({ services, agencies }: StepsClientProps) {
   async function submitPending() {
     if (pending.length === 0) return;
     setSubmitting(true);
-    setError(null);
 
     const payload = pending.map((p, i) => ({
       order: steps.length + i + 1,
@@ -152,10 +149,11 @@ export function StepsClient({ services, agencies }: StepsClientProps) {
 
     if (!res.ok) {
       const json = await res.json().catch(() => ({}));
-      setError(json?.error?.message ?? 'Failed to save steps.');
+      toast.error(json?.error?.message ?? 'Failed to save steps.');
       return;
     }
 
+    toast.success(`${pending.length} ${pending.length === 1 ? 'step' : 'steps'} saved.`);
     setPending([]);
     setShowDraftForm(false);
     setCurrentDraft(emptyDraft);
@@ -174,7 +172,6 @@ export function StepsClient({ services, agencies }: StepsClientProps) {
   function startEdit(step: Step) {
     setEditingId(step.id);
     setEditDraft({ title: step.title, description: step.description });
-    setError(null);
   }
 
   function cancelEdit() {
@@ -185,7 +182,6 @@ export function StepsClient({ services, agencies }: StepsClientProps) {
   async function saveEdit(stepId: string) {
     if (!editDraft.title.trim()) return;
     setSavingId(stepId);
-    setError(null);
 
     const res = await fetch(`/api/admin/steps/${stepId}`, {
       method: 'PUT',
@@ -197,10 +193,11 @@ export function StepsClient({ services, agencies }: StepsClientProps) {
 
     if (!res.ok) {
       const json = await res.json().catch(() => ({}));
-      setError(json?.error?.message ?? 'Failed to update step.');
+      toast.error(json?.error?.message ?? 'Failed to update step.');
       return;
     }
 
+    toast.success('Step updated.');
     setSteps((prev) =>
       prev.map((s) => (s.id === stepId ? { ...s, title: editDraft.title, description: editDraft.description } : s))
     );
@@ -210,9 +207,8 @@ export function StepsClient({ services, agencies }: StepsClientProps) {
   // ── delete ────────────────────────────────────────────────
 
   async function deleteStep(stepId: string) {
-    if (!confirm('Delete this step? This cannot be undone.')) return;
     setDeletingId(stepId);
-    setError(null);
+    setConfirmDeleteId(null);
 
     const res = await fetch(`/api/admin/steps/${stepId}`, { method: 'DELETE' });
 
@@ -220,10 +216,11 @@ export function StepsClient({ services, agencies }: StepsClientProps) {
 
     if (!res.ok && res.status !== 204) {
       const json = await res.json().catch(() => ({}));
-      setError(json?.error?.message ?? 'Failed to delete step.');
+      toast.error(json?.error?.message ?? 'Failed to delete step.');
       return;
     }
 
+    toast.success('Step deleted.');
     setSteps((prev) => prev.filter((s) => s.id !== stepId).map((s, i) => ({ ...s, order: i + 1 })));
   }
 
@@ -243,7 +240,6 @@ export function StepsClient({ services, agencies }: StepsClientProps) {
 
   async function saveOrder() {
     setReordering(true);
-    setError(null);
 
     const res = await fetch(`/api/admin/services/${selectedServiceId}/steps/reorder`, {
       method: 'PATCH',
@@ -254,10 +250,11 @@ export function StepsClient({ services, agencies }: StepsClientProps) {
     setReordering(false);
 
     if (!res.ok && res.status !== 204) {
-      setError('Failed to save order.');
+      toast.error('Failed to save order.');
       return;
     }
 
+    toast.success('Order saved.');
     setOrderDirty(false);
   }
 
@@ -302,13 +299,6 @@ export function StepsClient({ services, agencies }: StepsClientProps) {
           </select>
         </div>
       </div>
-
-      {/* Error */}
-      {error && (
-        <p className="text-xs text-red-500 bg-red-50 border border-red-100 px-3 py-2.5 rounded-xl animate-scale-in">
-          {error}
-        </p>
-      )}
 
       {/* ── Saved steps ───────────────────────────────────── */}
       <div className="animate-fade-in-up animation-delay-100">
@@ -423,7 +413,7 @@ export function StepsClient({ services, agencies }: StepsClientProps) {
                       <Pencil className="w-3.5 h-3.5" />
                     </button>
                     <button
-                      onClick={() => deleteStep(step.id)}
+                      onClick={() => setConfirmDeleteId(step.id)}
                       disabled={deletingId === step.id}
                       className="p-1.5 rounded-lg text-gray-300 hover:text-red-400 hover:bg-red-50 disabled:opacity-40 transition-all duration-150"
                       title="Delete"
@@ -588,6 +578,50 @@ export function StepsClient({ services, agencies }: StepsClientProps) {
           )}
         </div>
       )}
+      {/* Delete confirmation dialog */}
+      {confirmDeleteId &&
+        createPortal(
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm animate-fade-in"
+            onClick={() => setConfirmDeleteId(null)}
+          >
+            <div
+              className="bg-white rounded-2xl shadow-xl border border-gray-100 w-full max-w-sm mx-4 p-6 animate-scale-in"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center shrink-0">
+                  <AlertTriangle className="w-5 h-5 text-red-400" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-semibold text-gray-900">Delete step</p>
+                  <p className="text-xs text-gray-400 mt-1 leading-relaxed">
+                    Are you sure you want to delete{' '}
+                    <span className="font-medium text-gray-600">
+                      {steps.find((s) => s.id === confirmDeleteId)?.title}
+                    </span>
+                    ? This action cannot be undone.
+                  </p>
+                </div>
+              </div>
+              <div className="flex justify-end gap-2 mt-6">
+                <button
+                  onClick={() => setConfirmDeleteId(null)}
+                  className="px-4 py-2 text-sm text-gray-500 hover:text-gray-700 rounded-xl border border-gray-200 hover:border-gray-300 transition-all duration-200"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={() => deleteStep(confirmDeleteId)}
+                  className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-red-500 hover:bg-red-600 rounded-xl transition-all duration-200 active:scale-95"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>,
+          document.body
+        )}
     </div>
   );
 }

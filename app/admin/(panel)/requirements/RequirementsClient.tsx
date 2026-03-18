@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { Pencil, Trash2, Plus, Loader2, Save, X, Upload } from 'lucide-react';
+import { toast } from 'sonner';
 import type { Agency, Service } from '@/types';
 import { cn } from '@/lib/utils';
 
@@ -73,15 +74,12 @@ export function RequirementsClient({ services, agencies }: RequirementsClientPro
   const [showDraftForm, setShowDraftForm] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
-  const [error, setError] = useState<string | null>(null);
-
   // ── fetch steps for selected service ─────────────────────
 
   const fetchSteps = useCallback(
     async (serviceId: string) => {
       if (!serviceId) return;
       setLoadingSteps(true);
-      setError(null);
 
       try {
         const service = services.find((s) => s.id === serviceId);
@@ -96,7 +94,7 @@ export function RequirementsClient({ services, agencies }: RequirementsClientPro
         setSelectedStepId(firstId);
         setRequirements(raw[0]?.requirements ?? []);
       } catch {
-        setError('Could not load steps for this service.');
+        toast.error('Could not load steps for this service.');
       } finally {
         setLoadingSteps(false);
       }
@@ -114,7 +112,6 @@ export function RequirementsClient({ services, agencies }: RequirementsClientPro
     setPending([]);
     setCurrentDraft(emptyDraft);
     setShowDraftForm(false);
-    setError(null);
     fetchSteps(selectedServiceId);
   }, [selectedServiceId, fetchSteps]);
 
@@ -127,7 +124,6 @@ export function RequirementsClient({ services, agencies }: RequirementsClientPro
     setPending([]);
     setCurrentDraft(emptyDraft);
     setShowDraftForm(false);
-    setError(null);
   }, [selectedStepId, steps]);
 
   // ── agency / service switch ───────────────────────────────
@@ -136,17 +132,14 @@ export function RequirementsClient({ services, agencies }: RequirementsClientPro
     setSelectedAgencyId(agencyId);
     const first = services.find((s) => s.agencyId === agencyId);
     setSelectedServiceId(first?.id ?? '');
-    setError(null);
   }
 
   function switchService(serviceId: string) {
     setSelectedServiceId(serviceId);
-    setError(null);
   }
 
   function switchStep(stepId: string) {
     setSelectedStepId(stepId);
-    setError(null);
   }
 
   // ── pending queue ─────────────────────────────────────────
@@ -171,7 +164,6 @@ export function RequirementsClient({ services, agencies }: RequirementsClientPro
   async function submitPending() {
     if (pending.length === 0) return;
     setSubmitting(true);
-    setError(null);
 
     for (const p of pending) {
       const res = await fetch(`/api/admin/steps/${selectedStepId}/requirements`, {
@@ -188,12 +180,13 @@ export function RequirementsClient({ services, agencies }: RequirementsClientPro
 
       if (!res.ok) {
         const json = await res.json().catch(() => ({}));
-        setError(json?.error?.message ?? `Failed to save "${p.name}".`);
+        toast.error(json?.error?.message ?? `Failed to save "${p.name}".`);
         setSubmitting(false);
         return;
       }
     }
 
+    toast.success(`${pending.length} ${pending.length === 1 ? 'requirement' : 'requirements'} saved.`);
     setSubmitting(false);
     setPending([]);
     setShowDraftForm(false);
@@ -218,7 +211,6 @@ export function RequirementsClient({ services, agencies }: RequirementsClientPro
       is_optional: r.is_optional ?? false,
       notes: r.notes ?? '',
     });
-    setError(null);
   }
 
   function cancelEdit() {
@@ -229,7 +221,6 @@ export function RequirementsClient({ services, agencies }: RequirementsClientPro
   async function saveEdit(reqId: string) {
     if (!editDraft.name.trim()) return;
     setSavingId(reqId);
-    setError(null);
 
     const res = await fetch(`/api/admin/requirements/${reqId}`, {
       method: 'PUT',
@@ -246,10 +237,11 @@ export function RequirementsClient({ services, agencies }: RequirementsClientPro
 
     if (!res.ok) {
       const json = await res.json().catch(() => ({}));
-      setError(json?.error?.message ?? 'Failed to update requirement.');
+      toast.error(json?.error?.message ?? 'Failed to update requirement.');
       return;
     }
 
+    toast.success('Requirement updated.');
     setRequirements((prev) =>
       prev.map((r) =>
         r.id === reqId
@@ -271,7 +263,6 @@ export function RequirementsClient({ services, agencies }: RequirementsClientPro
   async function deleteReq(reqId: string) {
     if (!confirm('Delete this requirement? This cannot be undone.')) return;
     setDeletingId(reqId);
-    setError(null);
 
     const res = await fetch(`/api/admin/requirements/${reqId}`, { method: 'DELETE' });
 
@@ -279,10 +270,11 @@ export function RequirementsClient({ services, agencies }: RequirementsClientPro
 
     if (!res.ok && res.status !== 204) {
       const json = await res.json().catch(() => ({}));
-      setError(json?.error?.message ?? 'Failed to delete requirement.');
+      toast.error(json?.error?.message ?? 'Failed to delete requirement.');
       return;
     }
 
+    toast.success('Requirement deleted.');
     setRequirements((prev) => prev.filter((r) => r.id !== reqId));
   }
 
@@ -353,13 +345,6 @@ export function RequirementsClient({ services, agencies }: RequirementsClientPro
           )}
         </div>
       </div>
-
-      {/* Error */}
-      {error && (
-        <p className="text-xs text-red-500 bg-red-50 border border-red-100 px-3 py-2.5 rounded-xl animate-scale-in">
-          {error}
-        </p>
-      )}
 
       {/* ── Requirements list ──────────────────────────────── */}
       {!loadingSteps && selectedStep && (

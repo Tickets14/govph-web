@@ -3,18 +3,17 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, Loader2 } from 'lucide-react';
+import { toast } from 'sonner';
 import { useState } from 'react';
 
 export default function NewAgencyPage() {
   const router = useRouter();
   const [form, setForm] = useState({ name: '', acronym: '', description: '', website_url: '' });
-  const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
-    setError(null);
 
     const body: Record<string, string> = {
       name: form.name,
@@ -31,11 +30,12 @@ export default function NewAgencyPage() {
 
     if (!res.ok) {
       const json = await res.json().catch(() => ({}));
-      setError(json?.error?.message ?? 'Failed to create agency.');
+      toast.error(json?.error?.message ?? 'Failed to create agency.');
       setSubmitting(false);
       return;
     }
 
+    toast.success('Agency created.');
     router.push('/admin/agencies');
     router.refresh();
   };
@@ -99,12 +99,6 @@ export default function NewAgencyPage() {
               {hint && <p className="text-[11px] text-gray-400 mt-1">{hint}</p>}
             </div>
           ))}
-
-          {error && (
-            <p className="text-xs text-red-500 bg-red-50 border border-red-100 px-3 py-2.5 rounded-xl animate-scale-in">
-              {error}
-            </p>
-          )}
 
           <div className="flex gap-3 pt-1">
             <button
