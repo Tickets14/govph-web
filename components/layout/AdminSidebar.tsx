@@ -2,7 +2,16 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, FileText, Building2, ListChecks, Shield, ArrowLeft, LogOut } from 'lucide-react';
+import {
+  LayoutDashboard,
+  FileText,
+  Building2,
+  ListChecks,
+  ClipboardList,
+  Shield,
+  ArrowLeft,
+  LogOut,
+} from 'lucide-react';
 import { signOut } from 'next-auth/react';
 import { cn } from '@/lib/utils';
 
@@ -11,6 +20,7 @@ const links = [
   { href: '/admin/services', label: 'Services', icon: FileText },
   { href: '/admin/agencies', label: 'Agencies', icon: Building2 },
   { href: '/admin/steps', label: 'Steps', icon: ListChecks },
+  { href: '/admin/requirements', label: 'Requirements', icon: ClipboardList },
 ];
 
 export function AdminSidebar() {
