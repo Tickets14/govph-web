@@ -17,18 +17,18 @@ export function HeroSearch() {
 
   return (
     <form onSubmit={handleSubmit} className="relative">
-      <div className="flex items-center bg-white rounded-2xl shadow-2xl shadow-black/30 overflow-hidden border border-white/20 focus-within:ring-2 focus-within:ring-gold/50 transition-all">
-        <Search className="w-5 h-5 text-gray-400 ml-5 shrink-0" />
+      <div className="flex items-center bg-white rounded-2xl overflow-hidden border border-white/20 focus-within:ring-2 focus-within:ring-gold/40 transition-all duration-200 shadow-2xl shadow-black/20">
+        <Search className="w-4 h-4 text-gray-300 ml-5 shrink-0" />
         <input
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Maghanap ng serbisyo... (passport, NBI, LTO...)"
-          className="flex-1 px-4 py-4 text-gray-900 placeholder:text-gray-400 bg-transparent focus:outline-none text-sm sm:text-base"
+          className="flex-1 px-4 py-4 text-gray-900 placeholder:text-gray-300 bg-transparent focus:outline-none text-sm sm:text-base"
         />
         <button
           type="submit"
-          className="m-2 bg-navy text-white font-semibold px-5 py-2.5 rounded-xl text-sm hover:bg-[#243561] transition-colors shrink-0"
+          className="m-2 bg-navy text-white font-semibold px-5 py-2.5 rounded-xl text-sm hover:bg-[#243561] active:scale-95 transition-all duration-200 shrink-0"
         >
           Hanapin
         </button>

@@ -16,14 +16,14 @@ export function ServiceSearch({ query, category, onQueryChange, onCategoryChange
   return (
     <div className="space-y-3">
       <SearchInput value={query} onChange={onQueryChange} size="md" />
-      <div className="flex gap-2 flex-wrap">
+      <div className="flex gap-1.5 flex-wrap">
         <button
           onClick={() => onCategoryChange(undefined)}
           className={cn(
-            'px-3 py-1.5 rounded-full text-xs font-medium transition-all border',
+            'px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 border',
             !category
               ? 'bg-navy text-white border-navy'
-              : 'bg-white text-gray-600 border-gray-200 hover:border-gray-300'
+              : 'bg-white text-gray-500 border-gray-200 hover:border-gray-300 hover:text-gray-700'
           )}
         >
           Lahat
@@ -33,10 +33,10 @@ export function ServiceSearch({ query, category, onQueryChange, onCategoryChange
             key={c.value}
             onClick={() => onCategoryChange(category === c.value ? undefined : (c.value as ServiceCategory))}
             className={cn(
-              'px-3 py-1.5 rounded-full text-xs font-medium transition-all border',
+              'px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 border',
               category === c.value
                 ? 'bg-navy text-white border-navy'
-                : 'bg-white text-gray-600 border-gray-200 hover:border-gray-300'
+                : 'bg-white text-gray-500 border-gray-200 hover:border-gray-300 hover:text-gray-700'
             )}
           >
             {c.label}

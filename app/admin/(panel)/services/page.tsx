@@ -14,66 +14,72 @@ export default async function AdminServicesPage() {
   const agencyById = Object.fromEntries(agencies.map((a) => [a.id, a]));
 
   return (
-    <div className="p-6">
-      <div className="flex items-center justify-between mb-6">
+    <div className="p-8 animate-fade-in">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-7 animate-fade-in-up">
         <div>
-          <h1 className="font-display font-bold text-2xl text-navy">Services</h1>
-          <p className="text-sm text-gray-500 mt-0.5">{services.length} services total</p>
+          <h1 className="font-display font-bold text-xl text-navy">Services</h1>
+          <p className="text-xs text-gray-400 mt-1">{services.length} services total</p>
         </div>
         <Link
           href="/admin/services/new"
-          className="inline-flex items-center gap-2 bg-navy text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-navy/90 transition-colors"
+          className="inline-flex items-center gap-1.5 bg-navy text-white text-xs font-medium px-4 py-2 rounded-xl hover:bg-navy/90 active:scale-95 transition-all duration-200"
         >
-          <Plus className="w-4 h-4" /> New Service
+          <Plus className="w-3.5 h-3.5" /> New Service
         </Link>
       </div>
 
-      <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
+      {/* Table */}
+      <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden animate-fade-in-up animation-delay-100">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-gray-200 bg-gray-50">
-              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+            <tr className="border-b border-gray-100">
+              <th className="px-5 py-3 text-left text-[11px] font-semibold text-gray-400 uppercase tracking-wider">
                 Service
               </th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider hidden sm:table-cell">
+              <th className="px-5 py-3 text-left text-[11px] font-semibold text-gray-400 uppercase tracking-wider hidden sm:table-cell">
                 Agency
               </th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider hidden md:table-cell">
+              <th className="px-5 py-3 text-left text-[11px] font-semibold text-gray-400 uppercase tracking-wider hidden md:table-cell">
                 Est. Time
               </th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider hidden lg:table-cell">
+              <th className="px-5 py-3 text-left text-[11px] font-semibold text-gray-400 uppercase tracking-wider hidden lg:table-cell">
                 Status
               </th>
-              <th className="px-4 py-3 text-right text-xs font-semibold text-gray-500 uppercase tracking-wider">
+              <th className="px-5 py-3 text-right text-[11px] font-semibold text-gray-400 uppercase tracking-wider">
                 Actions
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-100">
-            {services.map((service) => {
+          <tbody className="divide-y divide-gray-50">
+            {services.map((service, i) => {
               const agency = agencyById[service.agencyId];
               return (
-                <tr key={service.id} className="hover:bg-gray-50 transition-colors">
-                  <td className="px-4 py-3">
-                    <p className="font-medium text-gray-900">{service.title}</p>
-                    <p className="text-xs text-gray-400">{service.slug}</p>
+                <tr
+                  key={service.id}
+                  className="hover:bg-gray-50/70 transition-colors duration-150 animate-fade-in-up"
+                  style={{ animationDelay: `${i * 30 + 150}ms` }}
+                >
+                  <td className="px-5 py-3.5">
+                    <p className="font-medium text-gray-900 text-sm">{service.title}</p>
+                    <p className="text-[11px] text-gray-400 mt-0.5">{service.slug}</p>
                   </td>
-                  <td className="px-4 py-3 hidden sm:table-cell text-gray-600">
-                    {agency ? <span>{agency.acronym}</span> : <span className="text-gray-300">—</span>}
+                  <td className="px-5 py-3.5 hidden sm:table-cell text-xs text-gray-500">
+                    {agency ? <span>{agency.acronym}</span> : <span className="text-gray-200">—</span>}
                   </td>
-                  <td className="px-4 py-3 hidden md:table-cell text-gray-500 text-xs">
-                    {service.processingTime ?? <span className="text-gray-300">—</span>}
+                  <td className="px-5 py-3.5 hidden md:table-cell text-xs text-gray-400">
+                    {service.processingTime ?? <span className="text-gray-200">—</span>}
                   </td>
-                  <td className="px-4 py-3 hidden lg:table-cell">
+                  <td className="px-5 py-3.5 hidden lg:table-cell">
                     {service.isActive ? (
-                      <span className="text-xs font-medium text-green-600 bg-green-50 px-2 py-0.5 rounded-full">
+                      <span className="text-[11px] font-medium text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full">
                         Active
                       </span>
                     ) : (
-                      <span className="text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">Inactive</span>
+                      <span className="text-[11px] text-gray-400 bg-gray-100 px-2.5 py-1 rounded-full">Inactive</span>
                     )}
                   </td>
-                  <td className="px-4 py-3">
+                  <td className="px-5 py-3.5">
                     <ServiceActions id={service.id} slug={service.slug} name={service.title} />
                   </td>
                 </tr>
@@ -81,6 +87,15 @@ export default async function AdminServicesPage() {
             })}
           </tbody>
         </table>
+
+        {services.length === 0 && (
+          <div className="py-16 text-center">
+            <p className="text-sm text-gray-400">No services yet.</p>
+            <Link href="/admin/services/new" className="text-xs text-navy mt-1 inline-block hover:underline">
+              Add your first service
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );

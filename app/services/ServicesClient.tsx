@@ -36,14 +36,16 @@ export function ServicesClient({ initialQuery = '' }: ServicesClientProps) {
       ) : services.length === 0 ? (
         <EmptyState title="Walang nahanap" description="Subukan ang ibang keyword o alisin ang filter." />
       ) : (
-        <>
-          <p className="text-sm text-gray-500">{services.length} serbisyo ang nahanap</p>
+        <div className="animate-fade-in">
+          <p className="text-xs text-gray-400 mb-5">{services.length} serbisyo ang nahanap</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {services.map((service) => (
-              <ServiceCard key={service.id} service={service} />
+            {services.map((service, i) => (
+              <div key={service.id} className="animate-fade-in-up" style={{ animationDelay: `${i * 40}ms` }}>
+                <ServiceCard service={service} />
+              </div>
             ))}
           </div>
-        </>
+        </div>
       )}
     </div>
   );

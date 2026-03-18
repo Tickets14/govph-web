@@ -25,18 +25,18 @@ export default async function EditAgencyPage({ params }: Props) {
   if (!agency) notFound();
 
   return (
-    <div className="p-6">
+    <div className="p-8 animate-fade-in">
       <Link
         href="/admin/agencies"
-        className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-navy mb-6 transition-colors"
+        className="inline-flex items-center gap-1.5 text-xs text-gray-400 hover:text-navy mb-8 transition-colors duration-200"
       >
-        <ArrowLeft className="w-4 h-4" /> Back to Agencies
+        <ArrowLeft className="w-3.5 h-3.5" /> Back to Agencies
       </Link>
-      <h1 className="font-display font-bold text-2xl text-navy mb-1">Edit Agency</h1>
-      <p className="text-sm text-gray-500 mb-6">
+      <h1 className="font-display font-bold text-xl text-navy mb-1">Edit Agency</h1>
+      <p className="text-sm text-gray-400 mb-8">
         {agency.acronym} — {agency.name}
       </p>
-      <div className="bg-white rounded-2xl border border-gray-100 p-6 max-w-xl">
+      <div className="bg-white rounded-2xl border border-gray-100 p-6 max-w-lg animate-fade-in-up animation-delay-100">
         <AgencyEditForm agency={agency} />
       </div>
     </div>

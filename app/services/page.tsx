@@ -14,7 +14,7 @@ export default function ServicesPage() {
         title="Mga Government Services"
         description="Piliin ang serbisyong kailangan mo at makita ang buong proseso."
       />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <ServicesClient />
       </div>
     </div>

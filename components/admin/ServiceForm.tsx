@@ -2,8 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Loader2 } from 'lucide-react';
 import type { Agency, Service } from '@/types';
 
 interface ServiceFormProps {
@@ -19,6 +18,9 @@ function toSlug(name: string) {
     .replace(/\s+/g, '-')
     .replace(/-+/g, '-');
 }
+
+const inputCls =
+  'w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-gray-900 placeholder:text-gray-300 outline-none focus:border-navy/40 focus:ring-2 focus:ring-navy/8 transition-all duration-200 bg-gray-50/50';
 
 export function ServiceForm({ initialData, agencies }: ServiceFormProps) {
   const router = useRouter();
@@ -78,98 +80,125 @@ export function ServiceForm({ initialData, agencies }: ServiceFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 max-w-2xl">
-      <div className="grid gap-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1.5">Service Name</label>
-          <Input
-            value={form.name}
-            onChange={(e) => handleNameChange(e.target.value)}
-            placeholder="e.g., New Passport Application"
-            required
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1.5">Slug</label>
-          <Input
-            value={form.slug}
-            onChange={(e) => setForm({ ...form, slug: e.target.value })}
-            placeholder="e.g., new-passport-application"
-            required
-          />
-          <p className="text-xs text-gray-400 mt-1">Lowercase letters, numbers, and hyphens only.</p>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1.5">Description</label>
-          <textarea
-            value={form.description}
-            onChange={(e) => setForm({ ...form, description: e.target.value })}
-            placeholder="Brief description of the service..."
-            rows={3}
-            className="w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition-all"
-            required
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1.5">Agency</label>
-          <select
-            value={form.agencyId}
-            onChange={(e) => setForm({ ...form, agencyId: e.target.value })}
-            className="w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy"
-            required
-          >
-            <option value="">Select agency...</option>
-            {agencies.map((a) => (
-              <option key={a.id} value={a.id}>
-                {a.acronym} – {a.name}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">Estimated Time</label>
-            <Input
-              value={form.estimatedTime}
-              onChange={(e) => setForm({ ...form, estimatedTime: e.target.value })}
-              placeholder="e.g., 10-15 working days"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">Appointment URL</label>
-            <Input
-              type="url"
-              value={form.appointmentUrl}
-              onChange={(e) => setForm({ ...form, appointmentUrl: e.target.value })}
-              placeholder="https://..."
-            />
-          </div>
-        </div>
-
-        <label className="flex items-center gap-2.5 cursor-pointer">
-          <input
-            type="checkbox"
-            checked={form.isActive}
-            onChange={(e) => setForm({ ...form, isActive: e.target.checked })}
-            className="w-4 h-4 rounded text-navy border-gray-300"
-          />
-          <span className="text-sm text-gray-700">Active (visible to users)</span>
+    <form onSubmit={handleSubmit} className="space-y-5 max-w-2xl">
+      <div>
+        <label className="block text-xs font-medium text-gray-500 uppercase tracking-wide mb-1.5">
+          Service Name <span className="text-red-400">*</span>
         </label>
+        <input
+          className={inputCls}
+          value={form.name}
+          onChange={(e) => handleNameChange(e.target.value)}
+          placeholder="e.g., New Passport Application"
+          required
+        />
       </div>
 
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      <div>
+        <label className="block text-xs font-medium text-gray-500 uppercase tracking-wide mb-1.5">
+          Slug <span className="text-red-400">*</span>
+        </label>
+        <input
+          className={inputCls}
+          value={form.slug}
+          onChange={(e) => setForm({ ...form, slug: e.target.value })}
+          placeholder="e.g., new-passport-application"
+          required
+        />
+        <p className="text-[11px] text-gray-400 mt-1">Lowercase letters, numbers, and hyphens only.</p>
+      </div>
 
-      <div className="flex items-center gap-3 pt-2">
-        <Button type="submit" disabled={submitting} className="bg-navy hover:bg-navy/90 text-white">
+      <div>
+        <label className="block text-xs font-medium text-gray-500 uppercase tracking-wide mb-1.5">
+          Description <span className="text-red-400">*</span>
+        </label>
+        <textarea
+          value={form.description}
+          onChange={(e) => setForm({ ...form, description: e.target.value })}
+          placeholder="Brief description of the service..."
+          rows={3}
+          className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-gray-900 placeholder:text-gray-300 outline-none focus:border-navy/40 focus:ring-2 focus:ring-navy/8 transition-all duration-200 bg-gray-50/50 resize-none"
+          required
+        />
+      </div>
+
+      <div>
+        <label className="block text-xs font-medium text-gray-500 uppercase tracking-wide mb-1.5">
+          Agency <span className="text-red-400">*</span>
+        </label>
+        <select
+          value={form.agencyId}
+          onChange={(e) => setForm({ ...form, agencyId: e.target.value })}
+          className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-gray-900 outline-none focus:border-navy/40 focus:ring-2 focus:ring-navy/8 transition-all duration-200 bg-gray-50/50"
+          required
+        >
+          <option value="">Select agency...</option>
+          {agencies.map((a) => (
+            <option key={a.id} value={a.id}>
+              {a.acronym} – {a.name}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className="block text-xs font-medium text-gray-500 uppercase tracking-wide mb-1.5">
+            Estimated Time
+          </label>
+          <input
+            className={inputCls}
+            value={form.estimatedTime}
+            onChange={(e) => setForm({ ...form, estimatedTime: e.target.value })}
+            placeholder="e.g., 10-15 working days"
+          />
+        </div>
+        <div>
+          <label className="block text-xs font-medium text-gray-500 uppercase tracking-wide mb-1.5">
+            Appointment URL
+          </label>
+          <input
+            type="url"
+            className={inputCls}
+            value={form.appointmentUrl}
+            onChange={(e) => setForm({ ...form, appointmentUrl: e.target.value })}
+            placeholder="https://..."
+          />
+        </div>
+      </div>
+
+      <label className="flex items-center gap-2.5 cursor-pointer py-1">
+        <input
+          type="checkbox"
+          checked={form.isActive}
+          onChange={(e) => setForm({ ...form, isActive: e.target.checked })}
+          className="w-4 h-4 rounded accent-navy border-gray-300"
+        />
+        <span className="text-sm text-gray-600">Active (visible to users)</span>
+      </label>
+
+      {error && (
+        <p className="text-xs text-red-500 bg-red-50 border border-red-100 px-3 py-2.5 rounded-xl animate-scale-in">
+          {error}
+        </p>
+      )}
+
+      <div className="flex items-center gap-3 pt-1">
+        <button
+          type="submit"
+          disabled={submitting}
+          className="inline-flex items-center gap-2 bg-navy text-white text-sm font-medium px-5 py-2.5 rounded-xl hover:bg-navy/90 active:scale-[0.98] transition-all duration-200 disabled:opacity-50"
+        >
+          {submitting && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
           {submitting ? 'Saving…' : initialData ? 'Save Changes' : 'Create Service'}
-        </Button>
-        <Button type="button" variant="outline" onClick={() => router.back()}>
+        </button>
+        <button
+          type="button"
+          onClick={() => router.back()}
+          className="text-sm font-medium text-gray-400 hover:text-gray-700 px-4 py-2.5 rounded-xl border border-gray-200 hover:border-gray-300 transition-all duration-200"
+        >
           Cancel
-        </Button>
+        </button>
       </div>
     </form>
   );

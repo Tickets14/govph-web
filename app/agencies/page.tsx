@@ -24,10 +24,12 @@ export default async function AgenciesPage() {
         title="Mga Ahensya ng Gobyerno"
         description={`${agencies.length} agencies ang kasalukuyang covered.`}
       />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {agencies.map((agency) => (
-            <AgencyCard key={agency.id} agency={agency} serviceCount={serviceCountByAgency[agency.id] ?? 0} />
+          {agencies.map((agency, i) => (
+            <div key={agency.id} className="animate-fade-in-up" style={{ animationDelay: `${i * 40}ms` }}>
+              <AgencyCard agency={agency} serviceCount={serviceCountByAgency[agency.id] ?? 0} />
+            </div>
           ))}
         </div>
       </div>

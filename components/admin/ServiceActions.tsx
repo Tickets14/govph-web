@@ -32,21 +32,21 @@ export function ServiceActions({ id, slug, name }: ServiceActionsProps) {
   };
 
   return (
-    <div className="flex items-center justify-end gap-2">
+    <div className="flex items-center justify-end gap-1">
       <Link
         href={`/admin/services/${slug}/edit`}
-        className="p-1.5 text-gray-400 hover:text-navy transition-colors"
+        className="p-2 rounded-lg text-gray-300 hover:text-navy hover:bg-gray-50 transition-all duration-150"
         title="Edit"
       >
-        <Pencil className="w-4 h-4" />
+        <Pencil className="w-3.5 h-3.5" />
       </Link>
       <button
         onClick={handleDelete}
         disabled={deleting}
-        className="p-1.5 text-gray-400 hover:text-red-500 transition-colors disabled:opacity-50"
+        className="p-2 rounded-lg text-gray-300 hover:text-red-400 hover:bg-red-50 transition-all duration-150 disabled:opacity-40"
         title="Delete"
       >
-        <Trash2 className="w-4 h-4" />
+        <Trash2 className="w-3.5 h-3.5" />
       </button>
     </div>
   );
