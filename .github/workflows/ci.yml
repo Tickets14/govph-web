@@ -52,6 +52,9 @@ jobs:
       - name: Install Vercel CLI
         run: npm install -g vercel
 
+      - name: Link Vercel project
+        run: vercel link --yes --project=${{ secrets.VERCEL_PROJECT_NAME }} --token=${{ secrets.VERCEL_TOKEN }}
+
       - name: Set Vercel environment variables
         run: |
           echo "$NEXT_PUBLIC_API_URL" | vercel env add NEXT_PUBLIC_API_URL production --token=${{ secrets.VERCEL_TOKEN }} --force
