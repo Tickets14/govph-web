@@ -57,11 +57,11 @@ jobs:
 
       - name: Set Vercel environment variables
         run: |
-          echo "$NEXT_PUBLIC_API_URL" | vercel env add NEXT_PUBLIC_API_URL production --token=${{ secrets.VERCEL_TOKEN }} --force
-          echo "$ADMIN_USERNAME" | vercel env add ADMIN_USERNAME production --token=${{ secrets.VERCEL_TOKEN }} --force
-          echo "$ADMIN_PASSWORD" | vercel env add ADMIN_PASSWORD production --token=${{ secrets.VERCEL_TOKEN }} --force
-          echo "$AUTH_SECRET" | vercel env add AUTH_SECRET production --token=${{ secrets.VERCEL_TOKEN }} --force
-          echo "$ADMIN_API_KEY" | vercel env add ADMIN_API_KEY production --token=${{ secrets.VERCEL_TOKEN }} --force
+          printf '%s' "$NEXT_PUBLIC_API_URL" | vercel env add NEXT_PUBLIC_API_URL production --token=${{ secrets.VERCEL_TOKEN }} --force
+          printf '%s' "$ADMIN_USERNAME" | vercel env add ADMIN_USERNAME production --token=${{ secrets.VERCEL_TOKEN }} --force
+          printf '%s' "$ADMIN_PASSWORD" | vercel env add ADMIN_PASSWORD production --token=${{ secrets.VERCEL_TOKEN }} --force
+          printf '%s' "$AUTH_SECRET" | vercel env add AUTH_SECRET production --token=${{ secrets.VERCEL_TOKEN }} --force
+          printf '%s' "$ADMIN_API_KEY" | vercel env add ADMIN_API_KEY production --token=${{ secrets.VERCEL_TOKEN }} --force
 
       - name: Pull Vercel environment
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
