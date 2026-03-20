@@ -33,6 +33,10 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     env:
+      NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+      ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
+      ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+      AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
       ADMIN_API_KEY: ${{ secrets.ADMIN_API_KEY }}
 
     steps:
