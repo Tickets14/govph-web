@@ -52,17 +52,19 @@ jobs:
       - name: Install Vercel CLI
         run: npm install -g vercel
 
+      - name: Set Vercel environment variables
+        run: |
+          echo "$NEXT_PUBLIC_API_URL" | vercel env add NEXT_PUBLIC_API_URL production --token=${{ secrets.VERCEL_TOKEN }} --force
+          echo "$ADMIN_USERNAME" | vercel env add ADMIN_USERNAME production --token=${{ secrets.VERCEL_TOKEN }} --force
+          echo "$ADMIN_PASSWORD" | vercel env add ADMIN_PASSWORD production --token=${{ secrets.VERCEL_TOKEN }} --force
+          echo "$AUTH_SECRET" | vercel env add AUTH_SECRET production --token=${{ secrets.VERCEL_TOKEN }} --force
+          echo "$ADMIN_API_KEY" | vercel env add ADMIN_API_KEY production --token=${{ secrets.VERCEL_TOKEN }} --force
+
       - name: Pull Vercel environment
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Build project
         run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
-        env:
-          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
-          ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
-          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
-          AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
-          ADMIN_API_KEY: ${{ secrets.ADMIN_API_KEY }}
 
       - name: Deploy to Vercel
         run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}

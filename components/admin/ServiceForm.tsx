@@ -6,6 +6,7 @@ import { Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import type { Agency, Service } from '@/types';
 import { SERVICE_CATEGORIES } from '@/lib/constants';
+import { adminClientFetch } from '@/lib/admin-fetch';
 
 interface ServiceFormProps {
   initialData?: Service;
@@ -64,7 +65,7 @@ export function ServiceForm({ initialData, agencies }: ServiceFormProps) {
     const url = initialData ? `/api/admin/services/${initialData.id}` : '/api/admin/services';
     const method = initialData ? 'PUT' : 'POST';
 
-    const res = await fetch(url, {
+    const res = await adminClientFetch(url, {
       method,
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),

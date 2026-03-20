@@ -6,6 +6,7 @@ import { Pencil, Trash2, Plus, Loader2, Save, X, Upload } from 'lucide-react';
 import { toast } from 'sonner';
 import type { Agency, Service } from '@/types';
 import { cn } from '@/lib/utils';
+import { adminClientFetch } from '@/lib/admin-fetch';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3000/api/v1';
 
@@ -166,7 +167,7 @@ export function RequirementsClient({ services, agencies }: RequirementsClientPro
     setSubmitting(true);
 
     for (const p of pending) {
-      const res = await fetch(`/api/admin/steps/${selectedStepId}/requirements`, {
+      const res = await adminClientFetch(`/api/admin/steps/${selectedStepId}/requirements`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -222,7 +223,7 @@ export function RequirementsClient({ services, agencies }: RequirementsClientPro
     if (!editDraft.name.trim()) return;
     setSavingId(reqId);
 
-    const res = await fetch(`/api/admin/requirements/${reqId}`, {
+    const res = await adminClientFetch(`/api/admin/requirements/${reqId}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -264,7 +265,7 @@ export function RequirementsClient({ services, agencies }: RequirementsClientPro
     if (!confirm('Delete this requirement? This cannot be undone.')) return;
     setDeletingId(reqId);
 
-    const res = await fetch(`/api/admin/requirements/${reqId}`, { method: 'DELETE' });
+    const res = await adminClientFetch(`/api/admin/requirements/${reqId}`, { method: 'DELETE' });
 
     setDeletingId(null);
 

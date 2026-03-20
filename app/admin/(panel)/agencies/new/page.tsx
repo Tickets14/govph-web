@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { ArrowLeft, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useState } from 'react';
+import { adminClientFetch } from '@/lib/admin-fetch';
 
 export default function NewAgencyPage() {
   const router = useRouter();
@@ -22,7 +23,7 @@ export default function NewAgencyPage() {
     };
     if (form.website_url) body.website_url = form.website_url;
 
-    const res = await fetch('/api/admin/agencies', {
+    const res = await adminClientFetch('/api/admin/agencies', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),

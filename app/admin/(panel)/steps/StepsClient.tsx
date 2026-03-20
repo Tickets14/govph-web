@@ -7,6 +7,7 @@ import { ChevronUp, ChevronDown, Pencil, Trash2, Plus, Loader2, Save, X, Upload,
 import { toast } from 'sonner';
 import type { Agency, Service, Step } from '@/types';
 import { cn } from '@/lib/utils';
+import { adminClientFetch } from '@/lib/admin-fetch';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3000/api/v1';
 
@@ -139,7 +140,7 @@ export function StepsClient({ services, agencies }: StepsClientProps) {
       is_optional: false,
     }));
 
-    const res = await fetch(`/api/admin/services/${selectedServiceId}/steps`, {
+    const res = await adminClientFetch(`/api/admin/services/${selectedServiceId}/steps`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
@@ -183,7 +184,7 @@ export function StepsClient({ services, agencies }: StepsClientProps) {
     if (!editDraft.title.trim()) return;
     setSavingId(stepId);
 
-    const res = await fetch(`/api/admin/steps/${stepId}`, {
+    const res = await adminClientFetch(`/api/admin/steps/${stepId}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ title: editDraft.title, description: editDraft.description }),
@@ -210,7 +211,7 @@ export function StepsClient({ services, agencies }: StepsClientProps) {
     setDeletingId(stepId);
     setConfirmDeleteId(null);
 
-    const res = await fetch(`/api/admin/steps/${stepId}`, { method: 'DELETE' });
+    const res = await adminClientFetch(`/api/admin/steps/${stepId}`, { method: 'DELETE' });
 
     setDeletingId(null);
 
@@ -241,7 +242,7 @@ export function StepsClient({ services, agencies }: StepsClientProps) {
   async function saveOrder() {
     setReordering(true);
 
-    const res = await fetch(`/api/admin/services/${selectedServiceId}/steps/reorder`, {
+    const res = await adminClientFetch(`/api/admin/services/${selectedServiceId}/steps/reorder`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ step_ids: steps.map((s) => s.id) }),

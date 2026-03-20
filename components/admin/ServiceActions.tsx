@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Pencil, Trash2, AlertTriangle, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
+import { adminClientFetch } from '@/lib/admin-fetch';
 
 interface ServiceActionsProps {
   id: string;
@@ -21,7 +22,7 @@ export function ServiceActions({ id, slug, name }: ServiceActionsProps) {
   const handleDelete = async () => {
     setDeleting(true);
 
-    const res = await fetch(`/api/admin/services/${id}`, { method: 'DELETE' });
+    const res = await adminClientFetch(`/api/admin/services/${id}`, { method: 'DELETE' });
 
     if (!res.ok) {
       const json = await res.json().catch(() => ({}));

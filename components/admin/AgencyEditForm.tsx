@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import type { Agency } from '@/types';
+import { adminClientFetch } from '@/lib/admin-fetch';
 
 interface AgencyEditFormProps {
   agency: Agency;
@@ -31,7 +32,7 @@ export function AgencyEditForm({ agency }: AgencyEditFormProps) {
     };
     if (form.website_url) body.website_url = form.website_url;
 
-    const res = await fetch(`/api/admin/agencies/${agency.id}`, {
+    const res = await adminClientFetch(`/api/admin/agencies/${agency.id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
