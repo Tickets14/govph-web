@@ -3,6 +3,7 @@ export const dynamic = 'force-dynamic';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowLeft, Clock, PhilippinePeso, ExternalLink, Building2 } from 'lucide-react';
 import { getServiceBySlug } from '@/lib/api';
 import { SERVICE_CATEGORIES } from '@/lib/constants';
@@ -44,7 +45,7 @@ export default async function ServiceDetailPage({ params }: Props) {
         <div className="lg:col-span-2">
           <div className="bg-white rounded-2xl border border-gray-100 p-6 mb-5 animate-fade-in-up">
             {category && (
-              <span className="inline-block text-[11px] font-medium bg-navy/[0.06] text-navy/70 px-3 py-1 rounded-full mb-3">
+              <span className="inline-block text-[11px] font-medium bg-navy/6 text-navy/70 px-3 py-1 rounded-full mb-3">
                 {category.label}
               </span>
             )}
@@ -81,8 +82,18 @@ export default async function ServiceDetailPage({ params }: Props) {
             <div className="bg-white rounded-2xl border border-gray-100 p-5">
               <p className="text-[10px] font-semibold text-gray-300 uppercase tracking-widest mb-3">Ahensya</p>
               <div className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-xl bg-navy/[0.05] flex items-center justify-center shrink-0">
-                  <Building2 className="w-4 h-4 text-navy/30" />
+                <div className="w-10 h-10 rounded-xl bg-navy/[0.05] flex items-center justify-center shrink-0 overflow-hidden">
+                  {service.agency.logoUrl ? (
+                    <Image
+                      src={service.agency.logoUrl}
+                      alt={service.agency.acronym}
+                      width={28}
+                      height={28}
+                      className="w-7 h-7 object-contain"
+                    />
+                  ) : (
+                    <Building2 className="w-4 h-4 text-navy/30" />
+                  )}
                 </div>
                 <div>
                   <p className="font-semibold text-gray-900 text-sm">{service.agency.acronym}</p>

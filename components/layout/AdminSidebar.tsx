@@ -8,6 +8,7 @@ import {
   Building2,
   ListChecks,
   ClipboardList,
+  BookOpen,
   Shield,
   ArrowLeft,
   LogOut,
@@ -21,15 +22,16 @@ const links = [
   { href: '/admin/services', label: 'Services', icon: FileText },
   { href: '/admin/steps', label: 'Steps', icon: ListChecks },
   { href: '/admin/requirements', label: 'Requirements', icon: ClipboardList },
+  { href: '/admin/dictionary', label: 'Dictionary', icon: BookOpen },
 ];
 
 export function AdminSidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="w-60 min-h-screen bg-[#111b30] text-white flex flex-col border-r border-white/[0.06] animate-slide-in-left">
+    <aside className="w-60 min-h-screen bg-navy-dark text-white flex flex-col border-r border-white/6 animate-slide-in-left">
       {/* Logo */}
-      <div className="px-5 py-5 border-b border-white/[0.06]">
+      <div className="px-5 py-5 border-b border-white/6">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-lg bg-gold/15 flex items-center justify-center shrink-0">
             <Shield className="w-4 h-4 text-gold" />
@@ -53,9 +55,7 @@ export function AdminSidebar() {
               style={{ animationDelay: `${i * 60 + 100}ms` }}
               className={cn(
                 'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all duration-200 animate-fade-in-up',
-                active
-                  ? 'bg-white/10 text-white font-medium'
-                  : 'text-white/50 hover:bg-white/[0.06] hover:text-white/80'
+                active ? 'bg-white/10 text-white font-medium' : 'text-white/50 hover:bg-white/6 hover:text-white/80'
               )}
             >
               {active && <span className="absolute left-3 w-0.5 h-4 rounded-full bg-gold" />}
@@ -67,17 +67,17 @@ export function AdminSidebar() {
       </nav>
 
       {/* Footer */}
-      <div className="px-3 py-4 border-t border-white/[0.06] space-y-0.5">
+      <div className="px-3 py-4 border-t border-white/6 space-y-0.5">
         <Link
           href="/"
-          className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm text-white/40 hover:text-white/70 hover:bg-white/[0.06] transition-all duration-200"
+          className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm text-white/40 hover:text-white/70 hover:bg-white/6 transition-all duration-200"
         >
           <ArrowLeft className="w-4 h-4" />
           Back to site
         </Link>
         <button
           onClick={() => signOut({ callbackUrl: '/admin/login' })}
-          className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm text-white/40 hover:text-white/70 hover:bg-white/[0.06] transition-all duration-200"
+          className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm text-white/40 hover:text-white/70 hover:bg-white/6 transition-all duration-200"
         >
           <LogOut className="w-4 h-4" />
           Sign out

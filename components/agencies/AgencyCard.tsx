@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowRight, ExternalLink } from 'lucide-react';
 import type { Agency } from '@/types';
 
@@ -14,10 +15,20 @@ export function AgencyCard({ agency, serviceCount }: AgencyCardProps) {
     <div className="group bg-white rounded-2xl border border-gray-100 p-5 hover:border-gray-200 hover:shadow-sm transition-all duration-200 flex flex-col">
       {/* Header */}
       <div className="flex items-start justify-between gap-3 mb-3">
-        <div className="w-11 h-11 rounded-xl bg-navy/[0.05] flex items-center justify-center shrink-0">
-          <span className="text-navy font-display font-extrabold text-[11px] text-center leading-tight">
-            {agency.acronym}
-          </span>
+        <div className="w-11 h-11 rounded-xl bg-navy/5 flex items-center justify-center shrink-0 overflow-hidden">
+          {agency.logoUrl ? (
+            <Image
+              src={agency.logoUrl}
+              alt={agency.acronym}
+              width={28}
+              height={28}
+              className="w-7 h-7 object-contain"
+            />
+          ) : (
+            <span className="text-navy font-display font-extrabold text-[11px] text-center leading-tight">
+              {agency.acronym}
+            </span>
+          )}
         </div>
         {agency.website && (
           <a

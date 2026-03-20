@@ -51,15 +51,20 @@ export interface Service {
 }
 
 export type ServiceCategory =
-  | 'identity'
-  | 'travel'
+  | 'civil_registry'
+  | 'foreign_affairs'
+  | 'housing'
   | 'business'
-  | 'social-services'
-  | 'education'
-  | 'healthcare'
-  | 'property'
-  | 'vehicle'
+  | 'clearance'
+  | 'government'
+  | 'professional'
+  | 'health'
+  | 'social_security'
+  | 'transport'
+  | 'identification'
+  | 'overseas'
   | 'tax'
+  | 'social_services'
   | 'other';
 
 export interface Progress {

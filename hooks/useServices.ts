@@ -19,10 +19,10 @@ export function useServices(initialFilters?: Partial<SearchFilters>) {
 
   useEffect(() => {
     let cancelled = false;
-    getServices({ query: debouncedQuery, category, agencyId })
+    getServices({ query: debouncedQuery, agencyId })
       .then((data) => {
         if (!cancelled) {
-          setServices(data);
+          setServices(category ? data.filter((s) => s.category === category) : data);
           setError(null);
           setResolvedKey(requestKey);
         }

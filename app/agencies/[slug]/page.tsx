@@ -3,6 +3,7 @@ export const dynamic = 'force-dynamic';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowLeft, ExternalLink, Globe } from 'lucide-react';
 import { getAgencyBySlug } from '@/lib/api';
 import { ServiceCard } from '@/components/services/ServiceCard';
@@ -38,10 +39,20 @@ export default async function AgencyDetailPage({ params }: Props) {
       {/* Agency header */}
       <div className="bg-white rounded-2xl border border-gray-100 p-6 mb-8 animate-fade-in-up">
         <div className="flex items-start gap-5">
-          <div className="w-[60px] h-[60px] rounded-2xl bg-navy/[0.05] flex items-center justify-center shrink-0">
-            <span className="font-display font-extrabold text-navy text-xs text-center leading-tight">
-              {agency.acronym}
-            </span>
+          <div className="w-15 h-15 rounded-2xl bg-navy/5 flex items-center justify-center shrink-0 overflow-hidden">
+            {agency.logoUrl ? (
+              <Image
+                src={agency.logoUrl}
+                alt={agency.acronym}
+                width={40}
+                height={40}
+                className="w-10 h-10 object-contain"
+              />
+            ) : (
+              <span className="font-display font-extrabold text-navy text-xs text-center leading-tight">
+                {agency.acronym}
+              </span>
+            )}
           </div>
           <div className="flex-1 min-w-0">
             <h1 className="font-display font-bold text-2xl text-navy tracking-tight">{agency.name}</h1>

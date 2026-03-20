@@ -3,13 +3,16 @@ export const dynamic = 'force-dynamic';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Plus, ExternalLink } from 'lucide-react';
-import { getAgencies } from '@/lib/api';
+import { getPaginatedAgencies } from '@/lib/api';
 import { AgencyActions } from '@/components/admin/AgencyActions';
+import { Pagination } from '@/components/admin/Pagination';
 
 export const metadata: Metadata = { title: 'Manage Agencies' };
 
-export default async function AdminAgenciesPage() {
-  const agencies = await getAgencies();
+export default async function AdminAgenciesPage({ searchParams }: { searchParams: Promise<{ page?: string }> }) {
+  const params = await searchParams;
+  const page = Math.max(1, Number(params.page) || 1);
+  const { data: agencies, total, totalPages } = await getPaginatedAgencies(page, 10);
 
   return (
     <div className="p-8 animate-fade-in">
@@ -17,7 +20,7 @@ export default async function AdminAgenciesPage() {
       <div className="flex items-center justify-between mb-7 animate-fade-in-up">
         <div>
           <h1 className="font-display font-bold text-xl text-navy">Agencies</h1>
-          <p className="text-xs text-gray-400 mt-1">{agencies.length} agencies total</p>
+          <p className="text-xs text-gray-400 mt-1">{total} agencies total</p>
         </div>
         <Link
           href="/admin/agencies/new"
@@ -91,6 +94,9 @@ export default async function AdminAgenciesPage() {
           </div>
         )}
       </div>
+
+      {/* Pagination */}
+      <Pagination currentPage={page} totalPages={totalPages} basePath="/admin/agencies" />
     </div>
   );
 }

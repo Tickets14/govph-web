@@ -3,13 +3,19 @@ export const dynamic = 'force-dynamic';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Plus } from 'lucide-react';
-import { getServices, getAgencies } from '@/lib/api';
+import { getPaginatedServices, getAgencies } from '@/lib/api';
 import { ServiceActions } from '@/components/admin/ServiceActions';
+import { Pagination } from '@/components/admin/Pagination';
 
 export const metadata: Metadata = { title: 'Manage Services' };
 
-export default async function AdminServicesPage() {
-  const [services, agencies] = await Promise.all([getServices(), getAgencies()]);
+export default async function AdminServicesPage({ searchParams }: { searchParams: Promise<{ page?: string }> }) {
+  const params = await searchParams;
+  const page = Math.max(1, Number(params.page) || 1);
+  const [{ data: services, total, totalPages }, agencies] = await Promise.all([
+    getPaginatedServices(page, 10),
+    getAgencies(),
+  ]);
 
   const agencyById = Object.fromEntries(agencies.map((a) => [a.id, a]));
 
@@ -19,7 +25,7 @@ export default async function AdminServicesPage() {
       <div className="flex items-center justify-between mb-7 animate-fade-in-up">
         <div>
           <h1 className="font-display font-bold text-xl text-navy">Services</h1>
-          <p className="text-xs text-gray-400 mt-1">{services.length} services total</p>
+          <p className="text-xs text-gray-400 mt-1">{total} services total</p>
         </div>
         <Link
           href="/admin/services/new"
@@ -97,6 +103,9 @@ export default async function AdminServicesPage() {
           </div>
         )}
       </div>
+
+      {/* Pagination */}
+      <Pagination currentPage={page} totalPages={totalPages} basePath="/admin/services" />
     </div>
   );
 }

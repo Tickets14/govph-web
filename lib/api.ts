@@ -119,6 +119,7 @@ export async function getServices(filters?: Partial<SearchFilters>): Promise<Ser
   const res = await fetch(`${API_URL}/services?${params}`, { cache: 'no-store' });
   if (!res.ok) return [];
   const json = await res.json();
+  console.log(json);
   const data: ApiService[] = json.data ?? json;
   return data.map(mapService);
 }

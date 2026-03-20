@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import type { Agency } from '@/types';
 import { cn } from '@/lib/utils';
 
@@ -8,6 +9,9 @@ interface AgencyLogoProps {
 }
 
 export function AgencyLogo({ agency, size = 'md' }: AgencyLogoProps) {
+  const logoSrc = agency.logoUrl || null;
+  const imageSize = size === 'sm' ? 28 : size === 'md' ? 36 : 44;
+
   return (
     <Link
       href={`/agencies/${agency.slug}`}
@@ -19,25 +23,40 @@ export function AgencyLogo({ agency, size = 'md' }: AgencyLogoProps) {
     >
       <div
         className={cn(
-          'rounded-xl bg-gray-50 group-hover:bg-navy/[0.05] flex items-center justify-center transition-colors duration-200',
+          'rounded-xl bg-gray-50 group-hover:bg-navy/5 flex items-center justify-center overflow-hidden transition-colors duration-200',
           size === 'sm' && 'w-10 h-10',
           size === 'md' && 'w-12 h-12',
           size === 'lg' && 'w-14 h-14'
         )}
       >
-        <span
-          className={cn(
-            'font-display font-extrabold text-navy/60 group-hover:text-navy text-center leading-none transition-colors duration-200',
-            size === 'sm' && 'text-[9px]',
-            size === 'md' && 'text-[10px]',
-            size === 'lg' && 'text-xs'
-          )}
-        >
-          {agency.acronym}
-        </span>
+        {logoSrc ? (
+          <Image
+            src={logoSrc}
+            alt={agency.acronym}
+            width={imageSize}
+            height={imageSize}
+            className={cn(
+              'object-contain',
+              size === 'sm' && 'w-7 h-7',
+              size === 'md' && 'w-9 h-9',
+              size === 'lg' && 'w-11 h-11'
+            )}
+          />
+        ) : (
+          <span
+            className={cn(
+              'font-display font-extrabold text-navy/60 group-hover:text-navy text-center leading-none transition-colors duration-200',
+              size === 'sm' && 'text-[9px]',
+              size === 'md' && 'text-[10px]',
+              size === 'lg' && 'text-xs'
+            )}
+          >
+            {agency.acronym}
+          </span>
+        )}
       </div>
       {size !== 'sm' && (
-        <span className="text-[10px] text-gray-400 group-hover:text-gray-600 text-center leading-tight max-w-[64px] line-clamp-1 transition-colors duration-200">
+        <span className="text-[10px] text-gray-400 group-hover:text-gray-600 text-center leading-tight max-w-16 line-clamp-1 transition-colors duration-200">
           {agency.acronym}
         </span>
       )}

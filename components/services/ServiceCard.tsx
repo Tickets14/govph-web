@@ -9,15 +9,20 @@ interface ServiceCardProps {
 }
 
 const categoryColors: Record<string, string> = {
-  identity: 'bg-blue-50 text-blue-600',
-  travel: 'bg-sky-50 text-sky-600',
-  vehicle: 'bg-orange-50 text-orange-600',
+  civil_registry: 'bg-blue-50 text-blue-600',
+  foreign_affairs: 'bg-sky-50 text-sky-600',
+  housing: 'bg-teal-50 text-teal-600',
   business: 'bg-violet-50 text-violet-600',
-  'social-services': 'bg-pink-50 text-pink-600',
-  healthcare: 'bg-green-50 text-green-600',
-  education: 'bg-yellow-50 text-yellow-600',
+  clearance: 'bg-amber-50 text-amber-600',
+  government: 'bg-slate-50 text-slate-600',
+  professional: 'bg-indigo-50 text-indigo-600',
+  health: 'bg-green-50 text-green-600',
+  social_security: 'bg-pink-50 text-pink-600',
+  transport: 'bg-orange-50 text-orange-600',
+  identification: 'bg-cyan-50 text-cyan-600',
+  overseas: 'bg-purple-50 text-purple-600',
   tax: 'bg-red-50 text-red-600',
-  property: 'bg-teal-50 text-teal-600',
+  social_services: 'bg-rose-50 text-rose-600',
   other: 'bg-gray-50 text-gray-600',
 };
 

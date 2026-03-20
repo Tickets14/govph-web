@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import type { Agency, Service } from '@/types';
+import { SERVICE_CATEGORIES } from '@/lib/constants';
 
 interface ServiceFormProps {
   initialData?: Service;
@@ -30,6 +31,7 @@ export function ServiceForm({ initialData, agencies }: ServiceFormProps) {
     slug: initialData?.slug ?? '',
     description: initialData?.description ?? '',
     agencyId: initialData?.agencyId ?? '',
+    category: (initialData?.category as string) ?? '',
     estimatedTime: initialData?.processingTime ?? '',
     appointmentUrl: initialData?.appointmentUrl ?? '',
     isActive: initialData?.isActive ?? true,
@@ -53,6 +55,7 @@ export function ServiceForm({ initialData, agencies }: ServiceFormProps) {
       name: form.name,
       slug: form.slug,
       description: form.description,
+      category: form.category || undefined,
       is_active: form.isActive,
     };
     if (form.estimatedTime) body.estimated_time = form.estimatedTime;
@@ -136,6 +139,25 @@ export function ServiceForm({ initialData, agencies }: ServiceFormProps) {
           {agencies.map((a) => (
             <option key={a.id} value={a.id}>
               {a.acronym} – {a.name}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div>
+        <label className="block text-xs font-medium text-gray-500 uppercase tracking-wide mb-1.5">
+          Category <span className="text-red-400">*</span>
+        </label>
+        <select
+          value={form.category}
+          onChange={(e) => setForm({ ...form, category: e.target.value })}
+          className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-gray-900 outline-none focus:border-navy/40 focus:ring-2 focus:ring-navy/8 transition-all duration-200 bg-gray-50/50"
+          required
+        >
+          <option value="">Select category...</option>
+          {SERVICE_CATEGORIES.map((c) => (
+            <option key={c.value} value={c.value}>
+              {c.label}
             </option>
           ))}
         </select>
