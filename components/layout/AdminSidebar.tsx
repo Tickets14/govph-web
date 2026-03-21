@@ -77,15 +77,14 @@ function AdminSidebarInner({ pathname }: AdminSidebarInnerProps) {
       {/* Nav */}
       <nav className="flex-1 px-3 py-4 space-y-0.5">
         <p className="text-[10px] font-semibold uppercase tracking-widest text-white/20 px-3 mb-3">Menu</p>
-        {links.map(({ href, label, icon: Icon }, i) => {
+        {links.map(({ href, label, icon: Icon }) => {
           const active = href === '/admin' ? pathname === '/admin' : pathname.startsWith(href);
           return (
             <Link
               key={href}
               href={href}
-              style={{ animationDelay: `${i * 60 + 100}ms` }}
               className={cn(
-                'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all duration-200 animate-fade-in-up',
+                'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all duration-200',
                 active ? 'bg-white/10 text-white font-medium' : 'text-white/50 hover:bg-white/6 hover:text-white/80'
               )}
             >
@@ -143,7 +142,7 @@ function AdminSidebarInner({ pathname }: AdminSidebarInnerProps) {
       </aside>
 
       {/* Desktop sidebar (always visible) */}
-      <aside className="hidden lg:flex w-60 min-h-screen bg-navy-dark text-white flex-col border-r border-white/6 animate-slide-in-left">
+      <aside className="hidden lg:flex w-60 min-h-screen bg-navy-dark text-white flex-col border-r border-white/6">
         {sidebarContent}
       </aside>
     </>
