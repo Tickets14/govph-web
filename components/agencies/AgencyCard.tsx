@@ -49,14 +49,14 @@ export function AgencyCard({ agency, serviceCount }: AgencyCardProps) {
       <div className="flex items-center justify-between mt-4 pt-3 border-t border-gray-50">
         {serviceCount !== undefined && (
           <span className="text-[11px] text-gray-300">
-            {serviceCount} {serviceCount === 1 ? 'serbisyo' : 'mga serbisyo'}
+            {serviceCount} {serviceCount === 1 ? 'service' : 'services'}
           </span>
         )}
         <Link
           href={`/agencies/${agency.slug}`}
           className="flex items-center gap-1 text-xs font-medium text-navy/60 hover:text-navy transition-colors duration-200 ml-auto group/link"
         >
-          Tingnan
+          View
           <ArrowRight className="w-3 h-3 transition-transform duration-200 group-hover/link:translate-x-0.5" />
         </Link>
       </div>

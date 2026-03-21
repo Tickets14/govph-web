@@ -18,10 +18,7 @@ export default async function AgenciesPage() {
 
   return (
     <div>
-      <PageHeader
-        title="Mga Ahensya ng Gobyerno"
-        description={`${agencies.length} agencies ang kasalukuyang covered.`}
-      />
+      <PageHeader title="Government Agencies" description={`${agencies.length} agencies currently covered.`} />
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {agencies.map((agency, i) => (

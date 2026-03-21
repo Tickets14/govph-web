@@ -14,7 +14,7 @@ interface SearchInputProps {
 export function SearchInput({
   value,
   onChange,
-  placeholder = 'Maghanap ng serbisyo...',
+  placeholder = 'Search for a service...',
   className,
   size = 'md',
 }: SearchInputProps) {
@@ -32,8 +32,8 @@ export function SearchInput({
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         className={cn(
-          'w-full rounded-xl border border-gray-200 bg-white text-gray-900 placeholder:text-gray-300',
-          'focus:outline-none focus:ring-2 focus:ring-navy/10 focus:border-navy/30 transition-all duration-200',
+          'w-full rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 placeholder:text-gray-300 dark:placeholder:text-gray-600',
+          'focus:outline-none focus:ring-2 focus:ring-navy/10 dark:focus:ring-gold/20 focus:border-navy/30 dark:focus:border-gold/30 transition-all duration-200',
           size === 'sm' && 'pl-9 pr-3 py-2 text-sm',
           size === 'md' && 'pl-10 pr-10 py-2.5 text-sm',
           size === 'lg' && 'pl-11 pr-11 py-3.5 text-sm'

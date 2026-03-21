@@ -10,10 +10,7 @@ export const metadata: Metadata = {
 export default function ServicesPage() {
   return (
     <div>
-      <PageHeader
-        title="Mga Government Services"
-        description="Piliin ang serbisyong kailangan mo at makita ang buong proseso."
-      />
+      <PageHeader title="Government Services" description="Choose the service you need and see the full process." />
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <ServicesClient />
       </div>

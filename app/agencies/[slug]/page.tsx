@@ -31,7 +31,7 @@ export default async function AgencyDetailPage({ params }: Props) {
         href="/agencies"
         className="inline-flex items-center gap-1.5 text-xs text-gray-400 hover:text-navy mb-8 transition-colors duration-200 animate-fade-in"
       >
-        <ArrowLeft className="w-3.5 h-3.5" /> Bumalik sa Agencies
+        <ArrowLeft className="w-3.5 h-3.5" /> Back to Agencies
       </Link>
 
       {/* Agency header */}
@@ -75,7 +75,7 @@ export default async function AgencyDetailPage({ params }: Props) {
       {/* Services */}
       <div className="animate-fade-in-up animation-delay-100">
         <h2 className="font-display font-semibold text-lg text-navy mb-5">
-          Mga Serbisyo
+          Services
           <span className="text-gray-300 font-normal ml-1.5">({agency.services?.length ?? 0})</span>
         </h2>
         {agency.services && agency.services.length > 0 ? (
@@ -88,7 +88,7 @@ export default async function AgencyDetailPage({ params }: Props) {
           </div>
         ) : (
           <div className="bg-white rounded-2xl border border-gray-100 py-14 text-center">
-            <p className="text-sm text-gray-400">Wala pang serbisyo para sa ahensyang ito.</p>
+            <p className="text-sm text-gray-400">No services available for this agency yet.</p>
           </div>
         )}
       </div>

@@ -75,7 +75,7 @@ export function StepChecklist({
             {/* Requirements for this step */}
             {step.requirements && step.requirements.length > 0 && (
               <div className="mt-3 space-y-2 pl-13">
-                <p className="text-xs font-medium text-gray-400 uppercase tracking-wide mb-2">Kailangan:</p>
+                <p className="text-xs font-medium text-gray-400 uppercase tracking-wide mb-2">Required:</p>
                 {step.requirements.map((req) => (
                   <RequirementBadge
                     key={req.id}

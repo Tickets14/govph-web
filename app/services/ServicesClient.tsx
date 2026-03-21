@@ -34,10 +34,12 @@ export function ServicesClient({ initialQuery = '' }: ServicesClientProps) {
       {loading ? (
         <LoadingGrid />
       ) : services.length === 0 ? (
-        <EmptyState title="Walang nahanap" description="Subukan ang ibang keyword o alisin ang filter." />
+        <EmptyState title="No results found" description="Try a different keyword or remove the filter." />
       ) : (
         <div className="animate-fade-in">
-          <p className="text-xs text-gray-400 mb-5">{services.length} serbisyo ang nahanap</p>
+          <p className="text-xs text-gray-400 mb-5">
+            {services.length} service{services.length !== 1 ? 's' : ''} found
+          </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {services.map((service, i) => (
               <div key={service.id} className="animate-fade-in-up" style={{ animationDelay: `${i * 40}ms` }}>

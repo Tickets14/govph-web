@@ -6,6 +6,7 @@ import { ArrowLeft, Clock, PhilippinePeso, ExternalLink, Building2 } from 'lucid
 import { getServiceBySlug } from '@/lib/api';
 import { SERVICE_CATEGORIES } from '@/lib/constants';
 import { ServiceDetailClient } from './ServiceDetailClient';
+import { ServiceDetailActions } from './ServiceDetailActions';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -35,24 +36,26 @@ export default async function ServiceDetailPage({ params }: Props) {
         href="/services"
         className="inline-flex items-center gap-1.5 text-xs text-gray-400 hover:text-navy mb-8 transition-colors duration-200 animate-fade-in"
       >
-        <ArrowLeft className="w-3.5 h-3.5" /> Bumalik sa Services
+        <ArrowLeft className="w-3.5 h-3.5" /> Back to Services
       </Link>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Main */}
         <div className="lg:col-span-2">
-          <div className="bg-white rounded-2xl border border-gray-100 p-6 mb-5 animate-fade-in-up">
+          <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-white/10 p-6 mb-5 animate-fade-in-up">
             {category && (
-              <span className="inline-block text-[11px] font-medium bg-navy/6 text-navy/70 px-3 py-1 rounded-full mb-3">
+              <span className="inline-block text-[11px] font-medium bg-navy/6 dark:bg-white/10 text-navy/70 dark:text-gray-300 px-3 py-1 rounded-full mb-3">
                 {category.label}
               </span>
             )}
-            <h1 className="font-display font-bold text-2xl sm:text-[26px] text-navy mb-2 tracking-tight">
+            <h1 className="font-display font-bold text-2xl sm:text-[26px] text-navy dark:text-white mb-2 tracking-tight">
               {service.title}
             </h1>
-            <p className="text-sm text-gray-500 leading-relaxed mb-5">{service.description}</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed mb-5">{service.description}</p>
 
-            <div className="flex flex-wrap gap-4 text-xs text-gray-400 pt-4 border-t border-gray-50">
+            <ServiceDetailActions service={service} />
+
+            <div className="flex flex-wrap gap-4 text-xs text-gray-400 dark:text-gray-500 pt-4 border-t border-gray-50 dark:border-white/5">
               {service.processingTime && (
                 <span className="flex items-center gap-1.5">
                   <Clock className="w-3.5 h-3.5 text-navy/30" />
@@ -62,7 +65,7 @@ export default async function ServiceDetailPage({ params }: Props) {
               {service.totalFee !== undefined && (
                 <span className="flex items-center gap-1.5">
                   <PhilippinePeso className="w-3.5 h-3.5 text-navy/30" />
-                  {service.totalFee === 0 ? 'Libre' : `₱${service.totalFee.toLocaleString()} total`}
+                  {service.totalFee === 0 ? 'Free' : `₱${service.totalFee.toLocaleString()} total`}
                 </span>
               )}
             </div>
@@ -77,10 +80,12 @@ export default async function ServiceDetailPage({ params }: Props) {
         <div className="space-y-4 animate-fade-in-up animation-delay-200">
           {/* Agency info */}
           {service.agency && (
-            <div className="bg-white rounded-2xl border border-gray-100 p-5">
-              <p className="text-[10px] font-semibold text-gray-300 uppercase tracking-widest mb-3">Ahensya</p>
+            <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-white/10 p-5">
+              <p className="text-[10px] font-semibold text-gray-300 dark:text-gray-600 uppercase tracking-widest mb-3">
+                Agency
+              </p>
               <div className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-xl bg-navy/[0.05] flex items-center justify-center shrink-0 overflow-hidden">
+                <div className="w-10 h-10 rounded-xl bg-navy/[0.05] dark:bg-white/10 flex items-center justify-center shrink-0 overflow-hidden">
                   {service.agency.logoUrl ? (
                     <Image
                       src={service.agency.logoUrl}
@@ -90,12 +95,12 @@ export default async function ServiceDetailPage({ params }: Props) {
                       className="w-7 h-7 object-contain"
                     />
                   ) : (
-                    <Building2 className="w-4 h-4 text-navy/30" />
+                    <Building2 className="w-4 h-4 text-navy/30 dark:text-gray-500" />
                   )}
                 </div>
                 <div>
-                  <p className="font-semibold text-gray-900 text-sm">{service.agency.acronym}</p>
-                  <p className="text-xs text-gray-400 leading-snug mt-0.5">{service.agency.name}</p>
+                  <p className="font-semibold text-gray-900 dark:text-gray-100 text-sm">{service.agency.acronym}</p>
+                  <p className="text-xs text-gray-400 dark:text-gray-500 leading-snug mt-0.5">{service.agency.name}</p>
                   {service.agency.website && (
                     <a
                       href={service.agency.website}
@@ -103,7 +108,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1 text-xs text-navy/50 hover:text-navy mt-2 transition-colors duration-200"
                     >
-                      Pumunta sa website <ExternalLink className="w-3 h-3" />
+                      Visit website <ExternalLink className="w-3 h-3" />
                     </a>
                   )}
                 </div>
@@ -113,13 +118,13 @@ export default async function ServiceDetailPage({ params }: Props) {
 
           {/* Requirements summary */}
           {service.requirements.length > 0 && (
-            <div className="bg-white rounded-2xl border border-gray-100 p-5">
-              <p className="text-[10px] font-semibold text-gray-300 uppercase tracking-widest mb-3">
-                Mga Kailangan ({service.requirements.length})
+            <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-white/10 p-5">
+              <p className="text-[10px] font-semibold text-gray-300 dark:text-gray-600 uppercase tracking-widest mb-3">
+                Requirements ({service.requirements.length})
               </p>
               <ul className="space-y-2">
                 {service.requirements.map((req) => (
-                  <li key={req.id} className="flex items-start gap-2 text-xs text-gray-600">
+                  <li key={req.id} className="flex items-start gap-2 text-xs text-gray-600 dark:text-gray-400">
                     <span className="w-1 h-1 rounded-full bg-gold mt-1.5 shrink-0" />
                     <span className="leading-relaxed">{req.label}</span>
                   </li>
@@ -129,11 +134,11 @@ export default async function ServiceDetailPage({ params }: Props) {
           )}
 
           {/* Tip */}
-          <div className="bg-amber-50/60 rounded-2xl border border-amber-100/80 p-5">
+          <div className="bg-amber-50/60 dark:bg-amber-950/30 rounded-2xl border border-amber-100/80 dark:border-amber-800/30 p-5">
             <p className="text-[10px] font-semibold text-amber-500/80 uppercase tracking-widest mb-2">Tip</p>
-            <p className="text-xs text-gray-500 leading-relaxed">
-              I-verify palagi ang mga requirements direkta sa opisyal na website ng ahensya bago pumunta. Maaaring
-              magbago ang mga requirement.
+            <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
+              Always verify requirements directly on the official agency website before visiting. Requirements may
+              change.
             </p>
           </div>
         </div>

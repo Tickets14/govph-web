@@ -3,6 +3,7 @@ import { Plus_Jakarta_Sans, Inter } from 'next/font/google';
 import './globals.css';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
+import { ThemeProvider } from '@/hooks/useTheme';
 
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -20,7 +21,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Gov Requirements Tracker — Alamin ang requirements. Walang hassle.',
+    default: 'Gov Requirements Tracker — Know the requirements. No hassle.',
     template: '%s | Gov Requirements Tracker',
   },
   description:
@@ -30,17 +31,19 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_PH',
     title: 'Gov Requirements Tracker',
-    description: 'Alamin ang requirements. Walang hassle.',
+    description: 'Know the requirements. No hassle.',
   },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="fil" className={`${plusJakarta.variable} ${inter.variable}`}>
-      <body className="min-h-screen flex flex-col antialiased bg-white">
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
+    <html lang="en" className={`${plusJakarta.variable} ${inter.variable}`} suppressHydrationWarning>
+      <body className="min-h-screen flex flex-col antialiased bg-white dark:bg-gray-950 text-foreground transition-colors duration-300">
+        <ThemeProvider>
+          <Navbar />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );

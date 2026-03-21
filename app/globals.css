@@ -82,6 +82,27 @@
   --sidebar-ring: #f0a500;
 }
 
+.dark {
+  --background: oklch(0.13 0 0);
+  --foreground: oklch(0.93 0 0);
+  --card: oklch(0.16 0 0);
+  --card-foreground: oklch(0.93 0 0);
+  --popover: oklch(0.16 0 0);
+  --popover-foreground: oklch(0.93 0 0);
+  --primary: #f0a500;
+  --primary-foreground: #1b2a4a;
+  --secondary: oklch(0.2 0 0);
+  --secondary-foreground: oklch(0.93 0 0);
+  --muted: oklch(0.2 0 0);
+  --muted-foreground: oklch(0.6 0 0);
+  --accent: #f0a500;
+  --accent-foreground: #1b2a4a;
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.25 0 0);
+  --input: oklch(0.25 0 0);
+  --ring: #f0a500;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -261,6 +282,10 @@
   background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 37%, #f0f0f0 63%);
   background-size: 400% 100%;
   animation: shimmer 1.4s ease infinite;
+}
+.dark .animate-shimmer {
+  background: linear-gradient(90deg, #1f2937 25%, #2a3544 37%, #1f2937 63%);
+  background-size: 400% 100%;
 }
 
 /* Reduced motion */

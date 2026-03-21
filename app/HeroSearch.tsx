@@ -23,14 +23,14 @@ export function HeroSearch() {
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Maghanap ng serbisyo... (passport, NBI, LTO...)"
+          placeholder="Search for a service... (passport, NBI, LTO...)"
           className="flex-1 px-4 py-4 text-gray-900 placeholder:text-gray-300 bg-transparent focus:outline-none text-sm sm:text-base"
         />
         <button
           type="submit"
           className="m-2 bg-navy text-white font-semibold px-5 py-2.5 rounded-xl text-sm hover:bg-[#243561] active:scale-95 transition-all duration-200 shrink-0"
         >
-          Hanapin
+          Search
         </button>
       </div>
     </form>

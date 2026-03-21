@@ -1,6 +1,6 @@
 export function ServiceCardSkeleton() {
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 p-5 space-y-3">
+    <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-white/10 p-5 space-y-3">
       <div className="flex items-start justify-between gap-3">
         <div className="space-y-2 flex-1">
           <div className="h-3.5 w-14 rounded-full animate-shimmer" />

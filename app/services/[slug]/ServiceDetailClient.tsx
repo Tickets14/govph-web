@@ -17,18 +17,18 @@ export function ServiceDetailClient({ service }: { service: Service }) {
     <div className="space-y-4">
       {/* Progress summary */}
       {stepsTotal > 0 && (
-        <div className="bg-white rounded-2xl border border-gray-100 p-5">
+        <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-white/10 p-5">
           <div className="flex items-center justify-between mb-3">
-            <h2 className="font-display font-semibold text-navy">Iyong Progress</h2>
+            <h2 className="font-display font-semibold text-navy dark:text-white">Your Progress</h2>
             {stepsDone > 0 && (
               <button onClick={resetProgress} className="text-xs text-gray-400 hover:text-red-500 transition-colors">
-                I-reset
+                Reset
               </button>
             )}
           </div>
           <ProgressBar value={pct} />
-          <p className="text-xs text-gray-400 mt-2">
-            {stepsDone} sa {stepsTotal} hakbang ang tapos na
+          <p className="text-xs text-gray-400 dark:text-gray-500 mt-2">
+            {stepsDone} of {stepsTotal} steps completed
             {pct === 100 && ' 🎉 Congrats!'}
           </p>
         </div>
@@ -36,8 +36,8 @@ export function ServiceDetailClient({ service }: { service: Service }) {
 
       {/* Steps */}
       {service.steps.length > 0 && (
-        <div className="bg-white rounded-2xl border border-gray-100 p-5">
-          <h2 className="font-display font-semibold text-navy mb-4">Mga Hakbang ({service.steps.length})</h2>
+        <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-white/10 p-5">
+          <h2 className="font-display font-semibold text-navy dark:text-white mb-4">Steps ({service.steps.length})</h2>
           <StepChecklist
             steps={service.steps}
             completedSteps={progress.completedSteps}
@@ -50,9 +50,9 @@ export function ServiceDetailClient({ service }: { service: Service }) {
 
       {/* Requirements */}
       {service.requirements.length > 0 && (
-        <div className="bg-white rounded-2xl border border-gray-100 p-5">
-          <h2 className="font-display font-semibold text-navy mb-4">
-            Mga Requirements ({service.requirements.length})
+        <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-white/10 p-5">
+          <h2 className="font-display font-semibold text-navy dark:text-white mb-4">
+            Requirements ({service.requirements.length})
           </h2>
           <div className="space-y-2">
             {service.requirements.map((req) => (
