@@ -20,8 +20,8 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: 'GovPH Tracker — Alamin ang requirements. Walang hassle.',
-    template: '%s | GovPH Tracker',
+    default: 'Gov Requirements Tracker — Alamin ang requirements. Walang hassle.',
+    template: '%s | Gov Requirements Tracker',
   },
   description:
     'A step-by-step guide to Philippine government services. Find requirements, track your progress, and complete any government transaction with confidence.',
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_PH',
-    title: 'GovPH Tracker',
+    title: 'Gov Requirements Tracker',
     description: 'Alamin ang requirements. Walang hassle.',
   },
 };

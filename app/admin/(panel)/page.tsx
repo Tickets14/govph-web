@@ -83,7 +83,9 @@ export default async function AdminDashboardPage() {
           />
           <div className="relative flex items-end justify-between">
             <div>
-              <p className="text-white/40 text-xs font-medium uppercase tracking-widest mb-1">GovPH Tracker</p>
+              <p className="text-white/40 text-xs font-medium uppercase tracking-widest mb-1">
+                Gov Requirements Tracker
+              </p>
               <h1 className="font-display font-bold text-2xl text-white leading-tight">Admin Dashboard</h1>
               <p className="text-white/40 text-sm mt-1">
                 {services.length} services across {agencies.length} agencies

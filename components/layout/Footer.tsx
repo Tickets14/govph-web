@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Shield, Heart } from 'lucide-react';
+import { ClipboardCheck, Heart } from 'lucide-react';
 
 export function Footer() {
   return (
@@ -10,10 +10,10 @@ export function Footer() {
           <div>
             <div className="flex items-center gap-2.5 mb-4">
               <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
-                <Shield className="w-4 h-4 text-gold" />
+                <ClipboardCheck className="w-4 h-4 text-gold" />
               </div>
               <span className="font-display font-bold text-[17px]">
-                GovPH <span className="text-gold">Tracker</span>
+                Gov Requirements <span className="text-gold">Tracker</span>
               </span>
             </div>
             <p className="text-sm text-white/50 leading-relaxed max-w-xs">
@@ -54,7 +54,9 @@ export function Footer() {
         </div>
 
         <div className="border-t border-white/[0.07] mt-10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-white/30">© {new Date().getFullYear()} GovPH Tracker. For the Filipino people.</p>
+          <p className="text-xs text-white/30">
+            © {new Date().getFullYear()} Gov Requirements Tracker. For the Filipino people.
+          </p>
           <p className="text-xs text-white/30 flex items-center gap-1.5">
             Made with <Heart className="w-3 h-3 text-gold fill-gold" /> for everyday Filipinos
           </p>

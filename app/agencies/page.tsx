@@ -5,7 +5,7 @@ import { AgencyCard } from '@/components/agencies/AgencyCard';
 
 export const metadata: Metadata = {
   title: 'Agencies',
-  description: 'Browse all Philippine government agencies covered by GovPH Tracker.',
+  description: 'Browse all Philippine government agencies covered by Gov Requirements Tracker.',
 };
 
 export default async function AgenciesPage() {

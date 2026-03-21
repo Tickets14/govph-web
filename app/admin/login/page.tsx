@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 import { LoginForm } from './LoginForm';
-import { Shield } from 'lucide-react';
+import { ClipboardCheck } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Admin Login — GovPH Tracker',
+  title: 'Admin Login — Gov Requirements Tracker',
 };
 
 export default function LoginPage() {
@@ -13,9 +13,9 @@ export default function LoginPage() {
         {/* Logo */}
         <div className="flex flex-col items-center mb-8">
           <div className="w-12 h-12 rounded-2xl bg-navy flex items-center justify-center mb-4 shadow-lg shadow-navy/20">
-            <Shield className="w-5 h-5 text-gold" />
+            <ClipboardCheck className="w-5 h-5 text-gold" />
           </div>
-          <h1 className="font-display font-bold text-lg text-navy">GovPH Tracker</h1>
+          <h1 className="font-display font-bold text-lg text-navy">Gov Requirements Tracker</h1>
           <p className="text-xs text-gray-400 mt-1">Admin Panel</p>
         </div>
 
@@ -25,7 +25,7 @@ export default function LoginPage() {
           <LoginForm />
         </div>
 
-        <p className="text-center text-xs text-gray-300 mt-5">GovPH Tracker · Admin Access Only</p>
+        <p className="text-center text-xs text-gray-300 mt-5">Gov Requirements Tracker · Admin Access Only</p>
       </div>
     </div>
   );

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, Shield } from 'lucide-react';
+import { Menu, X, ClipboardCheck } from 'lucide-react';
 import { NAV_LINKS } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 
@@ -18,10 +18,10 @@ export function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 group">
             <div className="w-8 h-8 rounded-lg bg-navy flex items-center justify-center transition-transform duration-200 group-hover:scale-105">
-              <Shield className="w-4 h-4 text-gold" strokeWidth={2.5} />
+              <ClipboardCheck className="w-4 h-4 text-gold" strokeWidth={2.5} />
             </div>
             <span className="font-display font-bold text-navy text-[17px] tracking-tight">
-              GovPH <span className="text-gold">Tracker</span>
+              Gov Requirements <span className="text-gold">Tracker</span>
             </span>
           </Link>
 
