@@ -1,5 +1,3 @@
-export const dynamic = 'force-dynamic';
-
 import type { Metadata } from 'next';
 import { getServices, getAgencies } from '@/lib/api';
 import { StepsClient } from './StepsClient';

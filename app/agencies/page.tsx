@@ -1,5 +1,3 @@
-export const dynamic = 'force-dynamic';
-
 import type { Metadata } from 'next';
 import { getAgencies, getServices } from '@/lib/api';
 import { PageHeader } from '@/components/common/PageHeader';
