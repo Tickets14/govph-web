@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import { FileText } from 'lucide-react';
 import { useServices } from '@/hooks/useServices';
 import { ServiceCard } from '@/components/services/ServiceCard';
 import { ServiceSearch } from '@/components/services/ServiceSearch';
@@ -37,12 +38,17 @@ export function ServicesClient({ initialQuery = '' }: ServicesClientProps) {
         <EmptyState title="No results found" description="Try a different keyword or remove the filter." />
       ) : (
         <div className="animate-fade-in">
-          <p className="text-xs text-gray-400 mb-5">
+          <div className="inline-flex items-center gap-1.5 bg-gray-50 dark:bg-gray-800 px-2.5 py-1 rounded-lg text-xs text-gray-500 dark:text-gray-400 mb-5">
+            <FileText className="w-3 h-3" />
             {services.length} service{services.length !== 1 ? 's' : ''} found
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {services.map((service, i) => (
-              <div key={service.id} className="animate-fade-in-up" style={{ animationDelay: `${i * 40}ms` }}>
+              <div
+                key={service.id}
+                className="animate-fade-in-up"
+                style={{ animationDelay: `${Math.min(i * 50, 500)}ms` }}
+              >
                 <ServiceCard service={service} />
               </div>
             ))}

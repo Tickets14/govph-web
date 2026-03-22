@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowRight, CheckCircle, List, Trophy, Search } from 'lucide-react';
+import { ArrowRight, CheckCircle, List, Trophy, Search, Shield, RefreshCw, Users } from 'lucide-react';
 import { getFeaturedServices, getAgencies } from '@/lib/api';
 import { ServiceCard } from '@/components/services/ServiceCard';
 import { AgencyLogo } from '@/components/agencies/AgencyLogo';
@@ -11,7 +11,7 @@ export default async function HomePage() {
   return (
     <div className="overflow-hidden">
       {/* ── Hero ─────────────────────────────────────────── */}
-      <section className="relative bg-navy overflow-hidden">
+      <section className="relative bg-gradient-to-br from-navy via-navy to-navy-dark overflow-hidden">
         {/* Minimal grid decoration */}
         <div
           className="absolute inset-0 pointer-events-none opacity-[0.03]"
@@ -21,13 +21,13 @@ export default async function HomePage() {
             backgroundSize: '48px 48px',
           }}
         />
-        {/* Subtle glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-gold/[0.06] rounded-full blur-3xl pointer-events-none" />
+        {/* Pulsing glow */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-gold/[0.06] rounded-full blur-3xl pointer-events-none animate-glow-pulse" />
 
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32 text-center">
           {/* Badge */}
           <div className="inline-flex items-center gap-2 bg-white/[0.07] rounded-full px-4 py-1.5 mb-8 border border-white/[0.1] animate-fade-in-up">
-            <span className="w-1.5 h-1.5 rounded-full bg-gold" />
+            <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />
             <span className="text-xs text-white/60 font-medium tracking-wide">Free. No fees. Always updated.</span>
           </div>
 
@@ -37,7 +37,7 @@ export default async function HomePage() {
             <span className="block text-4xl sm:text-5xl lg:text-[58px] text-gold mt-1">No hassle.</span>
           </h1>
 
-          <p className="mt-6 text-sm sm:text-base text-white/40 max-w-lg mx-auto leading-relaxed animate-fade-in-up animation-delay-200">
+          <p className="mt-6 text-sm sm:text-base text-white/50 max-w-lg mx-auto leading-relaxed animate-fade-in-up animation-delay-200">
             A step-by-step guide to all government transactions in the Philippines. Passport, NBI, driver&apos;s license
             — everything is here.
           </p>
@@ -49,7 +49,7 @@ export default async function HomePage() {
 
           {/* Quick links */}
           <div className="mt-5 flex flex-wrap items-center justify-center gap-2 animate-fade-in-up animation-delay-400">
-            <span className="text-[11px] text-white/25 uppercase tracking-wider">Popular</span>
+            <span className="text-[11px] text-white/40 uppercase tracking-wider">Popular</span>
             {['Passport', 'NBI Clearance', "Driver's License", 'PSA Certificate'].map((tag) => (
               <Link
                 key={tag}
@@ -60,6 +60,20 @@ export default async function HomePage() {
               </Link>
             ))}
           </div>
+
+          {/* Trust badges */}
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-6 animate-fade-in-up animation-delay-500">
+            {[
+              { icon: Shield, label: '100% Free' },
+              { icon: RefreshCw, label: 'Always Updated' },
+              { icon: Users, label: 'Community-Driven' },
+            ].map(({ icon: Icon, label }) => (
+              <div key={label} className="flex items-center gap-1.5 text-white/35 text-xs">
+                <Icon className="w-3.5 h-3.5" />
+                {label}
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Bottom fade */}
@@ -67,7 +81,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── Featured Services ─────────────────────────────── */}
-      <section className="py-20 bg-white dark:bg-gray-950">
+      <section className="py-20 bg-gradient-to-b from-white to-gray-50/50 dark:from-gray-950 dark:to-gray-900/50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-end justify-between mb-10 animate-fade-in-up">
             <div>
@@ -78,13 +92,13 @@ export default async function HomePage() {
             </div>
             <Link
               href="/services"
-              className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-gray-400 hover:text-navy transition-colors duration-200"
+              className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-gray-400 hover:text-navy dark:hover:text-gold transition-colors duration-200"
             >
               View all <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {services.map((service, i) => (
               <div key={service.id} className="animate-fade-in-up" style={{ animationDelay: `${i * 60}ms` }}>
                 <ServiceCard service={service} />
@@ -93,7 +107,10 @@ export default async function HomePage() {
           </div>
 
           <div className="mt-8 text-center sm:hidden animate-fade-in-up animation-delay-400">
-            <Link href="/services" className="inline-flex items-center gap-1.5 text-sm font-medium text-navy">
+            <Link
+              href="/services"
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-navy dark:text-gold"
+            >
               View all services <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
@@ -101,7 +118,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── How It Works ──────────────────────────────────── */}
-      <section className="py-20 bg-[#f7f8fa] dark:bg-gray-900/50">
+      <section className="py-20 bg-surface dark:bg-gray-900/50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14 animate-fade-in-up">
             <p className="text-[11px] font-semibold text-gold uppercase tracking-widest mb-2">How it works</p>
@@ -137,11 +154,11 @@ export default async function HomePage() {
             ].map(({ step, icon: Icon, title, description }, i) => (
               <div
                 key={step}
-                className="relative z-10 bg-white dark:bg-gray-900 rounded-2xl p-6 border border-gray-100 dark:border-white/10 text-center hover:border-gray-200 dark:hover:border-white/20 hover:shadow-sm transition-all duration-300 animate-fade-in-up"
+                className="relative z-10 bg-white dark:bg-gray-900 rounded-2xl p-7 border border-gray-100 dark:border-white/10 text-center hover:border-gray-200 dark:hover:border-white/20 hover:shadow-lg hover:shadow-navy/[0.03] dark:hover:shadow-black/20 hover:-translate-y-1 transition-all duration-300 animate-fade-in-up"
                 style={{ animationDelay: `${i * 100}ms` }}
               >
-                <div className="w-[52px] h-[52px] rounded-2xl bg-navy/[0.06] flex items-center justify-center mx-auto mb-4">
-                  <Icon className="w-5 h-5 text-navy/70" />
+                <div className="w-[52px] h-[52px] rounded-2xl bg-gradient-to-br from-navy/[0.06] to-navy/[0.12] dark:from-white/5 dark:to-white/10 flex items-center justify-center mx-auto mb-4">
+                  <Icon className="w-5 h-5 text-navy/70 dark:text-gray-300" />
                 </div>
                 <div className="text-[11px] font-bold text-gold/50 tracking-widest mb-1.5">{step}</div>
                 <h3 className="font-display font-semibold text-gray-900 dark:text-gray-100 mb-2 text-[15px]">
@@ -164,15 +181,16 @@ export default async function HomePage() {
             </div>
             <Link
               href="/agencies"
-              className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-gray-400 hover:text-navy transition-colors duration-200"
+              className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-gray-400 hover:text-navy dark:hover:text-gold transition-colors duration-200"
             >
               View all <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
 
-          <div className="grid grid-cols-4 sm:grid-cols-8 gap-2">
+          {/* Horizontal scroll on mobile, grid on desktop */}
+          <div className="flex overflow-x-auto scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-8 gap-2">
             {agencies.map((agency, i) => (
-              <div key={agency.id} className="animate-fade-in-up" style={{ animationDelay: `${i * 30}ms` }}>
+              <div key={agency.id} className="shrink-0 animate-fade-in-up" style={{ animationDelay: `${i * 30}ms` }}>
                 <AgencyLogo agency={agency} />
               </div>
             ))}
@@ -181,7 +199,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── CTA ───────────────────────────────────────────── */}
-      <section className="py-20 bg-navy relative overflow-hidden">
+      <section className="py-20 bg-gradient-to-br from-navy-dark via-navy to-navy-light relative overflow-hidden">
         <div
           className="absolute inset-0 pointer-events-none opacity-[0.03]"
           style={{
@@ -190,18 +208,21 @@ export default async function HomePage() {
             backgroundSize: '48px 48px',
           }}
         />
+        {/* Radial gold glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-gold/[0.04] rounded-full blur-3xl pointer-events-none" />
+
         <div className="relative max-w-3xl mx-auto px-4 sm:px-6 text-center animate-fade-in-up">
           <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gold/10 mb-6 border border-gold/20">
             <CheckCircle className="w-6 h-6 text-gold" />
           </div>
           <h2 className="font-display font-bold text-3xl sm:text-4xl text-white mb-4">Ready to get started?</h2>
-          <p className="text-white/40 text-sm sm:text-base mb-10 max-w-sm mx-auto leading-relaxed">
+          <p className="text-white/50 text-sm sm:text-base mb-10 max-w-sm mx-auto leading-relaxed">
             Explore all government services and start your checklist today.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
               href="/services"
-              className="inline-flex items-center justify-center gap-2 bg-gold text-navy font-semibold px-6 py-3 rounded-xl hover:bg-gold/90 transition-all duration-200 hover:-translate-y-0.5 text-sm"
+              className="inline-flex items-center justify-center gap-2 bg-gold text-navy font-semibold px-6 py-3 rounded-xl hover:bg-gold/90 transition-all duration-200 hover:-translate-y-0.5 text-sm shadow-lg shadow-gold/20"
             >
               Browse Services <ArrowRight className="w-4 h-4" />
             </Link>

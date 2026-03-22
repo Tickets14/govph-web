@@ -1,6 +1,9 @@
-export function ServiceCardSkeleton() {
+export function ServiceCardSkeleton({ index = 0 }: { index?: number }) {
   return (
-    <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-white/10 p-5 space-y-3">
+    <div
+      className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-white/10 p-5 space-y-3 animate-fade-in"
+      style={{ animationDelay: `${index * 60}ms` }}
+    >
       <div className="flex items-start justify-between gap-3">
         <div className="space-y-2 flex-1">
           <div className="h-3.5 w-14 rounded-full animate-shimmer" />
@@ -20,9 +23,9 @@ export function ServiceCardSkeleton() {
 
 export function LoadingGrid({ count = 6 }: { count?: number }) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
       {Array.from({ length: count }).map((_, i) => (
-        <ServiceCardSkeleton key={i} />
+        <ServiceCardSkeleton key={i} index={i} />
       ))}
     </div>
   );

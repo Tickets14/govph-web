@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { ArrowRight, Bookmark } from 'lucide-react';
 import { useBookmarks } from '@/hooks/useBookmarks';
 import { ServiceCard } from '@/components/services/ServiceCard';
 import { EmptyState } from '@/components/common/EmptyState';
@@ -92,7 +94,19 @@ export function SavedServicesClient() {
 
   if (services.length === 0) {
     return (
-      <EmptyState title="No saved services yet" description="Tap the bookmark icon on any service to save it here." />
+      <EmptyState
+        title="No saved services yet"
+        description="Tap the bookmark icon on any service to save it here."
+        icon={<Bookmark className="w-7 h-7 text-gray-300 dark:text-gray-600" />}
+        action={
+          <Link
+            href="/services"
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-navy dark:text-gold hover:underline"
+          >
+            Browse Services <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        }
+      />
     );
   }
 
@@ -101,9 +115,9 @@ export function SavedServicesClient() {
       <p className="text-xs text-gray-400 dark:text-gray-500 mb-5">
         {services.length} saved service{services.length !== 1 ? 's' : ''}
       </p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {services.map((service, i) => (
-          <div key={service.id} className="animate-fade-in-up" style={{ animationDelay: `${i * 40}ms` }}>
+          <div key={service.id} className="animate-fade-in-up" style={{ animationDelay: `${Math.min(i * 50, 500)}ms` }}>
             <ServiceCard service={service} />
           </div>
         ))}

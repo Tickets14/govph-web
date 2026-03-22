@@ -23,7 +23,7 @@ function toSlug(name: string) {
 }
 
 const inputCls =
-  'w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-gray-900 placeholder:text-gray-300 outline-none focus:border-navy/40 focus:ring-2 focus:ring-navy/8 transition-all duration-200 bg-gray-50/50';
+  'w-full h-11 px-3.5 rounded-xl border border-gray-200 text-sm text-gray-900 placeholder:text-gray-400 outline-none focus:border-navy/40 focus:ring-2 focus:ring-navy/8 transition-all duration-200 bg-white dark:bg-gray-900 dark:border-gray-700 dark:text-gray-100 dark:placeholder:text-gray-500 dark:focus:border-gold/40 dark:focus:ring-gold/10';
 
 export function ServiceForm({ initialData, agencies }: ServiceFormProps) {
   const router = useRouter();
@@ -86,8 +86,8 @@ export function ServiceForm({ initialData, agencies }: ServiceFormProps) {
   return (
     <form onSubmit={handleSubmit} className="space-y-5 max-w-2xl">
       <div>
-        <label className="block text-xs font-medium text-gray-500 uppercase tracking-wide mb-1.5">
-          Service Name <span className="text-red-400">*</span>
+        <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1.5">
+          Service Name <span className="text-gold">*</span>
         </label>
         <input
           className={inputCls}
@@ -99,8 +99,8 @@ export function ServiceForm({ initialData, agencies }: ServiceFormProps) {
       </div>
 
       <div>
-        <label className="block text-xs font-medium text-gray-500 uppercase tracking-wide mb-1.5">
-          Slug <span className="text-red-400">*</span>
+        <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1.5">
+          Slug <span className="text-gold">*</span>
         </label>
         <input
           className={inputCls}
@@ -113,27 +113,27 @@ export function ServiceForm({ initialData, agencies }: ServiceFormProps) {
       </div>
 
       <div>
-        <label className="block text-xs font-medium text-gray-500 uppercase tracking-wide mb-1.5">
-          Description <span className="text-red-400">*</span>
+        <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1.5">
+          Description <span className="text-gold">*</span>
         </label>
         <textarea
           value={form.description}
           onChange={(e) => setForm({ ...form, description: e.target.value })}
           placeholder="Brief description of the service..."
           rows={3}
-          className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-gray-900 placeholder:text-gray-300 outline-none focus:border-navy/40 focus:ring-2 focus:ring-navy/8 transition-all duration-200 bg-gray-50/50 resize-none"
+          className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-gray-900 placeholder:text-gray-400 outline-none focus:border-navy/40 focus:ring-2 focus:ring-navy/8 transition-all duration-200 bg-white dark:bg-gray-900 dark:border-gray-700 dark:text-gray-100 dark:placeholder:text-gray-500 dark:focus:border-gold/40 dark:focus:ring-gold/10 resize-none"
           required
         />
       </div>
 
       <div>
-        <label className="block text-xs font-medium text-gray-500 uppercase tracking-wide mb-1.5">
-          Agency <span className="text-red-400">*</span>
+        <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1.5">
+          Agency <span className="text-gold">*</span>
         </label>
         <select
           value={form.agencyId}
           onChange={(e) => setForm({ ...form, agencyId: e.target.value })}
-          className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-gray-900 outline-none focus:border-navy/40 focus:ring-2 focus:ring-navy/8 transition-all duration-200 bg-gray-50/50"
+          className="w-full h-11 px-3.5 rounded-xl border border-gray-200 text-sm text-gray-900 outline-none focus:border-navy/40 focus:ring-2 focus:ring-navy/8 transition-all duration-200 bg-white dark:bg-gray-900 dark:border-gray-700 dark:text-gray-100 dark:focus:border-gold/40 dark:focus:ring-gold/10"
           required
         >
           <option value="">Select agency...</option>
@@ -146,13 +146,13 @@ export function ServiceForm({ initialData, agencies }: ServiceFormProps) {
       </div>
 
       <div>
-        <label className="block text-xs font-medium text-gray-500 uppercase tracking-wide mb-1.5">
-          Category <span className="text-red-400">*</span>
+        <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1.5">
+          Category <span className="text-gold">*</span>
         </label>
         <select
           value={form.category}
           onChange={(e) => setForm({ ...form, category: e.target.value })}
-          className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-gray-900 outline-none focus:border-navy/40 focus:ring-2 focus:ring-navy/8 transition-all duration-200 bg-gray-50/50"
+          className="w-full h-11 px-3.5 rounded-xl border border-gray-200 text-sm text-gray-900 outline-none focus:border-navy/40 focus:ring-2 focus:ring-navy/8 transition-all duration-200 bg-white dark:bg-gray-900 dark:border-gray-700 dark:text-gray-100 dark:focus:border-gold/40 dark:focus:ring-gold/10"
           required
         >
           <option value="">Select category...</option>
@@ -166,7 +166,7 @@ export function ServiceForm({ initialData, agencies }: ServiceFormProps) {
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-medium text-gray-500 uppercase tracking-wide mb-1.5">
+          <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1.5">
             Estimated Time
           </label>
           <input
@@ -177,7 +177,7 @@ export function ServiceForm({ initialData, agencies }: ServiceFormProps) {
           />
         </div>
         <div>
-          <label className="block text-xs font-medium text-gray-500 uppercase tracking-wide mb-1.5">
+          <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1.5">
             Appointment URL
           </label>
           <input
@@ -197,14 +197,14 @@ export function ServiceForm({ initialData, agencies }: ServiceFormProps) {
           onChange={(e) => setForm({ ...form, isActive: e.target.checked })}
           className="w-4 h-4 rounded accent-navy border-gray-300"
         />
-        <span className="text-sm text-gray-600">Active (visible to users)</span>
+        <span className="text-sm text-gray-600 dark:text-gray-400">Active (visible to users)</span>
       </label>
 
       <div className="flex items-center gap-3 pt-1">
         <button
           type="submit"
           disabled={submitting}
-          className="inline-flex items-center gap-2 bg-navy text-white text-sm font-medium px-5 py-2.5 rounded-xl hover:bg-navy/90 active:scale-[0.98] transition-all duration-200 disabled:opacity-50"
+          className="inline-flex items-center gap-2 bg-gradient-to-r from-navy to-navy-light text-white text-sm font-medium px-5 py-2.5 rounded-xl hover:from-navy-light hover:to-navy active:scale-[0.98] transition-all duration-200 disabled:opacity-50 shadow-sm"
         >
           {submitting && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
           {submitting ? 'Saving…' : initialData ? 'Save Changes' : 'Create Service'}
@@ -212,7 +212,7 @@ export function ServiceForm({ initialData, agencies }: ServiceFormProps) {
         <button
           type="button"
           onClick={() => router.back()}
-          className="text-sm font-medium text-gray-400 hover:text-gray-700 px-4 py-2.5 rounded-xl border border-gray-200 hover:border-gray-300 transition-all duration-200"
+          className="text-sm font-medium text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-200"
         >
           Cancel
         </button>

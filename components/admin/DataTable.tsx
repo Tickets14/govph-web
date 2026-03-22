@@ -19,15 +19,15 @@ export function DataTable<T extends Record<string, unknown>>({
   emptyMessage = 'No data found.',
 }: DataTableProps<T>) {
   return (
-    <div className="overflow-x-auto rounded-xl border border-gray-200">
+    <div className="overflow-x-auto rounded-2xl border border-gray-200 overflow-hidden">
       <table className="w-full text-sm">
         <thead>
-          <tr className="border-b border-gray-200 bg-gray-50">
+          <tr className="border-b border-gray-200 bg-gray-50/80 sticky top-0 z-10">
             {columns.map((col) => (
               <th
                 key={col.key}
                 className={cn(
-                  'px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider',
+                  'px-5 py-3.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider',
                   col.className
                 )}
               >
@@ -39,15 +39,15 @@ export function DataTable<T extends Record<string, unknown>>({
         <tbody className="bg-white divide-y divide-gray-100">
           {data.length === 0 ? (
             <tr>
-              <td colSpan={columns.length} className="px-4 py-10 text-center text-gray-400 text-sm">
+              <td colSpan={columns.length} className="px-5 py-10 text-center text-gray-400 text-sm">
                 {emptyMessage}
               </td>
             </tr>
           ) : (
             data.map((row, i) => (
-              <tr key={i} className="hover:bg-gray-50 transition-colors">
+              <tr key={i} className="hover:bg-navy/[0.02] transition-colors">
                 {columns.map((col) => (
-                  <td key={col.key} className={cn('px-4 py-3 text-gray-700', col.className)}>
+                  <td key={col.key} className={cn('px-5 py-3.5 text-gray-700', col.className)}>
                     {col.render ? col.render(row) : (row[col.key] as React.ReactNode)}
                   </td>
                 ))}

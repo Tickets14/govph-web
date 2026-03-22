@@ -41,7 +41,6 @@ type AdminSidebarInnerProps = {
 function AdminSidebarInner({ pathname }: AdminSidebarInnerProps) {
   const [open, setOpen] = useState(false);
 
-  // Prevent body scroll when sidebar is open on mobile
   useEffect(() => {
     if (open) {
       document.body.style.overflow = 'hidden';
@@ -56,27 +55,28 @@ function AdminSidebarInner({ pathname }: AdminSidebarInnerProps) {
   const sidebarContent = (
     <>
       {/* Logo */}
-      <div className="px-5 py-5 border-b border-white/6 flex items-center justify-between">
+      <div className="px-5 py-5 border-b border-gold/10 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-lg bg-gold/15 flex items-center justify-center shrink-0">
             <Shield className="w-4 h-4 text-gold" />
           </div>
           <div>
             <p className="font-display font-bold text-sm leading-none text-white">Gov Requirements Tracker</p>
-            <p className="text-[11px] text-white/30 mt-0.5">Admin Panel</p>
+            <p className="text-[11px] text-white/40 mt-0.5">Admin Panel</p>
           </div>
         </div>
         <button
           onClick={() => setOpen(false)}
           className="lg:hidden p-1.5 rounded-lg text-white/40 hover:text-white/80 hover:bg-white/6 transition-colors"
+          aria-label="Close sidebar"
         >
           <X className="w-5 h-5" />
         </button>
       </div>
 
       {/* Nav */}
-      <nav className="flex-1 px-3 py-4 space-y-0.5">
-        <p className="text-[10px] font-semibold uppercase tracking-widest text-white/20 px-3 mb-3">Menu</p>
+      <nav className="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto" role="navigation" aria-label="Admin navigation">
+        <p className="text-[10px] font-semibold uppercase tracking-widest text-white/40 px-3 mb-3">Menu</p>
         {links.map(({ href, label, icon: Icon }) => {
           const active = href === '/admin' ? pathname === '/admin' : pathname.startsWith(href);
           return (
@@ -84,11 +84,12 @@ function AdminSidebarInner({ pathname }: AdminSidebarInnerProps) {
               key={href}
               href={href}
               className={cn(
-                'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all duration-200',
-                active ? 'bg-white/10 text-white font-medium' : 'text-white/50 hover:bg-white/6 hover:text-white/80'
+                'relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all duration-200',
+                active
+                  ? 'bg-white/10 text-white font-medium border-l-2 border-l-gold'
+                  : 'text-white/50 hover:bg-white/6 hover:text-white/80 hover:translate-x-0.5'
               )}
             >
-              {active && <span className="absolute left-3 w-0.5 h-4 rounded-full bg-gold" />}
               <Icon className={cn('w-4 h-4 shrink-0 transition-colors', active ? 'text-gold' : 'text-white/40')} />
               {label}
             </Link>
@@ -97,7 +98,8 @@ function AdminSidebarInner({ pathname }: AdminSidebarInnerProps) {
       </nav>
 
       {/* Footer */}
-      <div className="px-3 py-4 border-t border-white/6 space-y-0.5">
+      <hr className="border-white/6 mx-3" />
+      <div className="px-3 py-4 space-y-0.5">
         <Link
           href="/"
           className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm text-white/40 hover:text-white/70 hover:bg-white/6 transition-all duration-200"
@@ -122,14 +124,19 @@ function AdminSidebarInner({ pathname }: AdminSidebarInnerProps) {
       <button
         onClick={() => setOpen(true)}
         className="lg:hidden fixed top-4 left-4 z-50 p-2 rounded-xl bg-navy-dark text-white/70 hover:text-white shadow-lg transition-colors"
+        aria-label="Open sidebar"
       >
         <Menu className="w-5 h-5" />
       </button>
 
       {/* Mobile overlay */}
-      {open && (
-        <div className="lg:hidden fixed inset-0 z-40 bg-black/50 backdrop-blur-sm" onClick={() => setOpen(false)} />
-      )}
+      <div
+        className={cn(
+          'lg:hidden fixed inset-0 z-40 bg-black/50 backdrop-blur-sm transition-opacity duration-300',
+          open ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        )}
+        onClick={() => setOpen(false)}
+      />
 
       {/* Mobile sidebar (slide-in) */}
       <aside
