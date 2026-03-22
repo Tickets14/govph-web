@@ -74,7 +74,7 @@ export function AgencyEditForm({ agency }: AgencyEditFormProps) {
             onChange={(e) => setForm({ ...form, [key]: e.target.value })}
             placeholder={placeholder}
             required={required}
-            className="w-full h-11 px-3.5 rounded-xl border border-gray-200 text-sm text-gray-900 placeholder:text-gray-400 outline-none focus:border-navy/40 focus:ring-2 focus:ring-navy/8 transition-all duration-200 bg-white dark:bg-gray-900 dark:border-gray-700 dark:text-gray-100 dark:placeholder:text-gray-500 dark:focus:border-gold/40 dark:focus:ring-gold/10"
+            className="w-full h-11 px-3.5 rounded-xl border border-gray-200 text-sm text-gray-900 placeholder:text-gray-400 outline-none focus:border-navy/40 focus:ring-2 focus:ring-navy/8 transition-all duration-200 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100 dark:placeholder:text-gray-500 dark:focus:border-gold/40 dark:focus:ring-gold/10"
           />
           {hint && <p className="text-[11px] text-gray-400 mt-1">{hint}</p>}
         </div>

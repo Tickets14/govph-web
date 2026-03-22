@@ -53,20 +53,20 @@ export default function LoginPage() {
       </div>
 
       {/* Right form panel */}
-      <div className="w-full lg:w-1/2 bg-gray-50 flex items-center justify-center px-4">
+      <div className="w-full lg:w-1/2 bg-gray-50 dark:bg-gray-900 flex items-center justify-center px-4">
         <div className="w-full max-w-sm animate-fade-in-up">
           {/* Logo — visible on mobile only */}
           <div className="flex flex-col items-center mb-8 lg:hidden">
             <div className="w-12 h-12 rounded-2xl bg-navy flex items-center justify-center mb-4 shadow-lg shadow-navy/20">
               <ClipboardCheck className="w-5 h-5 text-gold" />
             </div>
-            <h1 className="font-display font-bold text-lg text-navy">Gov Requirements Tracker</h1>
+            <h1 className="font-display font-bold text-lg text-navy dark:text-white">Gov Requirements Tracker</h1>
             <p className="text-xs text-gray-400 mt-1">Admin Panel</p>
           </div>
 
           {/* Card */}
-          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-7 animate-fade-in-up animation-delay-100">
-            <h2 className="font-semibold text-gray-900 text-base mb-6">Sign in to continue</h2>
+          <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-white/[0.07] shadow-sm p-7 animate-fade-in-up animation-delay-100">
+            <h2 className="font-semibold text-gray-900 dark:text-gray-100 text-base mb-6">Sign in to continue</h2>
             <LoginForm />
           </div>
 

@@ -33,12 +33,12 @@ export function Pagination({ currentPage, totalPages, basePath }: PaginationProp
       {currentPage > 1 ? (
         <Link
           href={href(currentPage - 1)}
-          className="inline-flex items-center justify-center w-9 h-9 rounded-lg text-gray-400 hover:text-navy hover:bg-navy/[0.06] transition-colors duration-150"
+          className="inline-flex items-center justify-center w-9 h-9 rounded-lg text-gray-400 hover:text-navy hover:bg-navy/[0.06] dark:hover:text-gold dark:hover:bg-gold/[0.06] transition-colors duration-150"
         >
           <ChevronLeft className="w-4 h-4" />
         </Link>
       ) : (
-        <span className="inline-flex items-center justify-center w-9 h-9 rounded-lg text-gray-200">
+        <span className="inline-flex items-center justify-center w-9 h-9 rounded-lg text-gray-200 dark:text-gray-700">
           <ChevronLeft className="w-4 h-4" />
         </span>
       )}
@@ -54,8 +54,8 @@ export function Pagination({ currentPage, totalPages, basePath }: PaginationProp
             href={href(p)}
             className={`inline-flex items-center justify-center w-9 h-9 rounded-lg text-xs font-medium transition-colors duration-150 ${
               p === currentPage
-                ? 'bg-navy text-white shadow-sm ring-1 ring-navy/20'
-                : 'text-gray-500 hover:text-navy hover:bg-navy/[0.06]'
+                ? 'bg-navy text-white shadow-sm ring-1 ring-navy/20 dark:bg-gold dark:text-navy-dark dark:ring-gold/20'
+                : 'text-gray-500 hover:text-navy hover:bg-navy/[0.06] dark:text-gray-400 dark:hover:text-gold dark:hover:bg-gold/[0.06]'
             }`}
           >
             {p}
@@ -66,12 +66,12 @@ export function Pagination({ currentPage, totalPages, basePath }: PaginationProp
       {currentPage < totalPages ? (
         <Link
           href={href(currentPage + 1)}
-          className="inline-flex items-center justify-center w-9 h-9 rounded-lg text-gray-400 hover:text-navy hover:bg-navy/[0.06] transition-colors duration-150"
+          className="inline-flex items-center justify-center w-9 h-9 rounded-lg text-gray-400 hover:text-navy hover:bg-navy/[0.06] dark:hover:text-gold dark:hover:bg-gold/[0.06] transition-colors duration-150"
         >
           <ChevronRight className="w-4 h-4" />
         </Link>
       ) : (
-        <span className="inline-flex items-center justify-center w-9 h-9 rounded-lg text-gray-200">
+        <span className="inline-flex items-center justify-center w-9 h-9 rounded-lg text-gray-200 dark:text-gray-700">
           <ChevronRight className="w-4 h-4" />
         </span>
       )}

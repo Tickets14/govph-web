@@ -11,12 +11,12 @@ export default async function AdminStepsPage() {
     <div className="p-8 animate-fade-in max-w-3xl">
       {/* Header */}
       <div className="mb-8 animate-fade-in-up">
-        <h1 className="font-display font-bold text-xl text-navy">Steps</h1>
+        <h1 className="font-display font-bold text-xl text-navy dark:text-white">Steps</h1>
         <p className="text-xs text-gray-400 mt-1">Manage steps for each government service.</p>
       </div>
 
       {services.length === 0 ? (
-        <div className="bg-white rounded-2xl border border-gray-100 py-16 text-center">
+        <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-white/[0.07] py-16 text-center">
           <p className="text-sm text-gray-400">No services found. Create a service first.</p>
         </div>
       ) : (

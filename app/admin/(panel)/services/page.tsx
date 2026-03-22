@@ -22,7 +22,7 @@ export default async function AdminServicesPage({ searchParams }: { searchParams
       {/* Header */}
       <div className="flex items-center justify-between mb-7 animate-fade-in-up">
         <div>
-          <h1 className="font-display font-bold text-xl text-navy">Services</h1>
+          <h1 className="font-display font-bold text-xl text-navy dark:text-white">Services</h1>
           <p className="text-xs text-gray-400 mt-1">{total} services total</p>
         </div>
         <Link
@@ -34,10 +34,10 @@ export default async function AdminServicesPage({ searchParams }: { searchParams
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden animate-fade-in-up animation-delay-100">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-white/[0.07] overflow-hidden animate-fade-in-up animation-delay-100">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-gray-100">
+            <tr className="border-b border-gray-100 dark:border-white/[0.07]">
               <th className="px-5 py-3 text-left text-[11px] font-semibold text-gray-400 uppercase tracking-wider">
                 Service
               </th>
@@ -55,32 +55,38 @@ export default async function AdminServicesPage({ searchParams }: { searchParams
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-50">
+          <tbody className="divide-y divide-gray-50 dark:divide-white/5">
             {services.map((service, i) => {
               const agency = agencyById[service.agencyId];
               return (
                 <tr
                   key={service.id}
-                  className="hover:bg-gray-50/70 transition-colors duration-150 animate-fade-in-up"
+                  className="hover:bg-gray-50/70 dark:hover:bg-white/[0.03] transition-colors duration-150 animate-fade-in-up"
                   style={{ animationDelay: `${i * 30 + 150}ms` }}
                 >
                   <td className="px-5 py-3.5">
-                    <p className="font-medium text-gray-900 text-sm">{service.title}</p>
+                    <p className="font-medium text-gray-900 dark:text-gray-100 text-sm">{service.title}</p>
                     <p className="text-[11px] text-gray-400 mt-0.5">{service.slug}</p>
                   </td>
-                  <td className="px-5 py-3.5 hidden sm:table-cell text-xs text-gray-500">
-                    {agency ? <span>{agency.acronym}</span> : <span className="text-gray-200">—</span>}
+                  <td className="px-5 py-3.5 hidden sm:table-cell text-xs text-gray-500 dark:text-gray-400">
+                    {agency ? (
+                      <span>{agency.acronym}</span>
+                    ) : (
+                      <span className="text-gray-200 dark:text-gray-700">—</span>
+                    )}
                   </td>
                   <td className="px-5 py-3.5 hidden md:table-cell text-xs text-gray-400">
-                    {service.processingTime ?? <span className="text-gray-200">—</span>}
+                    {service.processingTime ?? <span className="text-gray-200 dark:text-gray-700">—</span>}
                   </td>
                   <td className="px-5 py-3.5 hidden lg:table-cell">
                     {service.isActive ? (
-                      <span className="text-[11px] font-medium text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full">
+                      <span className="text-[11px] font-medium text-emerald-600 bg-emerald-50 dark:text-emerald-400 dark:bg-emerald-950/40 px-2.5 py-1 rounded-full">
                         Active
                       </span>
                     ) : (
-                      <span className="text-[11px] text-gray-400 bg-gray-100 px-2.5 py-1 rounded-full">Inactive</span>
+                      <span className="text-[11px] text-gray-400 bg-gray-100 dark:bg-gray-800 dark:text-gray-500 px-2.5 py-1 rounded-full">
+                        Inactive
+                      </span>
                     )}
                   </td>
                   <td className="px-5 py-3.5">
@@ -95,7 +101,10 @@ export default async function AdminServicesPage({ searchParams }: { searchParams
         {services.length === 0 && (
           <div className="py-16 text-center">
             <p className="text-sm text-gray-400">No services yet.</p>
-            <Link href="/admin/services/new" className="text-xs text-navy mt-1 inline-block hover:underline">
+            <Link
+              href="/admin/services/new"
+              className="text-xs text-navy dark:text-gold mt-1 inline-block hover:underline"
+            >
               Add your first service
             </Link>
           </div>

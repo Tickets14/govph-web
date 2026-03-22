@@ -36,7 +36,10 @@ export function LoginForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label htmlFor="username" className="block text-xs font-medium text-gray-600 mb-1.5 uppercase tracking-wide">
+        <label
+          htmlFor="username"
+          className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1.5 uppercase tracking-wide"
+        >
           Username
         </label>
         <input
@@ -45,13 +48,16 @@ export function LoginForm() {
           type="text"
           required
           autoComplete="username"
-          className="w-full h-11 px-3.5 rounded-xl border border-gray-200 text-sm text-gray-900 placeholder:text-gray-400 outline-none focus:border-navy/40 focus:ring-2 focus:ring-navy/8 transition-all duration-200 bg-white"
+          className="w-full h-11 px-3.5 rounded-xl border border-gray-200 dark:border-gray-700 text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-400 outline-none focus:border-navy/40 focus:ring-2 focus:ring-navy/8 dark:focus:border-gold/40 dark:focus:ring-gold/10 transition-all duration-200 bg-white dark:bg-gray-800"
           placeholder="admin"
         />
       </div>
 
       <div>
-        <label htmlFor="password" className="block text-xs font-medium text-gray-600 mb-1.5 uppercase tracking-wide">
+        <label
+          htmlFor="password"
+          className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1.5 uppercase tracking-wide"
+        >
           Password
         </label>
         <div className="relative">
@@ -61,7 +67,7 @@ export function LoginForm() {
             type={showPassword ? 'text' : 'password'}
             required
             autoComplete="current-password"
-            className="w-full h-11 px-3.5 pr-10 rounded-xl border border-gray-200 text-sm text-gray-900 placeholder:text-gray-400 outline-none focus:border-navy/40 focus:ring-2 focus:ring-navy/8 transition-all duration-200 bg-white"
+            className="w-full h-11 px-3.5 pr-10 rounded-xl border border-gray-200 dark:border-gray-700 text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-400 outline-none focus:border-navy/40 focus:ring-2 focus:ring-navy/8 dark:focus:border-gold/40 dark:focus:ring-gold/10 transition-all duration-200 bg-white dark:bg-gray-800"
             placeholder="••••••••"
           />
           <button
@@ -77,7 +83,7 @@ export function LoginForm() {
       </div>
 
       {error && (
-        <div className="flex items-start gap-2 text-xs text-red-500 bg-red-50 border border-red-100 px-3 py-2.5 rounded-xl animate-scale-in">
+        <div className="flex items-start gap-2 text-xs text-red-500 bg-red-50 dark:bg-red-950/30 border border-red-100 dark:border-red-900/30 px-3 py-2.5 rounded-xl animate-scale-in">
           <AlertCircle className="w-3.5 h-3.5 mt-0.5 shrink-0" />
           {error}
         </div>

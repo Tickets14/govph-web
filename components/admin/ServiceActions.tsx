@@ -41,14 +41,14 @@ export function ServiceActions({ id, slug, name }: ServiceActionsProps) {
       <div className="flex items-center justify-end gap-1">
         <Link
           href={`/admin/services/${slug}/edit`}
-          className="p-2 rounded-lg text-gray-300 hover:text-navy hover:bg-gray-50 transition-all duration-150"
+          className="p-2 rounded-lg text-gray-300 dark:text-gray-600 hover:text-navy dark:hover:text-gold hover:bg-gray-50 dark:hover:bg-white/5 transition-all duration-150"
           title="Edit"
         >
           <Pencil className="w-3.5 h-3.5" />
         </Link>
         <button
           onClick={() => setShowDialog(true)}
-          className="p-2 rounded-lg text-gray-300 hover:text-red-400 hover:bg-red-50 transition-all duration-150"
+          className="p-2 rounded-lg text-gray-300 dark:text-gray-600 hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 transition-all duration-150"
           title="Delete"
         >
           <Trash2 className="w-3.5 h-3.5" />
@@ -62,18 +62,19 @@ export function ServiceActions({ id, slug, name }: ServiceActionsProps) {
             onClick={() => !deleting && setShowDialog(false)}
           >
             <div
-              className="bg-white rounded-2xl shadow-xl border border-gray-100 w-full max-w-sm mx-4 p-6 animate-scale-in"
+              className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-white/[0.07] w-full max-w-sm mx-4 p-6 animate-scale-in"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 rounded-full bg-red-50 dark:bg-red-950/40 flex items-center justify-center shrink-0">
                   <AlertTriangle className="w-5 h-5 text-red-400" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-gray-900">Delete service</p>
+                  <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">Delete service</p>
                   <p className="text-xs text-gray-400 mt-1 leading-relaxed">
-                    Are you sure you want to delete <span className="font-medium text-gray-600">{name}</span>? This
-                    action cannot be undone.
+                    Are you sure you want to delete{' '}
+                    <span className="font-medium text-gray-600 dark:text-gray-300">{name}</span>? This action cannot be
+                    undone.
                   </p>
                 </div>
               </div>
@@ -82,7 +83,7 @@ export function ServiceActions({ id, slug, name }: ServiceActionsProps) {
                 <button
                   onClick={() => setShowDialog(false)}
                   disabled={deleting}
-                  className="px-4 py-2 text-sm text-gray-500 hover:text-gray-700 rounded-xl border border-gray-200 hover:border-gray-300 transition-all duration-200 disabled:opacity-50"
+                  className="px-4 py-2 text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-gray-300 transition-all duration-200 disabled:opacity-50"
                 >
                   Cancel
                 </button>

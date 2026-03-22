@@ -45,14 +45,14 @@ export default function NewAgencyPage() {
     <div className="p-8 animate-fade-in">
       <Link
         href="/admin/agencies"
-        className="inline-flex items-center gap-1.5 text-xs text-gray-400 hover:text-navy mb-8 transition-colors duration-200"
+        className="inline-flex items-center gap-1.5 text-xs text-gray-400 hover:text-navy dark:hover:text-gold mb-8 transition-colors duration-200"
       >
         <ArrowLeft className="w-3.5 h-3.5" /> Back to Agencies
       </Link>
-      <h1 className="font-display font-bold text-xl text-navy mb-1">Create New Agency</h1>
+      <h1 className="font-display font-bold text-xl text-navy dark:text-white mb-1">Create New Agency</h1>
       <p className="text-sm text-gray-400 mb-8">Add a new government agency to the tracker.</p>
 
-      <div className="bg-white rounded-2xl border border-gray-100 p-6 max-w-lg animate-fade-in-up animation-delay-100">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-white/[0.07] p-6 max-w-lg animate-fade-in-up animation-delay-100">
         <form onSubmit={handleSubmit} className="space-y-5">
           {[
             {
@@ -86,8 +86,8 @@ export default function NewAgencyPage() {
             },
           ].map(({ key, label, placeholder, type, required, hint }) => (
             <div key={key}>
-              <label className="block text-xs font-medium text-gray-500 uppercase tracking-wide mb-1.5">
-                {label} {required && <span className="text-red-400">*</span>}
+              <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1.5">
+                {label} {required && <span className="text-gold">*</span>}
               </label>
               <input
                 type={type}
@@ -95,7 +95,7 @@ export default function NewAgencyPage() {
                 onChange={(e) => setForm({ ...form, [key]: e.target.value })}
                 placeholder={placeholder}
                 required={required}
-                className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-gray-900 placeholder:text-gray-300 outline-none focus:border-navy/40 focus:ring-2 focus:ring-navy/8 transition-all duration-200 bg-gray-50/50"
+                className="w-full h-11 px-3.5 rounded-xl border border-gray-200 text-sm text-gray-900 placeholder:text-gray-400 outline-none focus:border-navy/40 focus:ring-2 focus:ring-navy/8 transition-all duration-200 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100 dark:placeholder:text-gray-500 dark:focus:border-gold/40 dark:focus:ring-gold/10"
               />
               {hint && <p className="text-[11px] text-gray-400 mt-1">{hint}</p>}
             </div>
@@ -105,7 +105,7 @@ export default function NewAgencyPage() {
             <button
               type="submit"
               disabled={submitting}
-              className="inline-flex items-center gap-2 bg-navy text-white text-sm font-medium px-5 py-2.5 rounded-xl hover:bg-navy/90 active:scale-[0.98] transition-all duration-200 disabled:opacity-50"
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-navy to-navy-light text-white text-sm font-medium px-5 py-2.5 rounded-xl hover:from-navy-light hover:to-navy active:scale-[0.98] transition-all duration-200 disabled:opacity-50 shadow-sm"
             >
               {submitting && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
               {submitting ? 'Creating…' : 'Create Agency'}
@@ -113,7 +113,7 @@ export default function NewAgencyPage() {
             <button
               type="button"
               onClick={() => router.back()}
-              className="text-sm font-medium text-gray-400 hover:text-gray-700 px-4 py-2.5 rounded-xl border border-gray-200 hover:border-gray-300 transition-all duration-200"
+              className="text-sm font-medium text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-200"
             >
               Cancel
             </button>

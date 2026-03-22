@@ -24,13 +24,13 @@ export default async function EditServicePage({ params }: Props) {
     <div className="p-8 animate-fade-in">
       <Link
         href="/admin/services"
-        className="inline-flex items-center gap-1.5 text-xs text-gray-400 hover:text-navy mb-8 transition-colors duration-200"
+        className="inline-flex items-center gap-1.5 text-xs text-gray-400 hover:text-navy dark:hover:text-gold mb-8 transition-colors duration-200"
       >
         <ArrowLeft className="w-3.5 h-3.5" /> Back to Services
       </Link>
-      <h1 className="font-display font-bold text-xl text-navy mb-1">Edit Service</h1>
+      <h1 className="font-display font-bold text-xl text-navy dark:text-white mb-1">Edit Service</h1>
       <p className="text-sm text-gray-400 mb-8">{service.title}</p>
-      <div className="bg-white rounded-2xl border border-gray-100 p-6 animate-fade-in-up animation-delay-100">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-white/[0.07] p-6 animate-fade-in-up animation-delay-100">
         <ServiceForm initialData={service} agencies={agencies} />
       </div>
     </div>

@@ -17,7 +17,7 @@ export default async function AdminAgenciesPage({ searchParams }: { searchParams
       {/* Header */}
       <div className="flex items-center justify-between mb-7 animate-fade-in-up">
         <div>
-          <h1 className="font-display font-bold text-xl text-navy">Agencies</h1>
+          <h1 className="font-display font-bold text-xl text-navy dark:text-white">Agencies</h1>
           <p className="text-xs text-gray-400 mt-1">{total} agencies total</p>
         </div>
         <Link
@@ -29,10 +29,10 @@ export default async function AdminAgenciesPage({ searchParams }: { searchParams
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden animate-fade-in-up animation-delay-100">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-white/[0.07] overflow-hidden animate-fade-in-up animation-delay-100">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-gray-100">
+            <tr className="border-b border-gray-100 dark:border-white/[0.07]">
               <th className="px-5 py-3 text-left text-[11px] font-semibold text-gray-400 uppercase tracking-wider">
                 Agency
               </th>
@@ -47,18 +47,18 @@ export default async function AdminAgenciesPage({ searchParams }: { searchParams
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-50">
+          <tbody className="divide-y divide-gray-50 dark:divide-white/5">
             {agencies.map((agency, i) => (
               <tr
                 key={agency.id}
-                className="hover:bg-gray-50/70 transition-colors duration-150 animate-fade-in-up"
+                className="hover:bg-gray-50/70 dark:hover:bg-white/[0.03] transition-colors duration-150 animate-fade-in-up"
                 style={{ animationDelay: `${i * 30 + 150}ms` }}
               >
                 <td className="px-5 py-3.5">
-                  <p className="font-semibold text-gray-900 text-sm">{agency.acronym}</p>
+                  <p className="font-semibold text-gray-900 dark:text-gray-100 text-sm">{agency.acronym}</p>
                   <p className="text-xs text-gray-400 mt-0.5">{agency.name}</p>
                 </td>
-                <td className="px-5 py-3.5 hidden md:table-cell text-gray-500 text-xs max-w-xs">
+                <td className="px-5 py-3.5 hidden md:table-cell text-gray-500 dark:text-gray-400 text-xs max-w-xs">
                   <p className="line-clamp-1">{agency.description}</p>
                 </td>
                 <td className="px-5 py-3.5 hidden lg:table-cell">
@@ -67,12 +67,12 @@ export default async function AdminAgenciesPage({ searchParams }: { searchParams
                       href={agency.website}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-xs text-gray-400 hover:text-navy transition-colors duration-200"
+                      className="inline-flex items-center gap-1 text-xs text-gray-400 hover:text-navy dark:hover:text-gold transition-colors duration-200"
                     >
                       <ExternalLink className="w-3.5 h-3.5" />
                     </a>
                   ) : (
-                    <span className="text-gray-200 text-xs">—</span>
+                    <span className="text-gray-200 dark:text-gray-700 text-xs">—</span>
                   )}
                 </td>
                 <td className="px-5 py-3.5">
@@ -86,7 +86,10 @@ export default async function AdminAgenciesPage({ searchParams }: { searchParams
         {agencies.length === 0 && (
           <div className="py-16 text-center">
             <p className="text-sm text-gray-400">No agencies yet.</p>
-            <Link href="/admin/agencies/new" className="text-xs text-navy mt-1 inline-block hover:underline">
+            <Link
+              href="/admin/agencies/new"
+              className="text-xs text-navy dark:text-gold mt-1 inline-block hover:underline"
+            >
               Add your first agency
             </Link>
           </div>

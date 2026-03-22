@@ -25,8 +25,8 @@ const entities: Entity[] = [
     name: 'Agency',
     description: 'A government agency that owns one or more services.',
     icon: Building2,
-    color: 'text-violet-600',
-    iconBg: 'bg-violet-50',
+    color: 'text-violet-600 dark:text-violet-400',
+    iconBg: 'bg-violet-50 dark:bg-violet-950/40',
     fields: [
       {
         name: 'name',
@@ -62,8 +62,8 @@ const entities: Entity[] = [
     name: 'Service',
     description: 'A specific government service offered by an agency (e.g., passport, birth certificate).',
     icon: FileText,
-    color: 'text-blue-600',
-    iconBg: 'bg-blue-50',
+    color: 'text-blue-600 dark:text-blue-400',
+    iconBg: 'bg-blue-50 dark:bg-blue-950/40',
     fields: [
       {
         name: 'name',
@@ -120,8 +120,8 @@ const entities: Entity[] = [
     name: 'Step',
     description: 'An ordered step the applicant must complete as part of a service.',
     icon: ListChecks,
-    color: 'text-emerald-600',
-    iconBg: 'bg-emerald-50',
+    color: 'text-emerald-600 dark:text-emerald-400',
+    iconBg: 'bg-emerald-50 dark:bg-emerald-950/40',
     fields: [
       {
         name: 'title',
@@ -150,8 +150,8 @@ const entities: Entity[] = [
     name: 'Requirement',
     description: 'A document or item the applicant must bring or prepare for a specific step.',
     icon: ClipboardList,
-    color: 'text-amber-600',
-    iconBg: 'bg-amber-50',
+    color: 'text-amber-600 dark:text-amber-400',
+    iconBg: 'bg-amber-50 dark:bg-amber-950/40',
     fields: [
       {
         name: 'name',
@@ -186,11 +186,11 @@ const entities: Entity[] = [
 ];
 
 const typeColors: Record<string, string> = {
-  string: 'bg-blue-50 text-blue-600',
-  url: 'bg-purple-50 text-purple-600',
-  number: 'bg-orange-50 text-orange-600',
-  boolean: 'bg-teal-50 text-teal-600',
-  select: 'bg-pink-50 text-pink-600',
+  string: 'bg-blue-50 text-blue-600 dark:bg-blue-950/40 dark:text-blue-400',
+  url: 'bg-purple-50 text-purple-600 dark:bg-purple-950/40 dark:text-purple-400',
+  number: 'bg-orange-50 text-orange-600 dark:bg-orange-950/40 dark:text-orange-400',
+  boolean: 'bg-teal-50 text-teal-600 dark:bg-teal-950/40 dark:text-teal-400',
+  select: 'bg-pink-50 text-pink-600 dark:bg-pink-950/40 dark:text-pink-400',
 };
 
 export default function DictionaryPage() {
@@ -198,7 +198,7 @@ export default function DictionaryPage() {
     <div className="p-8 animate-fade-in">
       {/* Header */}
       <div className="mb-8 animate-fade-in-up">
-        <h1 className="font-display font-bold text-xl text-navy">Field Dictionary</h1>
+        <h1 className="font-display font-bold text-xl text-navy dark:text-white">Field Dictionary</h1>
         <p className="text-xs text-gray-400 mt-1">
           Reference guide for all fields when creating agencies, services, steps, and requirements.
         </p>
@@ -210,16 +210,16 @@ export default function DictionaryPage() {
           return (
             <div
               key={entity.name}
-              className="bg-white rounded-2xl border border-gray-100 overflow-hidden animate-fade-in-up"
+              className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-white/[0.07] overflow-hidden animate-fade-in-up"
               style={{ animationDelay: `${ei * 80 + 80}ms` }}
             >
               {/* Entity header */}
-              <div className="flex items-center gap-3 px-5 py-4 border-b border-gray-50">
+              <div className="flex items-center gap-3 px-5 py-4 border-b border-gray-50 dark:border-white/5">
                 <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 ${entity.iconBg}`}>
                   <Icon className={`w-4 h-4 ${entity.color}`} />
                 </div>
                 <div>
-                  <h2 className="text-sm font-semibold text-gray-900">{entity.name}</h2>
+                  <h2 className="text-sm font-semibold text-gray-900 dark:text-gray-100">{entity.name}</h2>
                   <p className="text-xs text-gray-400 mt-0.5">{entity.description}</p>
                 </div>
               </div>
@@ -228,7 +228,7 @@ export default function DictionaryPage() {
               <div className="overflow-x-auto">
                 <table className="w-full text-xs">
                   <thead>
-                    <tr className="border-b border-gray-50">
+                    <tr className="border-b border-gray-50 dark:border-white/5">
                       <th className="text-left px-5 py-2.5 font-medium text-gray-400 uppercase tracking-wide text-[10px] w-36">
                         Field
                       </th>
@@ -246,11 +246,14 @@ export default function DictionaryPage() {
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-50">
+                  <tbody className="divide-y divide-gray-50 dark:divide-white/5">
                     {entity.fields.map((field) => (
-                      <tr key={field.name} className="hover:bg-gray-50/40 transition-colors duration-100">
+                      <tr
+                        key={field.name}
+                        className="hover:bg-gray-50/40 dark:hover:bg-white/[0.03] transition-colors duration-100"
+                      >
                         <td className="px-5 py-3.5">
-                          <code className="font-mono text-[11px] font-semibold text-navy/70 bg-navy/4 px-1.5 py-0.5 rounded-md">
+                          <code className="font-mono text-[11px] font-semibold text-navy/70 bg-navy/4 dark:text-gold/70 dark:bg-gold/10 px-1.5 py-0.5 rounded-md">
                             {field.name}
                           </code>
                         </td>
@@ -268,13 +271,15 @@ export default function DictionaryPage() {
                               <span className="text-[10px] font-medium">Yes</span>
                             </span>
                           ) : (
-                            <span className="inline-flex items-center gap-1 text-gray-300">
+                            <span className="inline-flex items-center gap-1 text-gray-300 dark:text-gray-600">
                               <Circle className="w-3 h-3" />
                               <span className="text-[10px] font-medium">Optional</span>
                             </span>
                           )}
                         </td>
-                        <td className="px-3 py-3.5 text-gray-500 leading-relaxed">{field.description}</td>
+                        <td className="px-3 py-3.5 text-gray-500 dark:text-gray-400 leading-relaxed">
+                          {field.description}
+                        </td>
                         <td className="px-5 py-3.5">
                           {field.example && <span className="text-[11px] text-gray-400 italic">{field.example}</span>}
                         </td>

@@ -167,6 +167,9 @@
   .bg-surface {
     background-color: #f7f8fa;
   }
+  .dark .bg-surface {
+    background-color: oklch(0.15 0.008 260);
+  }
   .border-navy {
     border-color: #1b2a4a;
   }

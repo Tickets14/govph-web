@@ -10,12 +10,12 @@ export default async function AdminRequirementsPage() {
   return (
     <div className="p-8 animate-fade-in max-w-3xl">
       <div className="mb-8 animate-fade-in-up">
-        <h1 className="font-display font-bold text-xl text-navy">Requirements</h1>
+        <h1 className="font-display font-bold text-xl text-navy dark:text-white">Requirements</h1>
         <p className="text-xs text-gray-400 mt-1">Manage requirements for each step in a government service.</p>
       </div>
 
       {services.length === 0 ? (
-        <div className="bg-white rounded-2xl border border-gray-100 py-16 text-center">
+        <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-white/[0.07] py-16 text-center">
           <p className="text-sm text-gray-400">No services found. Create a service first.</p>
         </div>
       ) : (

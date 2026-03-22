@@ -30,7 +30,7 @@ let localCounter = 0;
 const newLocalId = () => `local-${++localCounter}`;
 
 const inputCls =
-  'w-full px-3 py-2 rounded-lg border border-gray-200 text-sm text-gray-900 placeholder:text-gray-300 outline-none focus:border-navy/40 focus:ring-2 focus:ring-navy/8 transition-all duration-200 bg-white';
+  'w-full px-3 py-2 rounded-lg border border-gray-200 text-sm text-gray-900 placeholder:text-gray-300 outline-none focus:border-navy/40 focus:ring-2 focus:ring-navy/8 transition-all duration-200 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100 dark:placeholder:text-gray-500';
 
 // Map API step shape → Step type
 function mapStep(s: { id: string; order: number; title: string; description: string }): Step {
@@ -266,11 +266,11 @@ export function StepsClient({ services, agencies }: StepsClientProps) {
       {/* Agency → Service selectors */}
       <div className="flex flex-col gap-3 animate-fade-in-up">
         <div className="flex items-center gap-3">
-          <label className="text-xs font-medium text-gray-500 w-14 shrink-0">Agency</label>
+          <label className="text-xs font-medium text-gray-500 dark:text-gray-400 w-14 shrink-0">Agency</label>
           <select
             value={selectedAgencyId}
             onChange={(e) => switchAgency(e.target.value)}
-            className="flex-1 max-w-sm px-3.5 py-2 rounded-xl border border-gray-200 text-sm text-gray-900 outline-none focus:border-navy/40 focus:ring-2 focus:ring-navy/8 transition-all duration-200 bg-white"
+            className="flex-1 max-w-sm px-3.5 py-2 rounded-xl border border-gray-200 text-sm text-gray-900 outline-none focus:border-navy/40 focus:ring-2 focus:ring-navy/8 transition-all duration-200 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100"
           >
             {agencies.map((a) => (
               <option key={a.id} value={a.id}>
@@ -281,12 +281,12 @@ export function StepsClient({ services, agencies }: StepsClientProps) {
         </div>
 
         <div className="flex items-center gap-3">
-          <label className="text-xs font-medium text-gray-500 w-14 shrink-0">Service</label>
+          <label className="text-xs font-medium text-gray-500 dark:text-gray-400 w-14 shrink-0">Service</label>
           <select
             value={selectedServiceId}
             onChange={(e) => switchService(e.target.value)}
             disabled={agencyServices.length === 0}
-            className="flex-1 max-w-sm px-3.5 py-2 rounded-xl border border-gray-200 text-sm text-gray-900 outline-none focus:border-navy/40 focus:ring-2 focus:ring-navy/8 transition-all duration-200 bg-white disabled:opacity-50"
+            className="flex-1 max-w-sm px-3.5 py-2 rounded-xl border border-gray-200 text-sm text-gray-900 outline-none focus:border-navy/40 focus:ring-2 focus:ring-navy/8 transition-all duration-200 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100 disabled:opacity-50"
           >
             {agencyServices.length === 0 ? (
               <option>No services for this agency</option>
@@ -304,7 +304,7 @@ export function StepsClient({ services, agencies }: StepsClientProps) {
       {/* ── Saved steps ───────────────────────────────────── */}
       <div className="animate-fade-in-up animation-delay-100">
         {loadingSteps ? (
-          <div className="bg-white rounded-2xl border border-gray-100 divide-y divide-gray-50 overflow-hidden">
+          <div className="bg-white rounded-2xl border border-gray-100 dark:bg-gray-800 dark:border-white/[0.07] divide-y divide-gray-50 dark:divide-white/5 overflow-hidden">
             {Array.from({ length: 3 }).map((_, i) => (
               <div key={i} className="flex items-start gap-3 px-5 py-4">
                 <div className="w-7 h-7 rounded-full animate-shimmer shrink-0" />
@@ -316,27 +316,29 @@ export function StepsClient({ services, agencies }: StepsClientProps) {
             ))}
           </div>
         ) : steps.length === 0 && pending.length === 0 && !showDraftForm ? (
-          <div className="bg-white rounded-2xl border border-gray-100 py-14 text-center">
+          <div className="bg-white rounded-2xl border border-gray-100 dark:bg-gray-800 dark:border-white/[0.07] py-14 text-center">
             <p className="text-sm text-gray-400">No steps for this service yet.</p>
             <button
               onClick={() => setShowDraftForm(true)}
-              className="text-xs text-navy mt-1 inline-block hover:underline"
+              className="text-xs text-navy dark:text-gold mt-1 inline-block hover:underline"
             >
               Add the first step
             </button>
           </div>
         ) : steps.length > 0 ? (
-          <div className="bg-white rounded-2xl border border-gray-100 divide-y divide-gray-50 overflow-hidden">
+          <div className="bg-white rounded-2xl border border-gray-100 dark:bg-gray-800 dark:border-white/[0.07] divide-y divide-gray-50 dark:divide-white/5 overflow-hidden">
             {steps.map((step, idx) => (
               <div
                 key={step.id}
                 className={cn(
                   'group flex items-start gap-3 px-5 py-4 transition-colors duration-150 animate-fade-in-up',
-                  editingId === step.id ? 'bg-gray-50/70' : 'hover:bg-gray-50/40'
+                  editingId === step.id
+                    ? 'bg-gray-50/70 dark:bg-white/5'
+                    : 'hover:bg-gray-50/40 dark:hover:bg-white/[0.03]'
                 )}
                 style={{ animationDelay: `${idx * 25}ms` }}
               >
-                <div className="w-7 h-7 rounded-full bg-navy/[0.06] flex items-center justify-center shrink-0 mt-0.5">
+                <div className="w-7 h-7 rounded-full bg-navy/[0.06] dark:bg-white/10 flex items-center justify-center shrink-0 mt-0.5">
                   <span className="text-[11px] font-bold text-navy/50">{step.order}</span>
                 </div>
 
@@ -372,7 +374,7 @@ export function StepsClient({ services, agencies }: StepsClientProps) {
                         </button>
                         <button
                           onClick={cancelEdit}
-                          className="text-xs text-gray-400 hover:text-gray-600 px-3 py-1.5 rounded-lg border border-gray-200 hover:border-gray-300 transition-all duration-200"
+                          className="text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 px-3 py-1.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-gray-300 transition-all duration-200"
                         >
                           Cancel
                         </button>
@@ -380,7 +382,7 @@ export function StepsClient({ services, agencies }: StepsClientProps) {
                     </div>
                   ) : (
                     <>
-                      <p className="text-sm font-medium text-gray-900 leading-snug">{step.title}</p>
+                      <p className="text-sm font-medium text-gray-900 dark:text-gray-100 leading-snug">{step.title}</p>
                       {step.description && (
                         <p className="text-xs text-gray-400 mt-0.5 leading-relaxed">{step.description}</p>
                       )}
@@ -393,7 +395,7 @@ export function StepsClient({ services, agencies }: StepsClientProps) {
                     <button
                       onClick={() => moveStep(step.id, 'up')}
                       disabled={idx === 0 || reordering}
-                      className="p-1.5 rounded-lg text-gray-300 hover:text-navy hover:bg-gray-100 disabled:opacity-20 transition-all duration-150"
+                      className="p-1.5 rounded-lg text-gray-300 dark:text-gray-600 hover:text-navy dark:hover:text-gold hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-20 transition-all duration-150"
                       title="Move up"
                     >
                       <ChevronUp className="w-3.5 h-3.5" />
@@ -401,14 +403,14 @@ export function StepsClient({ services, agencies }: StepsClientProps) {
                     <button
                       onClick={() => moveStep(step.id, 'down')}
                       disabled={idx === steps.length - 1 || reordering}
-                      className="p-1.5 rounded-lg text-gray-300 hover:text-navy hover:bg-gray-100 disabled:opacity-20 transition-all duration-150"
+                      className="p-1.5 rounded-lg text-gray-300 dark:text-gray-600 hover:text-navy dark:hover:text-gold hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-20 transition-all duration-150"
                       title="Move down"
                     >
                       <ChevronDown className="w-3.5 h-3.5" />
                     </button>
                     <button
                       onClick={() => startEdit(step)}
-                      className="p-1.5 rounded-lg text-gray-300 hover:text-navy hover:bg-gray-100 transition-all duration-150"
+                      className="p-1.5 rounded-lg text-gray-300 dark:text-gray-600 hover:text-navy dark:hover:text-gold hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-150"
                       title="Edit"
                     >
                       <Pencil className="w-3.5 h-3.5" />
@@ -416,7 +418,7 @@ export function StepsClient({ services, agencies }: StepsClientProps) {
                     <button
                       onClick={() => setConfirmDeleteId(step.id)}
                       disabled={deletingId === step.id}
-                      className="p-1.5 rounded-lg text-gray-300 hover:text-red-400 hover:bg-red-50 disabled:opacity-40 transition-all duration-150"
+                      className="p-1.5 rounded-lg text-gray-300 dark:text-gray-600 hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 disabled:opacity-40 transition-all duration-150"
                       title="Delete"
                     >
                       {deletingId === step.id ? (
@@ -440,7 +442,7 @@ export function StepsClient({ services, agencies }: StepsClientProps) {
             Unsaved — {pending.length} {pending.length === 1 ? 'step' : 'steps'} queued
           </p>
 
-          <div className="bg-amber-50/60 rounded-2xl border border-amber-100 divide-y divide-amber-100/80 overflow-hidden">
+          <div className="bg-amber-50/60 dark:bg-amber-950/20 rounded-2xl border border-amber-100 dark:border-amber-900/30 divide-y divide-amber-100/80 overflow-hidden">
             {pending.map((p, idx) => (
               <div key={p.localId} className="flex items-start gap-3 px-5 py-3.5 group animate-fade-in-up">
                 <div className="w-7 h-7 rounded-full bg-amber-100 flex items-center justify-center shrink-0 mt-0.5">
@@ -451,13 +453,13 @@ export function StepsClient({ services, agencies }: StepsClientProps) {
                     value={p.title}
                     onChange={(e) => updatePending(p.localId, 'title', e.target.value)}
                     placeholder="Step title"
-                    className="w-full px-3 py-1.5 rounded-lg border border-amber-200 text-sm text-gray-900 placeholder:text-gray-300 outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-400/10 transition-all duration-200 bg-white"
+                    className="w-full px-3 py-1.5 rounded-lg border border-amber-200 dark:border-amber-900/40 text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-300 dark:placeholder:text-gray-500 outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-400/10 transition-all duration-200 bg-white dark:bg-gray-800"
                   />
                   <input
                     value={p.description}
                     onChange={(e) => updatePending(p.localId, 'description', e.target.value)}
                     placeholder="Description (optional)"
-                    className="w-full px-3 py-1.5 rounded-lg border border-amber-200 text-xs text-gray-700 placeholder:text-gray-300 outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-400/10 transition-all duration-200 bg-white"
+                    className="w-full px-3 py-1.5 rounded-lg border border-amber-200 dark:border-amber-900/40 text-xs text-gray-700 dark:text-gray-300 placeholder:text-gray-300 dark:placeholder:text-gray-500 outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-400/10 transition-all duration-200 bg-white dark:bg-gray-800"
                   />
                 </div>
                 <button
@@ -477,9 +479,9 @@ export function StepsClient({ services, agencies }: StepsClientProps) {
       {showDraftForm && (
         <form
           onSubmit={queueStep}
-          className="bg-white rounded-2xl border border-navy/10 p-5 space-y-3 animate-scale-in"
+          className="bg-white rounded-2xl border border-navy/10 dark:bg-gray-800 dark:border-navy/20 p-5 space-y-3 animate-scale-in"
         >
-          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+          <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">
             Step {steps.length + pending.length + 1}
           </p>
           <input
@@ -488,14 +490,14 @@ export function StepsClient({ services, agencies }: StepsClientProps) {
             onChange={(e) => setCurrentDraft({ ...currentDraft, title: e.target.value })}
             placeholder="Step title"
             required
-            className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-gray-900 placeholder:text-gray-300 outline-none focus:border-navy/40 focus:ring-2 focus:ring-navy/8 transition-all duration-200 bg-gray-50/50"
+            className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-gray-900 placeholder:text-gray-300 outline-none focus:border-navy/40 focus:ring-2 focus:ring-navy/8 transition-all duration-200 bg-gray-50/50 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100 dark:placeholder:text-gray-500"
           />
           <textarea
             value={currentDraft.description}
             onChange={(e) => setCurrentDraft({ ...currentDraft, description: e.target.value })}
             placeholder="Description (optional)"
             rows={2}
-            className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-gray-900 placeholder:text-gray-300 outline-none focus:border-navy/40 focus:ring-2 focus:ring-navy/8 transition-all duration-200 bg-gray-50/50 resize-none"
+            className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-gray-900 placeholder:text-gray-300 outline-none focus:border-navy/40 focus:ring-2 focus:ring-navy/8 transition-all duration-200 bg-gray-50/50 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100 dark:placeholder:text-gray-500 resize-none"
           />
           <div className="flex gap-2">
             <button
@@ -515,7 +517,7 @@ export function StepsClient({ services, agencies }: StepsClientProps) {
                 setShowDraftForm(false);
                 setCurrentDraft(emptyDraft);
               }}
-              className="text-sm text-gray-400 hover:text-gray-600 px-4 py-2 rounded-xl border border-gray-200 hover:border-gray-300 transition-all duration-200"
+              className="text-sm text-gray-400 hover:text-gray-600 dark:border-gray-700 dark:hover:text-gray-300 px-4 py-2 rounded-xl border border-gray-200 hover:border-gray-300 transition-all duration-200"
             >
               Done adding
             </button>
@@ -529,7 +531,7 @@ export function StepsClient({ services, agencies }: StepsClientProps) {
           {!showDraftForm && (
             <button
               onClick={() => setShowDraftForm(true)}
-              className="flex items-center gap-2 py-2.5 px-4 rounded-2xl border border-dashed border-gray-200 text-sm text-gray-400 hover:text-navy hover:border-navy/20 hover:bg-white transition-all duration-200 group"
+              className="flex items-center gap-2 py-2.5 px-4 rounded-2xl border border-dashed border-gray-200 dark:border-gray-700 text-sm text-gray-400 hover:text-navy hover:border-navy/20 hover:bg-white dark:hover:bg-gray-900 transition-all duration-200 group"
             >
               <Plus className="w-4 h-4 transition-transform duration-200 group-hover:scale-110" />
               Add step
@@ -587,18 +589,18 @@ export function StepsClient({ services, agencies }: StepsClientProps) {
             onClick={() => setConfirmDeleteId(null)}
           >
             <div
-              className="bg-white rounded-2xl shadow-xl border border-gray-100 w-full max-w-sm mx-4 p-6 animate-scale-in"
+              className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-white/[0.07] w-full max-w-sm mx-4 p-6 animate-scale-in"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 rounded-full bg-red-50 dark:bg-red-950/40 flex items-center justify-center shrink-0">
                   <AlertTriangle className="w-5 h-5 text-red-400" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-gray-900">Delete step</p>
+                  <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">Delete step</p>
                   <p className="text-xs text-gray-400 mt-1 leading-relaxed">
                     Are you sure you want to delete{' '}
-                    <span className="font-medium text-gray-600">
+                    <span className="font-medium text-gray-600 dark:text-gray-300">
                       {steps.find((s) => s.id === confirmDeleteId)?.title}
                     </span>
                     ? This action cannot be undone.
@@ -608,7 +610,7 @@ export function StepsClient({ services, agencies }: StepsClientProps) {
               <div className="flex justify-end gap-2 mt-6">
                 <button
                   onClick={() => setConfirmDeleteId(null)}
-                  className="px-4 py-2 text-sm text-gray-500 hover:text-gray-700 rounded-xl border border-gray-200 hover:border-gray-300 transition-all duration-200"
+                  className="px-4 py-2 text-sm text-gray-500 hover:text-gray-700 rounded-xl border border-gray-200 hover:border-gray-300 dark:border-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-all duration-200"
                 >
                   Cancel
                 </button>
