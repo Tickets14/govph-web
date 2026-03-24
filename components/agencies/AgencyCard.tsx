@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight, ExternalLink } from 'lucide-react';
+import { ArrowRight, ExternalLink, MapPin } from 'lucide-react';
 import type { Agency } from '@/types';
 
 interface AgencyCardProps {
@@ -33,18 +33,31 @@ export function AgencyCard({ agency, serviceCount }: AgencyCardProps) {
             </span>
           )}
         </div>
-        {agency.website && (
+        <div className="flex items-center gap-1.5 mt-0.5">
           <a
-            href={agency.website}
+            href={`https://www.google.com/maps/search/${encodeURIComponent(agency.name)}`}
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
-            className="text-gray-200 dark:text-gray-600 hover:text-gray-400 dark:hover:text-gray-300 transition-colors duration-200 mt-0.5"
-            aria-label={`Visit ${agency.name} website`}
+            className="text-gray-200 dark:text-gray-600 hover:text-gold transition-colors duration-200"
+            aria-label={`Find nearest ${agency.acronym} office`}
+            title="Find nearest office"
           >
-            <ExternalLink className="w-3.5 h-3.5" />
+            <MapPin className="w-4.5 h-4.5" />
           </a>
-        )}
+          {agency.website && (
+            <a
+              href={agency.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="text-gray-200 dark:text-gray-600 hover:text-gray-400 dark:hover:text-gray-300 transition-colors duration-200"
+              aria-label={`Visit ${agency.name} website`}
+            >
+              <ExternalLink className="w-3.5 h-3.5" />
+            </a>
+          )}
+        </div>
       </div>
 
       <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-sm leading-snug mb-1.5">{agency.name}</h3>

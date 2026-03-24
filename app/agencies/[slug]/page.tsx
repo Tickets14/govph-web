@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowLeft, ExternalLink, Globe } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Globe, MapPin } from 'lucide-react';
 import { getAgencyBySlug } from '@/lib/api';
 import { ServiceCard } from '@/components/services/ServiceCard';
 
@@ -62,18 +62,30 @@ export default async function AgencyDetailPage({ params }: Props) {
               </h1>
               <p className="text-sm text-gold font-medium mt-0.5">{agency.acronym}</p>
               <p className="text-sm text-gray-500 dark:text-gray-400 mt-3 leading-relaxed">{agency.description}</p>
-              {agency.website && (
+              <div className="flex items-center gap-2 mt-4">
                 <a
-                  href={agency.website}
+                  href={`https://www.google.com/maps/search/${encodeURIComponent(agency.name)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 mt-4 text-xs font-medium text-navy/60 dark:text-gray-400 hover:text-navy dark:hover:text-gold transition-colors duration-200 border border-gray-100 dark:border-white/10 rounded-lg px-3 py-1.5"
+                  className="inline-flex items-center gap-1.5 text-xs font-medium text-gold hover:text-gold/80 transition-colors duration-200 border border-gold/30 hover:border-gold/50 rounded-lg px-3 py-1.5"
                 >
-                  <Globe className="w-3.5 h-3.5" />
-                  Official Website
+                  <MapPin className="w-3.5 h-3.5" />
+                  Find Nearest Office
                   <ExternalLink className="w-3 h-3" />
                 </a>
-              )}
+                {agency.website && (
+                  <a
+                    href={agency.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-xs font-medium text-navy/60 dark:text-gray-400 hover:text-navy dark:hover:text-gold transition-colors duration-200 border border-gray-100 dark:border-white/10 rounded-lg px-3 py-1.5"
+                  >
+                    <Globe className="w-3.5 h-3.5" />
+                    Official Website
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                )}
+              </div>
             </div>
           </div>
         </div>

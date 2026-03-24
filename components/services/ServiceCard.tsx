@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Clock, PhilippinePeso, ArrowRight, CheckCircle } from 'lucide-react';
+import { Clock, PhilippinePeso, ArrowRight, CheckCircle, MapPin } from 'lucide-react';
 import type { Service } from '@/types';
 import { SERVICE_CATEGORIES } from '@/lib/constants';
 import { BookmarkButton } from './BookmarkButton';
@@ -88,7 +88,20 @@ export function ServiceCard({ service, completedSteps }: ServiceCardProps) {
             </span>
           )}
           {service.agency && (
-            <span className="ml-auto font-semibold text-navy/50 dark:text-white/30">{service.agency.acronym}</span>
+            <span className="ml-auto flex items-center gap-2">
+              <a
+                href={`https://www.google.com/maps/search/${encodeURIComponent(service.agency.name)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="text-gray-300 dark:text-gray-600 hover:text-gold transition-colors duration-200"
+                aria-label={`Find nearest ${service.agency.acronym} office`}
+                title="Find nearest office"
+              >
+                <MapPin className="w-3 h-3" />
+              </a>
+              <span className="font-semibold text-navy/50 dark:text-white/30">{service.agency.acronym}</span>
+            </span>
           )}
         </div>
 
