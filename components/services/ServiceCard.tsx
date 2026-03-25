@@ -1,8 +1,47 @@
 import Link from 'next/link';
-import { Clock, PhilippinePeso, ArrowRight, CheckCircle, MapPin } from 'lucide-react';
+import {
+  Clock,
+  PhilippinePeso,
+  CheckCircle,
+  MapPin,
+  FileText,
+  Globe,
+  Home,
+  Briefcase,
+  ShieldCheck,
+  Landmark,
+  Award,
+  Stethoscope,
+  Heart,
+  Car,
+  IdCard,
+  Plane,
+  Receipt,
+  Users,
+  MoreHorizontal,
+} from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import type { Service } from '@/types';
 import { SERVICE_CATEGORIES } from '@/lib/constants';
 import { BookmarkButton } from './BookmarkButton';
+
+const CATEGORY_ICONS: Record<string, LucideIcon> = {
+  FileText,
+  Globe,
+  Home,
+  Briefcase,
+  ShieldCheck,
+  Landmark,
+  Award,
+  Stethoscope,
+  Heart,
+  Car,
+  IdCard,
+  Plane,
+  Receipt,
+  Users,
+  MoreHorizontal,
+};
 
 interface ServiceCardProps {
   service: Service;
@@ -41,7 +80,7 @@ export function ServiceCard({ service, completedSteps }: ServiceCardProps) {
   const isComplete = hasProgress && progress === total;
 
   return (
-    <div className="group relative flex flex-col bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-white/[0.07] p-5 hover:border-gray-200 dark:hover:border-gold/30 hover:shadow-md hover:shadow-navy/[0.04] dark:hover:shadow-black/20 hover:-translate-y-0.5 transition-all duration-300 h-full">
+    <div className="group relative flex flex-col bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-white/[0.07] p-5 hover:border-gray-200 dark:hover:border-gold/30 hover:shadow-md hover:shadow-navy/4 dark:hover:shadow-black/20 hover:-translate-y-0.5 transition-all duration-300 h-full">
       {/* Gold left accent bar on hover */}
       <div className="absolute left-0 top-4 bottom-4 w-0.5 rounded-full bg-gold scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-center" />
 
@@ -51,23 +90,25 @@ export function ServiceCard({ service, completedSteps }: ServiceCardProps) {
       </div>
 
       <Link href={`/services/${service.slug}`} className="flex flex-col h-full">
-        <div className="flex items-start justify-between gap-3 mb-2.5">
-          <div className="flex-1 min-w-0">
-            {category && (
-              <span
-                className={`inline-flex items-center gap-1.5 text-[11px] font-medium px-2 py-0.5 rounded-full mb-2 ${colors.badge}`}
-              >
-                <span className={`w-1.5 h-1.5 rounded-full ${colors.dot}`} />
-                {category.label}
-              </span>
-            )}
-            <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-sm leading-snug group-hover:text-navy dark:group-hover:text-gold transition-colors duration-200 line-clamp-2 pr-6">
-              {service.title}
-            </h3>
-          </div>
-          <div className="shrink-0 w-8 h-8 rounded-xl flex items-center justify-center transition-all duration-200 group-hover:bg-navy group-hover:shadow-sm group-hover:scale-105">
-            <ArrowRight className="w-3.5 h-3.5 text-gray-300 dark:text-gray-600 group-hover:text-white transition-colors duration-200" />
-          </div>
+        <div className="mb-2.5 pr-8">
+          {category && (
+            <span
+              className={`inline-flex items-center gap-1.5 text-[11px] font-medium px-2 py-0.5 rounded-full mb-2 ${colors.badge}`}
+            >
+              {(() => {
+                const Icon = CATEGORY_ICONS[category.icon];
+                return Icon ? (
+                  <Icon className="w-3 h-3" />
+                ) : (
+                  <span className={`w-1.5 h-1.5 rounded-full ${colors.dot}`} />
+                );
+              })()}
+              {category.label}
+            </span>
+          )}
+          <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-sm leading-snug group-hover:text-navy dark:group-hover:text-gold transition-colors duration-200 line-clamp-2">
+            {service.title}
+          </h3>
         </div>
 
         <p className="text-xs text-gray-400 dark:text-gray-500 line-clamp-2 leading-relaxed mb-4 flex-1">
@@ -122,7 +163,7 @@ export function ServiceCard({ service, completedSteps }: ServiceCardProps) {
             </div>
             <div className="h-1.5 rounded-full bg-gray-100 dark:bg-gray-800 overflow-hidden">
               <div
-                className={`h-full rounded-full transition-all duration-500 ${isComplete ? 'bg-gradient-to-r from-green-400 to-green-600 animate-celebrate' : 'bg-gold'}`}
+                className={`h-full rounded-full transition-all duration-500 ${isComplete ? 'bg-linear-to-r from-green-400 to-green-600 animate-celebrate' : 'bg-gold'}`}
                 style={{ width: `${(progress / total) * 100}%` }}
               />
             </div>

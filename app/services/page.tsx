@@ -7,12 +7,14 @@ export const metadata: Metadata = {
   description: 'Browse all Philippine government services with step-by-step guides and requirements.',
 };
 
-export default function ServicesPage() {
+export default async function ServicesPage({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
+  const { q } = await searchParams;
+
   return (
     <div>
       <PageHeader title="Government Services" description="Choose the service you need and see the full process." />
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <ServicesClient />
+        <ServicesClient initialQuery={q ?? ''} />
       </div>
     </div>
   );

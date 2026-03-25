@@ -55,6 +55,21 @@ interface ApiService {
   tags?: string[];
 }
 
+// ── Category mapping (API → frontend) ────────────────────────────────────────
+
+const API_CATEGORY_MAP: Record<string, ServiceCategory> = {
+  clearance: 'clearance',
+  document: 'civil_registry',
+  identification: 'identification',
+  license: 'transport',
+  registration: 'business',
+};
+
+function mapCategory(raw?: string): ServiceCategory {
+  if (!raw) return 'other';
+  return API_CATEGORY_MAP[raw.toLowerCase()] ?? 'other';
+}
+
 // ── Mappers ───────────────────────────────────────────────────────────────────
 
 function mapAgency(a: ApiAgency): Agency {
@@ -87,7 +102,7 @@ function mapService(s: ApiService): Service {
     description: s.description,
     agencyId: s.agency_id,
     agency: s.agency ? mapAgency(s.agency) : undefined,
-    category: (s.category as ServiceCategory) ?? 'other',
+    category: mapCategory(s.category),
     steps: (s.steps ?? []).map((step) => ({
       id: step.id,
       order: step.order,
