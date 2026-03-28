@@ -1,16 +1,23 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { Suspense } from 'react';
 import { Plus, ExternalLink } from 'lucide-react';
 import { getPaginatedAgencies } from '@/lib/api';
 import { AgencyActions } from '@/components/admin/AgencyActions';
 import { Pagination } from '@/components/admin/Pagination';
+import { AdminSearch } from '@/components/admin/AdminSearch';
 
 export const metadata: Metadata = { title: 'Manage Agencies' };
 
-export default async function AdminAgenciesPage({ searchParams }: { searchParams: Promise<{ page?: string }> }) {
+export default async function AdminAgenciesPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string; q?: string }>;
+}) {
   const params = await searchParams;
   const page = Math.max(1, Number(params.page) || 1);
-  const { data: agencies, total, totalPages } = await getPaginatedAgencies(page, 10);
+  const query = params.q ?? '';
+  const { data: agencies, total, totalPages } = await getPaginatedAgencies(page, 10, query);
 
   return (
     <div className="p-8 animate-fade-in">
@@ -18,7 +25,9 @@ export default async function AdminAgenciesPage({ searchParams }: { searchParams
       <div className="flex items-center justify-between mb-7 animate-fade-in-up">
         <div>
           <h1 className="font-display font-bold text-xl text-navy dark:text-white">Agencies</h1>
-          <p className="text-xs text-gray-400 mt-1">{total} agencies total</p>
+          <p className="text-xs text-gray-400 mt-1">
+            {total} {query ? 'results' : 'agencies total'}
+          </p>
         </div>
         <Link
           href="/admin/agencies/new"
@@ -26,6 +35,13 @@ export default async function AdminAgenciesPage({ searchParams }: { searchParams
         >
           <Plus className="w-3.5 h-3.5" /> New Agency
         </Link>
+      </div>
+
+      {/* Search */}
+      <div className="mb-4 animate-fade-in-up animation-delay-50">
+        <Suspense>
+          <AdminSearch placeholder="Search agencies..." />
+        </Suspense>
       </div>
 
       {/* Table */}
@@ -85,13 +101,15 @@ export default async function AdminAgenciesPage({ searchParams }: { searchParams
 
         {agencies.length === 0 && (
           <div className="py-16 text-center">
-            <p className="text-sm text-gray-400">No agencies yet.</p>
-            <Link
-              href="/admin/agencies/new"
-              className="text-xs text-navy dark:text-gold mt-1 inline-block hover:underline"
-            >
-              Add your first agency
-            </Link>
+            <p className="text-sm text-gray-400">{query ? 'No agencies match your search.' : 'No agencies yet.'}</p>
+            {!query && (
+              <Link
+                href="/admin/agencies/new"
+                className="text-xs text-navy dark:text-gold mt-1 inline-block hover:underline"
+              >
+                Add your first agency
+              </Link>
+            )}
           </div>
         )}
       </div>

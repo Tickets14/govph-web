@@ -183,15 +183,31 @@ export async function getServicesByAgency(agencyId: string): Promise<Service[]> 
 
 // ── Paginated (admin) ─────────────────────────────────────────────────────────
 
-export async function getPaginatedServices(page = 1, limit = 10): Promise<PaginatedResponse<Service>> {
-  const all = await getServices();
+export async function getPaginatedServices(page = 1, limit = 10, query = ''): Promise<PaginatedResponse<Service>> {
+  let all = await getServices();
+  if (query) {
+    const q = query.toLowerCase();
+    all = all.filter(
+      (s) =>
+        s.title.toLowerCase().includes(q) || s.slug.toLowerCase().includes(q) || s.description.toLowerCase().includes(q)
+    );
+  }
   const total = all.length;
   const data = all.slice((page - 1) * limit, page * limit);
   return { data, total, page, limit, totalPages: Math.ceil(total / limit) };
 }
 
-export async function getPaginatedAgencies(page = 1, limit = 10): Promise<PaginatedResponse<Agency>> {
-  const all = await getAgencies();
+export async function getPaginatedAgencies(page = 1, limit = 10, query = ''): Promise<PaginatedResponse<Agency>> {
+  let all = await getAgencies();
+  if (query) {
+    const q = query.toLowerCase();
+    all = all.filter(
+      (a) =>
+        a.name.toLowerCase().includes(q) ||
+        a.acronym.toLowerCase().includes(q) ||
+        a.description.toLowerCase().includes(q)
+    );
+  }
   const total = all.length;
   const data = all.slice((page - 1) * limit, page * limit);
   return { data, total, page, limit, totalPages: Math.ceil(total / limit) };

@@ -1,17 +1,24 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { Suspense } from 'react';
 import { Plus } from 'lucide-react';
 import { getPaginatedServices, getAgencies } from '@/lib/api';
 import { ServiceActions } from '@/components/admin/ServiceActions';
 import { Pagination } from '@/components/admin/Pagination';
+import { AdminSearch } from '@/components/admin/AdminSearch';
 
 export const metadata: Metadata = { title: 'Manage Services' };
 
-export default async function AdminServicesPage({ searchParams }: { searchParams: Promise<{ page?: string }> }) {
+export default async function AdminServicesPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string; q?: string }>;
+}) {
   const params = await searchParams;
   const page = Math.max(1, Number(params.page) || 1);
+  const query = params.q ?? '';
   const [{ data: services, total, totalPages }, agencies] = await Promise.all([
-    getPaginatedServices(page, 10),
+    getPaginatedServices(page, 10, query),
     getAgencies(),
   ]);
 
@@ -23,7 +30,9 @@ export default async function AdminServicesPage({ searchParams }: { searchParams
       <div className="flex items-center justify-between mb-7 animate-fade-in-up">
         <div>
           <h1 className="font-display font-bold text-xl text-navy dark:text-white">Services</h1>
-          <p className="text-xs text-gray-400 mt-1">{total} services total</p>
+          <p className="text-xs text-gray-400 mt-1">
+            {total} {query ? 'results' : 'services total'}
+          </p>
         </div>
         <Link
           href="/admin/services/new"
@@ -31,6 +40,13 @@ export default async function AdminServicesPage({ searchParams }: { searchParams
         >
           <Plus className="w-3.5 h-3.5" /> New Service
         </Link>
+      </div>
+
+      {/* Search */}
+      <div className="mb-4 animate-fade-in-up animation-delay-50">
+        <Suspense>
+          <AdminSearch placeholder="Search services..." />
+        </Suspense>
       </div>
 
       {/* Table */}
@@ -100,13 +116,15 @@ export default async function AdminServicesPage({ searchParams }: { searchParams
 
         {services.length === 0 && (
           <div className="py-16 text-center">
-            <p className="text-sm text-gray-400">No services yet.</p>
-            <Link
-              href="/admin/services/new"
-              className="text-xs text-navy dark:text-gold mt-1 inline-block hover:underline"
-            >
-              Add your first service
-            </Link>
+            <p className="text-sm text-gray-400">{query ? 'No services match your search.' : 'No services yet.'}</p>
+            {!query && (
+              <Link
+                href="/admin/services/new"
+                className="text-xs text-navy dark:text-gold mt-1 inline-block hover:underline"
+              >
+                Add your first service
+              </Link>
+            )}
           </div>
         )}
       </div>
