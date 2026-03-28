@@ -289,7 +289,7 @@ export async function submitFeedback(data: {
   email?: string;
 }): Promise<{ success: boolean; message?: string }> {
   try {
-    const res = await fetch(`${API_URL}/feedbacks`, {
+    const res = await fetch('/api/feedback', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
