@@ -67,6 +67,15 @@ export type ServiceCategory =
   | 'social_services'
   | 'other';
 
+export interface Feedback {
+  id: string;
+  type: 'bug' | 'feature_request' | 'general';
+  subject: string;
+  description: string;
+  email?: string;
+  createdAt?: string;
+}
+
 export interface Progress {
   serviceId: string;
   completedSteps: string[];

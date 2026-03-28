@@ -3,7 +3,7 @@
  * Works in both server components (Node.js fetch) and client components (browser fetch).
  */
 
-import type { Agency, Service, Progress, SearchFilters, PaginatedResponse, ServiceCategory } from '@/types';
+import type { Agency, Service, Progress, SearchFilters, PaginatedResponse, ServiceCategory, Feedback } from '@/types';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3000/api/v1';
 
@@ -234,6 +234,53 @@ export async function getProgressSummary(userId: string, serviceId: string): Pro
 }
 
 // ── Feedback ─────────────────────────────────────────────────────────────────
+
+// ── Feedback API shapes ─────────────────────────────────────────────────────
+
+interface ApiFeedback {
+  id: string;
+  type: 'bug' | 'feature_request' | 'general';
+  subject: string;
+  description: string;
+  email?: string | null;
+  created_at?: string;
+}
+
+function mapFeedback(f: ApiFeedback): Feedback {
+  return {
+    id: f.id,
+    type: f.type,
+    subject: f.subject,
+    description: f.description,
+    email: f.email ?? undefined,
+    createdAt: f.created_at ?? undefined,
+  };
+}
+
+export async function getFeedbacks(): Promise<Feedback[]> {
+  const res = await fetch(`${API_URL}/feedbacks`, { cache: 'no-store' });
+  if (!res.ok) return [];
+  const json = await res.json();
+  const data: ApiFeedback[] = json.data ?? json;
+  return data.map(mapFeedback);
+}
+
+export async function getPaginatedFeedbacks(page = 1, limit = 10, query = ''): Promise<PaginatedResponse<Feedback>> {
+  let all = await getFeedbacks();
+  if (query) {
+    const q = query.toLowerCase();
+    all = all.filter(
+      (f) =>
+        f.subject.toLowerCase().includes(q) ||
+        f.description.toLowerCase().includes(q) ||
+        f.type.toLowerCase().includes(q) ||
+        (f.email?.toLowerCase().includes(q) ?? false)
+    );
+  }
+  const total = all.length;
+  const data = all.slice((page - 1) * limit, page * limit);
+  return { data, total, page, limit, totalPages: Math.ceil(total / limit) };
+}
 
 export async function submitFeedback(data: {
   type: 'bug' | 'feature_request' | 'general';

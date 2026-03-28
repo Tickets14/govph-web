@@ -10,13 +10,14 @@ import {
   ListChecks,
   ClipboardList,
   ChevronRight,
+  MessageSquare,
 } from 'lucide-react';
-import { getServices, getAgencies } from '@/lib/api';
+import { getServices, getAgencies, getFeedbacks } from '@/lib/api';
 
 export const metadata: Metadata = { title: 'Dashboard' };
 
 export default async function AdminDashboardPage() {
-  const [services, agencies] = await Promise.all([getServices(), getAgencies()]);
+  const [services, agencies, feedbacks] = await Promise.all([getServices(), getAgencies(), getFeedbacks()]);
 
   const activeServices = services.filter((s) => s.isActive);
   const featuredServices = services.filter((s) => s.isFeatured);
@@ -53,6 +54,14 @@ export default async function AdminDashboardPage() {
       href: '/admin/services',
       accent: 'bg-amber-50 text-amber-600 dark:bg-amber-950/40 dark:text-amber-400',
       bar: 'bg-amber-500',
+    },
+    {
+      label: 'Feedback',
+      value: feedbacks.length,
+      icon: MessageSquare,
+      href: '/admin/feedbacks',
+      accent: 'bg-rose-50 text-rose-600 dark:bg-rose-950/40 dark:text-rose-400',
+      bar: 'bg-rose-500',
     },
   ];
 
@@ -106,7 +115,7 @@ export default async function AdminDashboardPage() {
 
       <div className="p-8">
         {/* ── KPI cards ──────────────────────────────────────── */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
           {stats.map(({ label, value, icon: Icon, href, accent, bar }) => (
             <Link
               key={label}

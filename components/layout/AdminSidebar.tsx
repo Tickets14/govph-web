@@ -10,6 +10,7 @@ import {
   ListChecks,
   ClipboardList,
   BookOpen,
+  MessageSquare,
   ArrowLeft,
   LogOut,
   Menu,
@@ -25,6 +26,7 @@ const links = [
   { href: '/admin/services', label: 'Services', icon: FileText },
   { href: '/admin/steps', label: 'Steps', icon: ListChecks },
   { href: '/admin/requirements', label: 'Requirements', icon: ClipboardList },
+  { href: '/admin/feedbacks', label: 'Feedback', icon: MessageSquare },
   { href: '/admin/dictionary', label: 'Dictionary', icon: BookOpen },
 ];
 
