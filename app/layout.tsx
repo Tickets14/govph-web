@@ -4,6 +4,7 @@ import './globals.css';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { ThemeProvider } from '@/hooks/useTheme';
+import { PWARegister } from '@/components/PWARegister';
 
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -27,6 +28,12 @@ export const metadata: Metadata = {
   description:
     'A step-by-step guide to Philippine government services. Find requirements, track your progress, and complete any government transaction with confidence.',
   keywords: ['Philippine government', 'government services', 'requirements', 'NBI', 'passport', 'DFA', 'LTO'],
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'GovPH',
+  },
   openGraph: {
     type: 'website',
     locale: 'en_PH',
@@ -39,6 +46,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${plusJakarta.variable} ${inter.variable}`} suppressHydrationWarning>
       <head>
+        <meta name="theme-color" content="#111b30" />
+        <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'||(t==null&&matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.classList.add('dark')}}catch(e){}})()`,
@@ -58,6 +67,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             {children}
           </main>
           <Footer />
+          <PWARegister />
         </ThemeProvider>
       </body>
     </html>
