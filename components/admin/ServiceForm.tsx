@@ -79,8 +79,8 @@ export function ServiceForm({ initialData, agencies }: ServiceFormProps) {
     }
 
     toast.success(initialData ? 'Service updated.' : 'Service created.');
-    router.push('/admin/services');
     router.refresh();
+    router.push('/admin/services');
   };
 
   return (

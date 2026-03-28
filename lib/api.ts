@@ -131,7 +131,7 @@ export async function getServices(filters?: Partial<SearchFilters>): Promise<Ser
   if (filters?.category) params.set('category', filters.category);
   if (filters?.agencyId) params.set('agency_id', filters.agencyId);
 
-  const res = await fetch(`${API_URL}/services?${params}`, { next: { revalidate: 60 } });
+  const res = await fetch(`${API_URL}/services?${params}`, { cache: 'no-store' });
   if (!res.ok) return [];
   const json = await res.json();
   console.log(json);
@@ -145,14 +145,14 @@ export async function getFeaturedServices(): Promise<Service[]> {
 }
 
 export async function getServiceBySlug(slug: string): Promise<Service | null> {
-  const res = await fetch(`${API_URL}/services/${slug}`, { next: { revalidate: 60 } });
+  const res = await fetch(`${API_URL}/services/${slug}`, { cache: 'no-store' });
   if (!res.ok) return null;
   const json = await res.json();
   return mapService(json.data ?? json);
 }
 
 export async function getServiceById(id: string): Promise<Service | null> {
-  const res = await fetch(`${API_URL}/services/${id}`, { next: { revalidate: 60 } });
+  const res = await fetch(`${API_URL}/services/${id}`, { cache: 'no-store' });
   if (!res.ok) return null;
   const json = await res.json();
   return mapService(json.data ?? json);
@@ -161,7 +161,7 @@ export async function getServiceById(id: string): Promise<Service | null> {
 // ── Agencies ──────────────────────────────────────────────────────────────────
 
 export async function getAgencies(): Promise<Agency[]> {
-  const res = await fetch(`${API_URL}/agencies`, { next: { revalidate: 60 } });
+  const res = await fetch(`${API_URL}/agencies`, { cache: 'no-store' });
   if (!res.ok) return [];
   const json = await res.json();
   const data: ApiAgency[] = json.data ?? json;
@@ -169,7 +169,7 @@ export async function getAgencies(): Promise<Agency[]> {
 }
 
 export async function getAgencyBySlug(slug: string): Promise<Agency | null> {
-  const res = await fetch(`${API_URL}/agencies/${slug}`, { next: { revalidate: 60 } });
+  const res = await fetch(`${API_URL}/agencies/${slug}`, { cache: 'no-store' });
   if (!res.ok) return null;
   const json = await res.json();
   const agency = mapAgency(json.data ?? json);

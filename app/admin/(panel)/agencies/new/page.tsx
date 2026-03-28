@@ -37,8 +37,8 @@ export default function NewAgencyPage() {
     }
 
     toast.success('Agency created.');
-    router.push('/admin/agencies');
     router.refresh();
+    router.push('/admin/agencies');
   };
 
   return (
