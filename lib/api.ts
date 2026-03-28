@@ -258,7 +258,13 @@ function mapFeedback(f: ApiFeedback): Feedback {
 }
 
 export async function getFeedbacks(): Promise<Feedback[]> {
-  const res = await fetch(`${API_URL}/feedbacks`, { cache: 'no-store' });
+  const adminKey = process.env.ADMIN_API_KEY ?? '';
+  const res = await fetch(`${API_URL}/feedbacks`, {
+    cache: 'no-store',
+    headers: {
+      ...(adminKey ? { 'X-Admin-Key': adminKey } : {}),
+    },
+  });
   if (!res.ok) return [];
   const json = await res.json();
   const data: ApiFeedback[] = json.data ?? json;
@@ -289,7 +295,7 @@ export async function submitFeedback(data: {
   email?: string;
 }): Promise<{ success: boolean; message?: string }> {
   try {
-    const res = await fetch('/api/feedback', {
+    const res = await fetch(`${API_URL}/feedbacks`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),

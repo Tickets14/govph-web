@@ -115,7 +115,7 @@ export default async function AdminFeedbacksPage({
                       : '—'}
                   </td>
                   <td className="px-5 py-3.5">
-                    <FeedbackActions id={feedback.id} subject={feedback.subject} />
+                    <FeedbackActions feedback={feedback} />
                   </td>
                 </tr>
               );
