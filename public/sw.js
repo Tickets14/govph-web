@@ -3,7 +3,9 @@ const CACHE_NAME = 'govph-v1';
 const PRECACHE_URLS = ['/', '/saved'];
 
 self.addEventListener('install', (event) => {
-  event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(PRECACHE_URLS)));
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => Promise.allSettled(PRECACHE_URLS.map((url) => cache.add(url))))
+  );
   self.skipWaiting();
 });
 
