@@ -233,6 +233,30 @@ export async function getProgressSummary(userId: string, serviceId: string): Pro
   };
 }
 
+// ── Feedback ─────────────────────────────────────────────────────────────────
+
+export async function submitFeedback(data: {
+  type: 'bug' | 'feature_request' | 'general';
+  subject: string;
+  description: string;
+  email?: string;
+}): Promise<{ success: boolean; message?: string }> {
+  try {
+    const res = await fetch(`${API_URL}/feedbacks`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    const json = await res.json();
+    if (!res.ok) {
+      return { success: false, message: json.error?.message ?? 'Something went wrong' };
+    }
+    return { success: true, message: json.message ?? 'Feedback submitted successfully' };
+  } catch {
+    return { success: false, message: 'Network error — please try again' };
+  }
+}
+
 export async function toggleStep(
   userId: string,
   serviceId: string,
